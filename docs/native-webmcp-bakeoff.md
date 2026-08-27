@@ -11,6 +11,10 @@ Checked: 27 August 2026
   reports `document.modelContext` as `undefined` on localhost.
 - The Codex in-app browser also reports `document.modelContext` as `undefined`.
   This is not evidence about the separately documented ChatGPT in-app browser.
+- After enabling the separate DevTools support experiment and relaunching, the
+  connected Chrome profile `David` still reported the API as undefined in both
+  Toolglass and GoogleChromeLabs' official WebMCP explainer demo. DevTools
+  support alone therefore does not enable the runtime API.
 - The deterministic fallback proof passes for all three candidates, including
   four Playwright/axe browser proofs.
 - Native registration now follows the current promise plus registration
