@@ -20,6 +20,8 @@ npm run check
 
 This initial repository contains reviewed briefs and a deterministic metadata gate. Application code is delivered through guarded Symphony issues. Merge, deployment, publication, competition submission, payments, and Stockbridge production changes remain separate owner gates.
 
+The shared high-end interaction standard lives in [the experience system](docs/experience-system.md), and the bounded build contract is captured in [the Symphony delivery specification](docs/symphony-delivery-spec.md).
+
 ## Source material
 
 - [OpenAI WebMCP Challenge](https://openai.com/webmcp-challenge/)

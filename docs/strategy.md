@@ -24,6 +24,8 @@ The accepted portfolio keeps the team's strongest principles—visible state, ex
 - Preview and commit are distinct tools; destructive or consequential actions are simulated only.
 - Every app works as a coherent human UI when site tools are unavailable.
 - The demo path is deterministic, keyboard accessible, and completes in under three minutes.
+- The shared interaction and motion contract is defined in `docs/experience-system.md`.
+- The guarded implementation acceptance contract is defined in `docs/symphony-delivery-spec.md`.
 
 ## Evaluation
 

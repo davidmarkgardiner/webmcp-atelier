@@ -5,6 +5,14 @@ const root = resolve(import.meta.dirname, '..')
 const manifestPath = resolve(root, 'config/candidates.json')
 const manifest = JSON.parse(await readFile(manifestPath, 'utf8'))
 
+for (const requiredFile of [
+  'docs/strategy.md',
+  'docs/experience-system.md',
+  'docs/symphony-delivery-spec.md',
+]) {
+  await access(resolve(root, requiredFile))
+}
+
 if (manifest.submissionLimit !== 1) {
   throw new Error('submissionLimit must remain 1')
 }
