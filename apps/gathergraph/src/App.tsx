@@ -7,9 +7,11 @@ import {
 } from "@atelier/experience-system";
 import {
   FallbackRegistry,
+  formatNativeProbeEvidence,
   hasNativeModelContext,
   registerTools,
   result,
+  runNativeProbe,
   type ModelContextDocument,
   type ToolContext,
 } from "@atelier/webmcp-runtime";
@@ -36,6 +38,10 @@ export function App() {
   const ledger = useExecutionLedger();
   const fallback = useRef(new FallbackRegistry());
   const [mode, setMode] = useState<"native" | "fallback">("fallback");
+  const probeRequested = new URLSearchParams(window.location.search).has(
+    "native-probe",
+  );
+  const [probeEvidence, setProbeEvidence] = useState("Native probe pending");
   const [phase, setPhase] = useState("Surfaces ready");
   const [conflict, setConflict] = useState(true);
   const [budget, setBudget] = useState(1800);
@@ -116,22 +122,52 @@ export function App() {
     },
     [conflict, ledger, phase],
   );
+  const performRef = useRef(perform);
+  performRef.current = perform;
 
   useEffect(() => {
+    let active = true;
     const native = hasNativeModelContext(document as ModelContextDocument);
     const tools = createGathergraphTools(
-      perform,
+      (input, context) => performRef.current(input, context),
       !native,
       native ? "parent" : undefined,
     );
     const registration = registerTools(tools, {
       document: document as ModelContextDocument,
       fallback: fallback.current,
-      fallbackTools: native ? createGathergraphTools(perform, true) : undefined,
+      fallbackTools: native
+        ? createGathergraphTools(
+            (input, context) => performRef.current(input, context),
+            true,
+          )
+        : undefined,
     });
     setMode(registration.mode);
-    return registration.unregister;
-  }, [perform]);
+    if (probeRequested && registration.mode === "native")
+      void registration.ready
+        .then(() =>
+          runNativeProbe(
+            document as ModelContextDocument,
+            "find_spaces",
+            { capacity: 40 },
+            13,
+          ),
+        )
+        .then((evidence) => {
+          if (active) setProbeEvidence(formatNativeProbeEvidence(evidence));
+        })
+        .catch((error: unknown) => {
+          if (active)
+            setProbeEvidence(
+              `Native probe failed: ${error instanceof Error ? error.message : String(error)}`,
+            );
+        });
+    return () => {
+      active = false;
+      registration.unregister();
+    };
+  }, [probeRequested]);
 
   useEffect(() => {
     const receiveSurfaceResult = (event: MessageEvent<unknown>) => {
@@ -157,7 +193,7 @@ export function App() {
         typeof message.input !== "object"
       )
         return;
-      void perform(
+      void performRef.current(
         {
           ...(message.input as Record<string, unknown>),
           __tool: message.tool,
@@ -168,7 +204,7 @@ export function App() {
 
     window.addEventListener("message", receiveSurfaceResult);
     return () => window.removeEventListener("message", receiveSurfaceResult);
-  }, [perform]);
+  }, []);
 
   const invoke = (tool: string, input: Record<string, unknown>) =>
     fallback.current.invoke(tool, input);
@@ -213,6 +249,11 @@ export function App() {
         />
       }
     >
+      {probeRequested ? (
+        <output className="notice" aria-label="Native WebMCP probe">
+          {probeEvidence}
+        </output>
+      ) : null}
       <div className="workspace-grid">
         <section className="panel" aria-labelledby="event-plan-title">
           <div className="section-heading">

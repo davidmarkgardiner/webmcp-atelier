@@ -1,6 +1,6 @@
 # Native WebMCP bake-off
 
-Status: **preflight passed; manual Chrome enablement required**  
+Status: **native acceptance passed; GatherGraph selected**
 Checked: 27 August 2026
 
 ## Current evidence
@@ -25,6 +25,9 @@ Checked: 27 August 2026
   registers its own three tools when native WebMCP is present; the parent
   registers only the four composition and approval tools. Unsupported browsers
   retain the 13-tool namespaced parent fallback.
+- Chrome 151 executes imperative tools without the documented second callback
+  argument in this environment. The runtime now supplies a safe non-aborted
+  signal when that context is absent; the regression is covered by a unit test.
 
 ## Manual enablement boundary
 
@@ -45,5 +48,30 @@ step cannot be completed by the test harness.
 | Roastweave  | Seven tools, no duplicate-registration errors                            | `explore_sensory_library` changes the canvas and ledger | Human and agent can rebalance the same sensory object            |
 | GatherGraph | Thirteen tools: nine owned by three child windows and four by the parent | A child tool updates its iframe and the parent ledger   | Same-origin child discovery composes independent local providers |
 
-The winner decision remains blocked until every discovery gate and at least one
-native invocation per candidate has been witnessed in an enabled browser.
+## Accepted native results
+
+| Candidate   | Discovery receipt                                                                                         | Native execution receipt                                                                                                 | Result |
+| ----------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------ |
+| Toolglass   | Seven tools, all owned by the top document                                                                | `inspect_workspace`; visible ledger receipt                                                                              | Pass   |
+| Roastweave  | Seven tools, all owned by the top document                                                                | `explore_sensory_library`; visible ledger receipt                                                                        | Pass   |
+| GatherGraph | Thirteen tools: four top-document tools and three tools in each venue, food, and logistics child document | Child-owned `find_spaces`; venue iframe changed to `Last native call: find spaces` and parent ledger recorded completion | Pass   |
+
+All three remained labelled `Native WebMCP` after execution and produced no new
+console warnings or errors in their successful acceptance run.
+
+Evidence screenshots:
+
+- [Toolglass native proof](evidence/native-2026-08-27/toolglass-native.png)
+- [Roastweave native proof](evidence/native-2026-08-27/roastweave-native.png)
+- [GatherGraph native proof](evidence/native-2026-08-27/gathergraph-native.png)
+
+## Decision
+
+**GatherGraph advances as the competition candidate.** It is the only finalist
+whose winning interaction depends on cross-document WebMCP composition rather
+than simply exposing tools from one application document. The accepted proof
+shows Chrome discovering independent child-owned capabilities, invoking one in
+its owning venue surface, and reflecting the result in both that surface and
+the parent consent ledger. Toolglass remains the strongest alternate demo story
+and Roastweave remains the most directly reusable concept for Stockbridge
+Coffee.

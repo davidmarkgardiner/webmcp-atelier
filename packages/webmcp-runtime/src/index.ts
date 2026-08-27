@@ -39,6 +39,12 @@ export type AnyToolDefinition = ToolDefinition<
 
 export type RegisteredTool = Readonly<{ unregister: () => void }>;
 
+export type NativeDiscoveredTool = Readonly<{
+  name: string;
+  origin: string;
+  window: Window;
+}>;
+
 export interface NativeModelContext {
   registerTool(
     tool: {
@@ -50,6 +56,11 @@ export interface NativeModelContext {
     },
     options?: { signal?: AbortSignal },
   ): Promise<void> | void;
+  getTools?(): Promise<readonly NativeDiscoveredTool[]>;
+  executeTool?(
+    tool: NativeDiscoveredTool,
+    inputArguments: string,
+  ): Promise<unknown>;
 }
 
 export type ModelContextDocument = Document & {
@@ -117,6 +128,64 @@ export class FallbackRegistry {
 export const hasNativeModelContext = (doc: ModelContextDocument): boolean =>
   typeof doc.modelContext?.registerTool === "function";
 
+export type NativeProbeEvidence = Readonly<{
+  discovered: readonly string[];
+  executed: string;
+  owners: Readonly<Record<string, number>>;
+  output: unknown;
+}>;
+
+export const formatNativeProbeEvidence = (
+  evidence: NativeProbeEvidence,
+): string => {
+  const ownership = Object.entries(evidence.owners)
+    .map(([owner, count]) => `${owner}: ${count}`)
+    .join(" · ");
+  return `Native PASS · ${evidence.discovered.length} tools · executed ${evidence.executed} · ${ownership}`;
+};
+
+export const runNativeProbe = async (
+  doc: ModelContextDocument,
+  toolName: string,
+  input: Record<string, unknown>,
+  minimumToolCount: number,
+): Promise<NativeProbeEvidence> => {
+  const modelContext = doc.modelContext;
+  if (!modelContext?.getTools || !modelContext.executeTool)
+    throw new Error("Native WebMCP discovery and execution are unavailable.");
+
+  let tools: readonly NativeDiscoveredTool[] = [];
+  for (let attempt = 0; attempt < 30; attempt += 1) {
+    tools = await modelContext.getTools();
+    if (tools.length >= minimumToolCount) break;
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  }
+
+  const tool = tools.find(({ name }) => name === toolName);
+  if (!tool)
+    throw new Error(
+      `Native WebMCP tool ${toolName} was not discovered (${tools.length} tools visible).`,
+    );
+
+  const owners: Record<string, number> = {};
+  for (const discoveredTool of tools) {
+    const owner =
+      discoveredTool.window === doc.defaultView
+        ? "top"
+        : (discoveredTool.window.frameElement?.getAttribute("title") ??
+          "child");
+    owners[owner] = (owners[owner] ?? 0) + 1;
+  }
+
+  const output = await modelContext.executeTool(tool, JSON.stringify(input));
+  return {
+    discovered: tools.map(({ name }) => name).sort(),
+    executed: tool.name,
+    owners,
+    output,
+  };
+};
+
 export const registerTools = (
   tools: readonly AnyToolDefinition[],
   options: {
@@ -137,11 +206,19 @@ export const registerTools = (
     const controller = new AbortController();
     const modelContext = options.document.modelContext!;
     const ready = Promise.all(
-      tools.map((tool) =>
-        Promise.resolve(
-          modelContext.registerTool(tool, { signal: controller.signal }),
-        ),
-      ),
+      tools.map((tool) => {
+        const nativeTool = {
+          ...tool,
+          execute: (input: Record<string, unknown>, context?: ToolContext) =>
+            tool.execute(
+              input,
+              context ?? { signal: new AbortController().signal },
+            ),
+        };
+        return Promise.resolve(
+          modelContext.registerTool(nativeTool, { signal: controller.signal }),
+        );
+      }),
     ).then(() => undefined);
 
     void ready.catch((error: unknown) => {

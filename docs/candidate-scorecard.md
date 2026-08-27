@@ -1,5 +1,14 @@
 # Candidate scorecard
 
+## Native bake-off decision
+
+GatherGraph is the selected competition candidate. On 27 August 2026, enabled
+Chrome discovered 13 native tools with ownership split across the parent and
+three same-origin child documents, then executed the child-owned `find_spaces`
+tool with visible updates in both the venue surface and parent execution ledger.
+Toolglass and Roastweave also passed native seven-tool discovery and invocation.
+See the [native WebMCP bake-off](native-webmcp-bakeoff.md) for receipts.
+
 This deterministic build-stage scorecard uses the four official dimensions on
 a ten-point scale. Scores are explicit hypotheses for independent review, not
 competition results. Each evidence link points to a checked implementation or

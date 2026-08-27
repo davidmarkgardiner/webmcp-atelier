@@ -7,8 +7,10 @@ import {
 } from "@atelier/experience-system";
 import {
   FallbackRegistry,
+  formatNativeProbeEvidence,
   registerTools,
   result,
+  runNativeProbe,
   type ModelContextDocument,
   type ToolContext,
 } from "@atelier/webmcp-runtime";
@@ -18,6 +20,10 @@ export function App() {
   const ledger = useExecutionLedger();
   const fallback = useRef(new FallbackRegistry());
   const [mode, setMode] = useState<"native" | "fallback">("fallback");
+  const probeRequested = new URLSearchParams(window.location.search).has(
+    "native-probe",
+  );
+  const [probeEvidence, setProbeEvidence] = useState("Native probe pending");
   const [phase, setPhase] = useState("Canvas ready");
   const [chocolate, setChocolate] = useState(72);
   const [brightness, setBrightness] = useState(48);
@@ -115,16 +121,43 @@ export function App() {
     },
     [brightness, chocolate, ledger, phase],
   );
+  const performRef = useRef(perform);
+  performRef.current = perform;
 
   useEffect(() => {
-    const tools = createRoastweaveTools(perform);
+    let active = true;
+    const tools = createRoastweaveTools((input, context) =>
+      performRef.current(input, context),
+    );
     const registration = registerTools(tools, {
       document: document as ModelContextDocument,
       fallback: fallback.current,
     });
     setMode(registration.mode);
-    return registration.unregister;
-  }, [perform]);
+    if (probeRequested && registration.mode === "native")
+      void registration.ready
+        .then(() =>
+          runNativeProbe(
+            document as ModelContextDocument,
+            "explore_sensory_library",
+            { query: "native probe" },
+            7,
+          ),
+        )
+        .then((evidence) => {
+          if (active) setProbeEvidence(formatNativeProbeEvidence(evidence));
+        })
+        .catch((error: unknown) => {
+          if (active)
+            setProbeEvidence(
+              `Native probe failed: ${error instanceof Error ? error.message : String(error)}`,
+            );
+        });
+    return () => {
+      active = false;
+      registration.unregister();
+    };
+  }, [probeRequested]);
 
   const invoke = (tool: string, input: Record<string, unknown>) =>
     void fallback.current.invoke(tool, input);
@@ -154,6 +187,11 @@ export function App() {
       summary="Compose a coffee moment with an agent, reshape its flavour constellation by hand, and preserve only the recipe you explicitly approve."
       status={<WebMCPStatus mode={mode} />}
     >
+      {probeRequested ? (
+        <output className="notice" aria-label="Native WebMCP probe">
+          {probeEvidence}
+        </output>
+      ) : null}
       <div className="workspace-grid">
         <section className="panel sensory-panel" aria-labelledby="recipe-title">
           <div className="section-heading">
