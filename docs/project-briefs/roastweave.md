@@ -23,3 +23,10 @@ Create a low-caffeine Sunday-morning recipe for an AeroPress with chocolate dept
 ## Safety boundary
 
 No medical claims, product purchase, stock change, order, customer data, or Stockbridge production action. Recipes and sensory data are illustrative local fixtures.
+
+## Implemented proof
+
+Run `npm run dev --workspace @atelier/roastweave`. The keyboard proof composes
+the AeroPress low-caffeine recipe, compares two structured variants, adjusts a
+sensory range directly, records the provenance-linked rebalance, then approves,
+locks, and restores browser-local recipe history.

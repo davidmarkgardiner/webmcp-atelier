@@ -22,3 +22,11 @@ Plan a 40-person accessible evening with vegan and nut-free food under a fixed b
 ## Safety boundary
 
 All vendors, availability, reservations, routes, and prices are fictional fixtures. No real booking, message, payment, hold, order, or third-party API call occurs.
+
+## Implemented proof
+
+Run `npm run dev --workspace @atelier/gathergraph`. The parent embeds independent
+same-origin venue, food, and logistics documents. When native child discovery is
+unavailable, it visibly registers equivalent namespaced parent tools. The
+keyboard proof composes a 40-person accessible vegan and nut-free plan, repairs
+its timing conflict, and commits only an approved local dossier.

@@ -12,15 +12,45 @@ Three high-end, deliberately different WebMCP candidate applications for the 202
 
 The candidates share typed WebMCP registration, visible execution receipts, accessibility primitives, deterministic fixtures, and evaluation tooling. They remain separately runnable and independently judged.
 
-## Bootstrap validation
+## Run each candidate
+
+Install the lockfile-defined dependencies, then start any candidate independently:
+
+```sh
+npm ci --ignore-scripts
+npm run dev --workspace @atelier/toolglass
+npm run dev --workspace @atelier/roastweave
+npm run dev --workspace @atelier/gathergraph
+```
+
+Each app works as a normal keyboard-accessible interface and explicitly reports
+whether tools use native `document.modelContext` registration or the local
+development fallback. All boards, recipes, vendors, routes, approvals, commits,
+locks, holds, and dossiers are deterministic browser-local simulations.
+
+## Validation
 
 ```sh
 npm run check
 ```
 
-This initial repository contains reviewed briefs and a deterministic metadata gate. Application code is delivered through guarded Symphony issues. Merge, deployment, publication, competition submission, payments, and Stockbridge production changes remain separate owner gates.
+The gate runs formatting, lint, TypeScript, shared runtime and ledger unit tests,
+fixture-integrity checks, Playwright proof paths with accessibility smoke tests,
+and production builds for all three apps:
+
+```sh
+npm run check
+```
+
+The implementation never contacts a third party or creates a real booking,
+message, order, payment, hold, release, deployment, or production mutation.
+Merge, publication, competition submission, and Stockbridge production changes
+remain separate owner gates.
 
 The shared high-end interaction standard lives in [the experience system](docs/experience-system.md), and the bounded build contract is captured in [the Symphony delivery specification](docs/symphony-delivery-spec.md).
+
+Implementation evidence and explicit judging hypotheses live in the
+[candidate scorecard](docs/candidate-scorecard.md).
 
 ## Source material
 

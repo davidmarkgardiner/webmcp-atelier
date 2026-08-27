@@ -1,0 +1,106 @@
+:root {
+  color-scheme: light;
+  --bg: #f2e7d3;
+  --surface: #fff9ed;
+  --surface-strong: #eadbc3;
+  --ink: #2b1c15;
+  --muted: #65554a;
+  --accent: #315f78;
+  --accent-ink: #fffaf0;
+  --border: rgba(43, 28, 21, 0.2);
+  --approval: #e5a94d;
+  --success: #28654b;
+  --danger: #a43d38;
+}
+body {
+  background:
+    radial-gradient(
+      circle at 85% 0,
+      rgba(229, 169, 77, 0.24),
+      transparent 32rem
+    ),
+    var(--bg);
+}
+.sensory-panel {
+  background: rgba(255, 249, 237, 0.9);
+}
+.recipe-state {
+  border: 1px solid currentColor;
+  padding: 0.5rem 0.7rem;
+  border-radius: 0.2rem;
+  font: 700 0.75rem monospace;
+}
+.provenance {
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+}
+.constellation {
+  display: grid;
+  gap: 1rem;
+  margin: 1.3rem 0;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: radial-gradient(
+    circle at var(--value) 50%,
+    rgba(49, 95, 120, 0.22),
+    transparent 35%
+  );
+}
+.constellation label {
+  display: grid;
+  grid-template-columns: 9rem 1fr 2rem;
+  align-items: center;
+  gap: 0.7rem;
+}
+.constellation input {
+  accent-color: var(--accent);
+  width: 100%;
+}
+.constellation output {
+  font-family: monospace;
+}
+.variants {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+.variants article {
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: 0.8rem;
+  opacity: 0.68;
+  transition:
+    opacity 180ms ease-out,
+    transform 180ms ease-out;
+}
+.variants article.selected {
+  opacity: 1;
+  border-color: var(--accent);
+  transform: translateY(-0.2rem);
+}
+.variants small {
+  color: var(--accent);
+  font-family: monospace;
+}
+.history {
+  margin-top: 1rem;
+  padding: 0.9rem;
+  border-left: 3px solid var(--accent);
+  background: var(--surface-strong);
+}
+.history ol {
+  margin-bottom: 0;
+}
+@media (max-width: 540px) {
+  .variants {
+    grid-template-columns: 1fr;
+  }
+  .constellation label {
+    grid-template-columns: 1fr 2rem;
+  }
+  .constellation label span {
+    grid-column: 1 / -1;
+  }
+}

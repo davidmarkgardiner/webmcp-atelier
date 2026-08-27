@@ -23,3 +23,10 @@ Ask the agent to reorganise a release board while preserving two locked items. W
 ## Safety boundary
 
 All state is deterministic browser-local fixture data. There is no GitHub, Linear, email, payment, filesystem, or deployment mutation.
+
+## Implemented proof
+
+Run `npm run dev --workspace @atelier/toolglass`. The keyboard proof rejects a
+plan, edits its visible constraint, approves a corrected simulation, applies and
+rolls it back, then renders the hostile note as escaped inert text. Unsupported
+native WebMCP uses the shared fallback registry and remains visibly labelled.
