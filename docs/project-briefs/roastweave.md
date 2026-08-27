@@ -26,7 +26,16 @@ No medical claims, product purchase, stock change, order, customer data, or Stoc
 
 ## Implemented proof
 
-Run `npm run dev --workspace @atelier/roastweave`. The keyboard proof composes
-the AeroPress low-caffeine recipe, compares two structured variants, adjusts a
-sensory range directly, records the provenance-linked rebalance, then approves,
-locks, and restores browser-local recipe history.
+Run `npm run dev --workspace @atelier/roastweave` and open
+`http://localhost:4174`. The keyboard proof composes the AeroPress low-caffeine
+recipe, compares two structured variants, adjusts a sensory range directly,
+records the provenance-linked rebalance, then approves, locks, and restores
+browser-local recipe history.
+
+## Validation and limits
+
+From the repository root, `npm run check` runs the Roastweave browser proof,
+including direct manipulation, approval/rejection, restore recovery, reduced
+motion, narrow-width, and accessibility checks. Recipes, sensory notes, and
+history are illustrative local fixtures; the app does not make medical claims,
+purchase products, or call a coffee or payment service.

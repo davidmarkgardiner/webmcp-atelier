@@ -25,8 +25,18 @@ All vendors, availability, reservations, routes, and prices are fictional fixtur
 
 ## Implemented proof
 
-Run `npm run dev --workspace @atelier/gathergraph`. The parent embeds independent
-same-origin venue, food, and logistics documents. When native child discovery is
-unavailable, it visibly registers equivalent namespaced parent tools. The
-keyboard proof composes a 40-person accessible vegan and nut-free plan, repairs
-its timing conflict, and commits only an approved local dossier.
+Run `npm run dev --workspace @atelier/gathergraph` and open
+`http://localhost:4175`. The parent embeds independent same-origin venue, food,
+and logistics documents. When native child discovery is unavailable, it visibly
+registers equivalent namespaced parent tools. The keyboard proof composes a
+40-person accessible vegan and nut-free plan, repairs its timing conflict, and
+commits only an approved local dossier.
+
+## Validation and limits
+
+From the repository root, `npm run check` runs the GatherGraph browser proof,
+including child-surface fallback, keyboard operation, timing repair, approval,
+simulated commit, reduced motion, narrow-width, and accessibility checks.
+Venues, menus, routes, availability, prices, and reservations are fictional
+fixtures; the dossier cannot book a venue, reserve food, send a message, charge
+money, or call a provider.

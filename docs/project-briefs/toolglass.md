@@ -26,7 +26,16 @@ All state is deterministic browser-local fixture data. There is no GitHub, Linea
 
 ## Implemented proof
 
-Run `npm run dev --workspace @atelier/toolglass`. The keyboard proof rejects a
-plan, edits its visible constraint, approves a corrected simulation, applies and
-rolls it back, then renders the hostile note as escaped inert text. Unsupported
-native WebMCP uses the shared fallback registry and remains visibly labelled.
+Run `npm run dev --workspace @atelier/toolglass` and open
+`http://localhost:4173`. The keyboard proof rejects a plan, edits its visible
+constraint, approves a corrected simulation, applies and rolls it back, then
+renders the hostile note as escaped inert text. Unsupported native WebMCP uses
+the shared fallback registry and remains visibly labelled.
+
+## Validation and limits
+
+From the repository root, `npm run check` runs the Toolglass browser proof,
+including keyboard operation, abort handling, approval/rejection, rollback,
+reduced motion, narrow-width, and accessibility checks. The board is a local
+fixture: it cannot change a real release system, repository, account, or
+production environment.
