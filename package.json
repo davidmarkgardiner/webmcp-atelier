@@ -1,0 +1,14 @@
+{
+  "name": "webmcp-atelier",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Three independently judged WebMCP Challenge candidates",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/check.mjs"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

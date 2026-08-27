@@ -1,0 +1,28 @@
+{
+  "challenge": "OpenAI WebMCP Challenge 2026",
+  "submissionDeadline": "2026-09-03T20:00:00Z",
+  "submissionLimit": 1,
+  "candidates": [
+    {
+      "id": "toolglass",
+      "name": "Toolglass",
+      "audience": "Web product teams and people supervising browser agents",
+      "brief": "docs/project-briefs/toolglass.md",
+      "dimensions": ["webmcpLeverage", "execution", "impact", "creativity"]
+    },
+    {
+      "id": "roastweave",
+      "name": "Roastweave",
+      "audience": "Independent roasters, baristas, and curious coffee drinkers",
+      "brief": "docs/project-briefs/roastweave.md",
+      "dimensions": ["webmcpLeverage", "execution", "impact", "creativity"]
+    },
+    {
+      "id": "gathergraph",
+      "name": "GatherGraph",
+      "audience": "Neighbourhood organisers coordinating independent local businesses",
+      "brief": "docs/project-briefs/gathergraph.md",
+      "dimensions": ["webmcpLeverage", "execution", "impact", "creativity"]
+    }
+  ]
+}
