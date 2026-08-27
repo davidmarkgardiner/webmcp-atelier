@@ -40,13 +40,16 @@ export type AnyToolDefinition = ToolDefinition<
 export type RegisteredTool = Readonly<{ unregister: () => void }>;
 
 export interface NativeModelContext {
-  registerTool(tool: {
-    name: string;
-    description: string;
-    inputSchema: JsonSchema;
-    annotations: ToolAnnotations;
-    execute: AnyToolDefinition["execute"];
-  }): RegisteredTool | void;
+  registerTool(
+    tool: {
+      name: string;
+      description: string;
+      inputSchema: JsonSchema;
+      annotations: ToolAnnotations;
+      execute: AnyToolDefinition["execute"];
+    },
+    options?: { signal?: AbortSignal },
+  ): Promise<void> | void;
 }
 
 export type ModelContextDocument = Document & {
@@ -116,23 +119,49 @@ export const hasNativeModelContext = (doc: ModelContextDocument): boolean =>
 
 export const registerTools = (
   tools: readonly AnyToolDefinition[],
-  options: { document: ModelContextDocument; fallback: FallbackRegistry },
-): Readonly<{ mode: "native" | "fallback"; unregister: () => void }> => {
+  options: {
+    document: ModelContextDocument;
+    fallback: FallbackRegistry;
+    fallbackTools?: readonly AnyToolDefinition[];
+  },
+): Readonly<{
+  mode: "native" | "fallback";
+  ready: Promise<void>;
+  unregister: () => void;
+}> => {
   const handles: RegisteredTool[] = [];
+  for (const tool of options.fallbackTools ?? tools)
+    handles.push(options.fallback.register(tool));
+
   if (hasNativeModelContext(options.document)) {
-    for (const tool of tools) {
-      const handle = options.document.modelContext?.registerTool(tool);
-      if (handle) handles.push(handle);
-    }
+    const controller = new AbortController();
+    const modelContext = options.document.modelContext!;
+    const ready = Promise.all(
+      tools.map((tool) =>
+        Promise.resolve(
+          modelContext.registerTool(tool, { signal: controller.signal }),
+        ),
+      ),
+    ).then(() => undefined);
+
+    void ready.catch((error: unknown) => {
+      if (!controller.signal.aborted)
+        console.error("WebMCP tool registration failed.", error);
+    });
+
     return {
       mode: "native",
-      unregister: () => handles.forEach((handle) => handle.unregister()),
+      ready,
+      unregister: () => {
+        controller.abort();
+        handles.forEach((handle) => handle.unregister());
+      },
     };
   }
 
-  for (const tool of tools) handles.push(options.fallback.register(tool));
   return {
     mode: "fallback",
+    ready: Promise.resolve(),
     unregister: () => handles.forEach((handle) => handle.unregister()),
   };
 };

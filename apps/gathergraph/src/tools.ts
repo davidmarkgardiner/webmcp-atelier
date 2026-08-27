@@ -1,8 +1,8 @@
 import { objectSchema, type AnyToolDefinition } from "@atelier/webmcp-runtime";
 
-type Surface = "venue" | "food" | "logistics" | "parent";
+export type GathergraphSurface = "venue" | "food" | "logistics" | "parent";
 const definitions: readonly [
-  Surface,
+  GathergraphSurface,
   string,
   string,
   ReturnType<typeof objectSchema>,
@@ -108,16 +108,23 @@ export const gathergraphToolMetadata = definitions;
 export const createGathergraphTools = (
   execute: AnyToolDefinition["execute"],
   namespaced: boolean,
+  surface?: GathergraphSurface,
 ): AnyToolDefinition[] =>
-  definitions.map(([surface, name, description, inputSchema, annotations]) => {
-    const registeredName =
-      namespaced && surface !== "parent" ? `${surface}.${name}` : name;
-    return {
-      name: registeredName,
-      description,
-      inputSchema,
-      annotations,
-      execute: (input, context) =>
-        execute({ ...input, __tool: registeredName }, context),
-    };
-  });
+  definitions
+    .filter(([definitionSurface]) =>
+      surface === undefined ? true : definitionSurface === surface,
+    )
+    .map(([definitionSurface, name, description, inputSchema, annotations]) => {
+      const registeredName =
+        namespaced && definitionSurface !== "parent"
+          ? `${definitionSurface}.${name}`
+          : name;
+      return {
+        name: registeredName,
+        description,
+        inputSchema,
+        annotations,
+        execute: (input, context) =>
+          execute({ ...input, __tool: registeredName }, context),
+      };
+    });

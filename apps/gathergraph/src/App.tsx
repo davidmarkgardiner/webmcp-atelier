@@ -13,7 +13,7 @@ import {
   type ModelContextDocument,
   type ToolContext,
 } from "@atelier/webmcp-runtime";
-import { createGathergraphTools } from "./tools";
+import { createGathergraphTools, gathergraphToolMetadata } from "./tools";
 
 const surfaceInvocations: readonly [string, Record<string, unknown>][] = [
   ["venue.find_spaces", { capacity: 40 }],
@@ -26,6 +26,11 @@ const surfaceInvocations: readonly [string, Record<string, unknown>][] = [
   ["logistics.estimate_footprint", { route: "cargo-bike-east" }],
   ["logistics.reserve_route_preview", { route: "cargo-bike-east" }],
 ];
+const surfaceToolNames = new Set(
+  gathergraphToolMetadata
+    .filter(([surface]) => surface !== "parent")
+    .map(([, name]) => name),
+);
 
 export function App() {
   const ledger = useExecutionLedger();
@@ -114,13 +119,55 @@ export function App() {
 
   useEffect(() => {
     const native = hasNativeModelContext(document as ModelContextDocument);
-    const tools = createGathergraphTools(perform, !native);
+    const tools = createGathergraphTools(
+      perform,
+      !native,
+      native ? "parent" : undefined,
+    );
     const registration = registerTools(tools, {
       document: document as ModelContextDocument,
       fallback: fallback.current,
+      fallbackTools: native ? createGathergraphTools(perform, true) : undefined,
     });
     setMode(registration.mode);
     return registration.unregister;
+  }, [perform]);
+
+  useEffect(() => {
+    const receiveSurfaceResult = (event: MessageEvent<unknown>) => {
+      if (event.origin !== window.location.origin) return;
+      const surfaceWindows = Array.from(
+        document.querySelectorAll<HTMLIFrameElement>(
+          'iframe[title^="Independent "][title$=" tool surface"]',
+        ),
+        ({ contentWindow }) => contentWindow,
+      );
+      if (!surfaceWindows.includes(event.source as Window | null)) return;
+      if (!event.data || typeof event.data !== "object") return;
+      const message = event.data as {
+        type?: unknown;
+        tool?: unknown;
+        input?: unknown;
+      };
+      if (
+        message.type !== "gathergraph:surface-tool-executed" ||
+        typeof message.tool !== "string" ||
+        !surfaceToolNames.has(message.tool) ||
+        !message.input ||
+        typeof message.input !== "object"
+      )
+        return;
+      void perform(
+        {
+          ...(message.input as Record<string, unknown>),
+          __tool: message.tool,
+        },
+        { signal: new AbortController().signal },
+      );
+    };
+
+    window.addEventListener("message", receiveSurfaceResult);
+    return () => window.removeEventListener("message", receiveSurfaceResult);
   }, [perform]);
 
   const invoke = (tool: string, input: Record<string, unknown>) =>

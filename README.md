@@ -37,9 +37,11 @@ keeps those surfaces visibly separate. All boards, recipes, vendors, routes,
 approvals, commits, locks, holds, and dossiers are deterministic browser-local
 simulations.
 
-The shared runtime owns registration, feature detection, fallback invocation,
-and abort handling. The execution ledger owns the visible proposed/running,
-approval, result, rejection, failure, and recovery receipts. Applications keep
+The shared runtime owns registration, feature detection, the always-available
+local human control surface, abort handling, and native tool cleanup through
+the specification's registration `AbortSignal`. The execution ledger owns the
+visible proposed/running, approval, result, rejection, failure, and recovery
+receipts. Applications keep
 read-only inspection, reversible previews, human approval, simulated commits,
 and recovery actions as separate tool and UI states.
 
@@ -64,7 +66,9 @@ and Stockbridge production changes remain separate owner gates.
 The shared high-end interaction standard lives in [the experience system](docs/experience-system.md), and the bounded build contract is captured in [the Symphony delivery specification](docs/symphony-delivery-spec.md).
 
 Implementation evidence and explicit judging hypotheses live in the
-[candidate scorecard](docs/candidate-scorecard.md).
+[candidate scorecard](docs/candidate-scorecard.md). The real-browser enablement
+boundary and pending native acceptance matrix live in the
+[native WebMCP bake-off](docs/native-webmcp-bakeoff.md).
 
 ## Source material
 

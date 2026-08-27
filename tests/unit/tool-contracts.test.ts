@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { toolglassToolMetadata } from "../../apps/toolglass/src/tools";
 import { roastweaveToolMetadata } from "../../apps/roastweave/src/tools";
-import { gathergraphToolMetadata } from "../../apps/gathergraph/src/tools";
+import {
+  createGathergraphTools,
+  gathergraphToolMetadata,
+} from "../../apps/gathergraph/src/tools";
 
 const toolglassNames = toolglassToolMetadata.map(([name]) => name);
 const roastweaveNames = roastweaveToolMetadata.map(([name]) => name);
@@ -46,5 +49,10 @@ describe("candidate tool contracts", () => {
         ([, name]) => name === "commit_simulated_dossier",
       )?.[4],
     ).toMatchObject({ needsApproval: true });
+    const execute = async () => ({ content: [], structuredContent: {} });
+    expect(
+      createGathergraphTools(execute, false, "venue").map(({ name }) => name),
+    ).toEqual(["find_spaces", "check_accessibility", "hold_space_preview"]);
+    expect(createGathergraphTools(execute, false, "parent")).toHaveLength(4);
   });
 });

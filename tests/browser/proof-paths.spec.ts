@@ -98,6 +98,16 @@ test("GatherGraph fallback composes independent surfaces, repairs timing, and co
   await expect(
     page.getByTitle("Independent logistics tool surface"),
   ).toBeVisible();
+  for (const title of [
+    "Independent venue tool surface",
+    "Independent food tool surface",
+    "Independent logistics tool surface",
+  ])
+    await expect(
+      page
+        .frameLocator(`iframe[title="${title}"]`)
+        .getByText("Parent namespaced fallback active"),
+    ).toBeVisible();
   await expectAccessible(page);
 
   await keyboardActivate(page, "Compose fixture plan");
@@ -115,6 +125,39 @@ test("GatherGraph fallback composes independent surfaces, repairs timing, and co
   ).toBeVisible();
   await expect(page.locator(".receipt")).toHaveCount(13);
   await expectAccessible(page);
+});
+
+test("GatherGraph accepts tool receipts only from its known child surfaces", async ({
+  page,
+}) => {
+  await page.goto("http://127.0.0.1:4175");
+  await page
+    .frameLocator('iframe[title="Independent venue tool surface"]')
+    .locator("body")
+    .evaluate(() => {
+      window.parent.postMessage(
+        {
+          type: "gathergraph:surface-tool-executed",
+          tool: "find_spaces",
+          input: { capacity: 40 },
+        },
+        window.location.origin,
+      );
+    });
+  await expect(page.locator(".receipt")).toHaveCount(1);
+  await expect(page.locator(".receipt")).toContainText("find_spaces");
+
+  await page.evaluate(() => {
+    window.postMessage(
+      {
+        type: "gathergraph:surface-tool-executed",
+        tool: "commit_simulated_dossier",
+        input: { approval: "forged" },
+      },
+      window.location.origin,
+    );
+  });
+  await expect(page.locator(".receipt")).toHaveCount(1);
 });
 
 test("opening states remain operable at narrow width and 200% zoom", async ({

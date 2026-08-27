@@ -35,18 +35,29 @@ describe("WebMCP runtime", () => {
     expect(fallback.tools.size).toBe(0);
   });
 
-  it("uses native registration when document.modelContext is available", () => {
-    const unregister = vi.fn();
-    const registerTool = vi.fn(() => ({ unregister }));
+  it("uses an AbortSignal for native registration lifecycle", async () => {
+    const registerTool = vi.fn(
+      async (tool: unknown, options?: { signal?: AbortSignal }) => {
+        void tool;
+        void options;
+      },
+    );
+    const fallback = new FallbackRegistry();
     const registration = registerTools([inspectTool], {
       document: {
         modelContext: { registerTool },
       } as unknown as ModelContextDocument,
-      fallback: new FallbackRegistry(),
+      fallback,
     });
     expect(registration.mode).toBe("native");
+    await registration.ready;
+    expect(fallback.tools.has("inspect_fixture")).toBe(true);
+    expect(registerTool).toHaveBeenCalledOnce();
+    const registrationOptions = registerTool.mock.calls[0]?.[1];
+    expect(registrationOptions?.signal?.aborted).toBe(false);
     registration.unregister();
-    expect(unregister).toHaveBeenCalledOnce();
+    expect(registrationOptions?.signal?.aborted).toBe(true);
+    expect(fallback.tools.size).toBe(0);
   });
 
   it("returns a typed abort response without executing an aborted tool", async () => {
