@@ -1,0 +1,79 @@
+:root {
+  --bg: #0c1216;
+  --surface: #151d23;
+  --surface-strong: #1d2830;
+  --accent: #8de9e0;
+}
+.board-version {
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  color: var(--accent);
+  font-family: monospace;
+}
+.release-board {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0;
+  list-style: none;
+}
+.release-board li {
+  padding: 1rem;
+  background: linear-gradient(90deg, rgba(141, 233, 224, 0.12), transparent);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+.constraint {
+  display: grid;
+  gap: 0.4rem;
+  margin: 1.2rem 0;
+  color: var(--muted);
+}
+.constraint input {
+  min-height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.7rem;
+  background: var(--bg);
+  color: var(--ink);
+}
+.diff {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.6rem;
+  align-items: center;
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px dashed var(--accent);
+  border-radius: 0.7rem;
+  font-family: monospace;
+  font-size: 0.8rem;
+}
+.diff strong {
+  color: var(--approval);
+}
+.note-trigger {
+  margin-top: 0.4rem;
+}
+.untrusted {
+  margin-top: 0.8rem;
+  padding: 1rem;
+  border: 1px solid var(--danger);
+  border-radius: 0.7rem;
+  background: rgba(255, 141, 132, 0.07);
+}
+.untrusted strong {
+  color: var(--danger);
+}
+.untrusted pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 520px) {
+  .diff {
+    grid-template-columns: 1fr;
+  }
+}
