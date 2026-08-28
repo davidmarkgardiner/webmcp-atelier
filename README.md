@@ -1,6 +1,14 @@
 # WebMCP Atelier
 
-Three high-end, deliberately different WebMCP candidate applications for the 2026 OpenAI WebMCP Challenge. The strongest candidate will be selected through the same deterministic evaluation rubric and prepared as the single competition submission.
+Three high-end, deliberately different WebMCP applications built for the 2026 OpenAI WebMCP Challenge. **GatherGraph is the selected submission candidate**: a neighbourhood event planner where a person and agent coordinate independent venue, food, and logistics providers through thirteen structured browser tools.
+
+## Selected entry: GatherGraph
+
+GatherGraph turns one plain-language event brief into a visible, repairable plan. Three independent same-origin provider documents expose their own WebMCP capabilities. The parent document composes their evidence, identifies a timing conflict, repairs it, and stops for human approval before creating a browser-local dossier.
+
+The memorable proof is deliberately simple: plan an accessible vegan and nut-free dinner for 40 people under £1,800, watch the agent repair a delivery conflict, then approve a simulation with a receipt for every action. No venue, supplier, payment provider, or messaging service is contacted.
+
+[Read the submission pack](docs/submission/README.md) · [See the native WebMCP proof](docs/native-webmcp-bakeoff.md) · [Review the judging evidence](docs/candidate-scorecard.md)
 
 ## Candidates
 
@@ -26,7 +34,7 @@ opened side by side:
 
 ```sh
 npm ci --ignore-scripts
-npm run dev --workspace @atelier/toolglass
+npm run dev --workspace @atelier/gathergraph
 ```
 
 Every app is a keyboard-accessible interface and reports whether tools use
@@ -67,7 +75,7 @@ The shared high-end interaction standard lives in [the experience system](docs/e
 
 Implementation evidence and explicit judging hypotheses live in the
 [candidate scorecard](docs/candidate-scorecard.md). The real-browser enablement
-boundary and pending native acceptance matrix live in the
+boundary and accepted native matrix live in the
 [native WebMCP bake-off](docs/native-webmcp-bakeoff.md).
 
 ## Source material
