@@ -1,6 +1,6 @@
 # GatherGraph submission pack
 
-- Status: **prepared locally; publication and submission require owner approval**
+- Status: **public preview and repository ready; video and Devpost submission remain pending**
 - Prepared: 28 August 2026
 - Deadline: 3 September 2026 at 1:00 p.m. Pacific Time
 
@@ -16,13 +16,12 @@ GatherGraph is the selected WebMCP Challenge entry. This directory contains the 
 - [Release and submission checklist](release-checklist.md)
 - [Current evidence bundle](../evidence/submission-2026-08-28/README.md)
 
-## Required placeholders
+## Public assets
 
-These remain intentionally unset until the relevant owner-approved action occurs:
+- Live app: <https://davidmarkgardiner.github.io/webmcp-atelier/>
+- Public submission branch: <https://github.com/davidmarkgardiner/webmcp-atelier/tree/submission/gathergraph-2026>
 
-- `LIVE_URL` — public deployment tested in ChatGPT's in-app browser or enabled Chrome.
-- `PUBLIC_REPO_URL` — public repository containing this branch and a visible MIT license.
-- `YOUTUBE_URL` — public video under three minutes with spoken audio.
+The only remaining placeholder is `YOUTUBE_URL`: a public video under three minutes with spoken audio.
 
 ## Claims boundary
 

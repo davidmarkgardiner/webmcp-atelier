@@ -6,9 +6,9 @@
 - [x] MIT license exists at repository root.
 - [x] Source, fixtures, and local instructions are present.
 - [x] Submission copy distinguishes fixtures from production capability.
-- [ ] Review this isolated branch and create a local submission commit.
-- [ ] Push the approved branch and make the repository public or merge into the public default branch.
-- [ ] Confirm the license is visible in the repository About area.
+- [x] Review this isolated branch and create a local submission commit.
+- [x] Push the approved branch and make the repository public.
+- [x] Confirm the root MIT license is visible in the public repository.
 
 ## Product proof
 
@@ -16,9 +16,9 @@
 - [x] Deterministic fallback journey covered by automation.
 - [x] Approval and simulated dossier remain separate.
 - [x] Accessibility and mobile checks included in the quality gate.
-- [ ] Deploy an owner-approved production preview.
-- [ ] Run a fresh native discovery and invocation against the deployed URL.
-- [ ] Capture a new hosted native screenshot and console-clean receipt.
+- [x] Deploy a public HTTPS preview with a reproducible workflow.
+- [x] Run a fresh native discovery and invocation against the deployed URL.
+- [x] Record a console-clean hosted native receipt.
 - [ ] Keep the live project available through the judging period.
 
 ## Video
@@ -36,7 +36,7 @@
 - [x] Judging matrix prepared.
 - [ ] Confirm entrant eligibility and representative details.
 - [ ] Join/register for the challenge in the owner's Devpost account.
-- [ ] Replace `LIVE_URL`, `PUBLIC_REPO_URL`, and `YOUTUBE_URL` placeholders.
+- [ ] Replace the remaining `YOUTUBE_URL` placeholder.
 - [ ] Add final screenshots and testing instructions.
 - [ ] Owner reviews rules and submission preview.
 - [ ] Owner explicitly authorizes final submission.

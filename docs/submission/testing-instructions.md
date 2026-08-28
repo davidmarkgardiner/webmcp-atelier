@@ -2,7 +2,7 @@
 
 ## Preferred path
 
-1. Open `LIVE_URL` in ChatGPT's in-app browser, or Chrome 149+ with `chrome://flags/#enable-webmcp-testing` enabled and the browser relaunched.
+1. Open <https://davidmarkgardiner.github.io/webmcp-atelier/> in ChatGPT's in-app browser, or Chrome 149+ with `chrome://flags/#enable-webmcp-testing` enabled and the browser relaunched.
 2. Confirm that the page reports native WebMCP and that thirteen tools are discoverable.
 3. Ask the agent: “Plan an accessible dinner for 40 people with vegan and nut-free food under £1,800.”
 4. Confirm that venue, food, and logistics evidence becomes visible and receipts appear.

@@ -18,4 +18,6 @@ Captured: 28 August 2026
 
 ## Evidence boundary
 
-The 27 August native screenshot proves a prior local Chrome acceptance run against the native implementation. The new presentation captures prove the current human-facing workflow in deterministic fallback mode. A fresh native capture against the final hosted URL remains required before submission.
+The 27 August native screenshot proves a prior local Chrome acceptance run against the native implementation. The presentation captures prove the current human-facing workflow in deterministic fallback mode.
+
+The final hosted build was verified on 28 August at <https://davidmarkgardiner.github.io/webmcp-atelier/>. Enabled Chrome reported `Native PASS · 13 tools · executed find_spaces`, split across four parent tools and three tools in each independent provider document. The same hosted build completed the fallback human journey with thirteen completed receipts and no browser errors. See [the validation receipt](validation.md).

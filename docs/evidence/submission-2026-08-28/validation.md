@@ -30,6 +30,13 @@ The browser suite was run unchanged apart from a temporary mechanical port map f
 - Reduced motion
 - 360px viewport at 200% zoom
 
-## Remaining non-deterministic gate
+## Hosted release receipt
 
-A fresh native WebMCP discovery and representative child-owned invocation must still be captured against the final hosted URL before submission.
+- Public URL: <https://davidmarkgardiner.github.io/webmcp-atelier/>
+- Public source: <https://github.com/davidmarkgardiner/webmcp-atelier/tree/submission/gathergraph-2026>
+- Deployment workflow: <https://github.com/davidmarkgardiner/webmcp-atelier/actions/runs/33177369336>
+- Workflow result: success in 33 seconds against commit `17ece93`
+- Hosted fallback journey: three provider frames loaded; constraint repaired; approval boundary shown; 13 receipts completed; no console errors
+- Hosted native Chrome probe: `Native PASS · 13 tools · executed find_spaces · Independent food tool surface: 3 · Independent venue tool surface: 3 · top: 4 · Independent logistics tool surface: 3`
+
+The remaining release gates are the public narrated video and the owner-reviewed Devpost submission.

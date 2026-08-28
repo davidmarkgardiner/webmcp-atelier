@@ -179,6 +179,10 @@ export function App() {
         : undefined,
     });
     setMode(registration.mode);
+    if (probeRequested && registration.mode === "fallback")
+      setProbeEvidence(
+        "Native WebMCP unavailable in this browser · fallback demo active",
+      );
     if (probeRequested && registration.mode === "native")
       void registration.ready
         .then(() =>

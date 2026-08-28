@@ -42,6 +42,6 @@ All providers, availability, routes, prices, menus, holds, and dossiers are fict
 
 ## Links
 
-- Live app: `LIVE_URL`
-- Public repository: `PUBLIC_REPO_URL`
+- Live app: <https://davidmarkgardiner.github.io/webmcp-atelier/>
+- Public repository: <https://github.com/davidmarkgardiner/webmcp-atelier/tree/submission/gathergraph-2026>
 - Demo video: `YOUTUBE_URL`

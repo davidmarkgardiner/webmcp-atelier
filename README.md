@@ -8,7 +8,7 @@ GatherGraph turns one plain-language event brief into a visible, repairable plan
 
 The memorable proof is deliberately simple: plan an accessible vegan and nut-free dinner for 40 people under £1,800, watch the agent repair a delivery conflict, then approve a simulation with a receipt for every action. No venue, supplier, payment provider, or messaging service is contacted.
 
-[Read the submission pack](docs/submission/README.md) · [See the native WebMCP proof](docs/native-webmcp-bakeoff.md) · [Review the judging evidence](docs/candidate-scorecard.md)
+[Open the live GatherGraph preview](https://davidmarkgardiner.github.io/webmcp-atelier/) · [Read the submission pack](docs/submission/README.md) · [See the native WebMCP proof](docs/native-webmcp-bakeoff.md) · [Review the judging evidence](docs/candidate-scorecard.md)
 
 ## Candidates
 
@@ -76,7 +76,8 @@ The shared high-end interaction standard lives in [the experience system](docs/e
 Implementation evidence and explicit judging hypotheses live in the
 [candidate scorecard](docs/candidate-scorecard.md). The real-browser enablement
 boundary and accepted native matrix live in the
-[native WebMCP bake-off](docs/native-webmcp-bakeoff.md).
+[native WebMCP bake-off](docs/native-webmcp-bakeoff.md). The hosted release is
+built from this branch by the scoped [GitHub Pages workflow](.github/workflows/gathergraph-pages.yml).
 
 ## Source material
 
