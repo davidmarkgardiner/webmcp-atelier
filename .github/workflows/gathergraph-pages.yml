@@ -1,0 +1,58 @@
+name: Deploy GatherGraph preview
+
+on:
+  push:
+    branches:
+      - submission/gathergraph-2026
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: gathergraph-pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out submission branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install exact dependencies
+        run: npm ci
+
+      - name: Run focused quality gates
+        run: |
+          npm run format
+          npm run lint
+          npm run typecheck
+          npm run test:unit
+          npm run test:integrity
+
+      - name: Build GatherGraph for GitHub Pages
+        run: npm run build:pages -w @atelier/gathergraph
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/gathergraph/dist
+
+      - name: Deploy preview
+        id: deployment
+        uses: actions/deploy-pages@v4
