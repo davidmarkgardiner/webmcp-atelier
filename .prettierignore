@@ -5,3 +5,6 @@ coverage
 playwright-report
 test-results
 package-lock.json
+.omc/
+agentdb.rvf
+agentdb.rvf.lock

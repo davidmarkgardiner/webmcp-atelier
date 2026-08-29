@@ -1,10 +1,10 @@
 # Repository instructions
 
-This repository contains three competition candidates under one shared WebMCP platform.
+This repository contains three competition candidates and one challenger under a shared WebMCP platform.
 
 ## Delivery rules
 
-- Keep `apps/toolglass`, `apps/roastweave`, and `apps/gathergraph` independently runnable.
+- Keep `apps/toolglass`, `apps/roastweave`, `apps/gathergraph`, and `apps/grounded-ai` independently runnable.
 - Put shared WebMCP registration and result handling in `packages/webmcp-runtime`; do not copy tool-registration logic between apps.
 - Every tool invocation must make a visible, accessible UI state change and append a deterministic execution receipt.
 - Separate read-only inspection, reversible preview, and consequential commit tools. Never hide a mutation behind an ambiguous tool name.
@@ -22,4 +22,4 @@ Run from the repository root:
 npm run check
 ```
 
-The implementation gate must eventually include formatting, lint, typecheck, unit tests, browser tests, and production builds for all three apps.
+The implementation gate must include formatting, lint, typecheck, unit tests, browser tests, and production builds for all four apps.

@@ -1,12 +1,13 @@
 # WebMCP Atelier
 
-Three high-end, deliberately different WebMCP candidate applications for the 2026 OpenAI WebMCP Challenge. The strongest candidate will be selected through the same deterministic evaluation rubric and prepared as the single competition submission.
+Four high-end, deliberately different WebMCP applications for the 2026 OpenAI WebMCP Challenge. Three are the original scored candidates; Grounded AI is a new challenger that will enter the same deterministic bake-off before any submission decision.
 
 ## Candidates
 
 - **Toolglass** — a human control room for previewing, approving, tracing, and reversing agent actions.
 - **Roastweave** — a collaborative sensory studio where a person and agent create a coffee recipe without reducing the experience to shopping.
 - **GatherGraph** — a multi-surface neighbourhood event composer that coordinates independent venue tools into one visible, consented plan.
+- **Grounded AI** — a human-first infrastructure designer that turns an AI workload into a validated workstation and guarded deployment handover.
 
 ## Why one repository
 
@@ -15,7 +16,7 @@ The candidates share typed WebMCP registration, visible execution receipts, acce
 ## Run each candidate
 
 Install the lockfile-defined dependencies once, then start any candidate
-independently. Each command uses a fixed port so the three proof paths can be
+independently. Each command uses a fixed port so the four proof paths can be
 opened side by side:
 
 | Candidate   | Workspace command                              | Local URL               | Proof focus                                           |
@@ -23,6 +24,7 @@ opened side by side:
 | Toolglass   | `npm run dev --workspace @atelier/toolglass`   | `http://localhost:4173` | reject → constrain → approve → simulate → rollback    |
 | Roastweave  | `npm run dev --workspace @atelier/roastweave`  | `http://localhost:4174` | compose → compare → direct rebalance → lock → restore |
 | GatherGraph | `npm run dev --workspace @atelier/gathergraph` | `http://localhost:4175` | compose → repair timing → approve → simulated dossier |
+| Grounded AI | `npm run dev --workspace @atelier/grounded-ai` | `http://localhost:4176` | capture → ground → validate → approve → local dossier |
 
 ```sh
 npm ci --ignore-scripts
@@ -53,7 +55,7 @@ npm run check
 
 The gate runs formatting, lint, TypeScript, shared runtime and ledger unit tests,
 fixture-integrity checks, Playwright proof paths with accessibility smoke tests,
-and production builds for all three apps. It is the deterministic validation
+and production builds for all four apps. It is the deterministic validation
 command for the workspace and is expected to pass before a candidate is judged.
 
 The implementation is intentionally fixture-only: it never contacts a third

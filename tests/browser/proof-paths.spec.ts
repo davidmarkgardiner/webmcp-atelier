@@ -160,12 +160,46 @@ test("GatherGraph accepts tool receipts only from its known child surfaces", asy
   await expect(page.locator(".receipt")).toHaveCount(1);
 });
 
+test("Grounded AI turns a workload into a validated, approved browser-local dossier", async ({
+  page,
+}) => {
+  await page.goto("http://127.0.0.1:4176");
+  await expect(page.getByLabel("WebMCP availability")).toContainText(
+    "Fallback registry",
+  );
+  await expect(
+    page.getByText("Illustrative prices, not live offers"),
+  ).toBeVisible();
+  await expectAccessible(page);
+
+  await keyboardActivate(page, "Capture workload");
+  await keyboardActivate(page, "Recommend systems");
+  await keyboardActivate(page, "Check model fit");
+  await keyboardActivate(page, "Validate compatibility");
+  await keyboardActivate(page, "Compare builds");
+  await keyboardActivate(page, "Apply recommended build");
+  await keyboardActivate(page, "Draft deployment plan");
+  await expect(
+    page.getByText("Symphony agent factory with guarded issue delivery"),
+  ).toBeVisible();
+  await keyboardActivate(page, "Request quote approval");
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expectAccessible(page);
+  await keyboardActivate(page, "Approve simulation");
+  await keyboardActivate(page, "Save simulated dossier");
+  await expect(
+    page.getByText("Simulated dossier saved locally.", { exact: false }),
+  ).toBeVisible();
+  await expect(page.locator(".receipt")).toHaveCount(9);
+  await expectAccessible(page);
+});
+
 test("opening states remain operable at narrow width and 200% zoom", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 360, height: 740 });
   await page.emulateMedia({ reducedMotion: "reduce" });
-  for (const port of [4173, 4174, 4175]) {
+  for (const port of [4173, 4174, 4175, 4176]) {
     await page.goto(`http://127.0.0.1:${port}`);
     await page.evaluate(() => {
       document.documentElement.style.zoom = "2";

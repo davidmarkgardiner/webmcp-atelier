@@ -6,6 +6,8 @@ A neighbourhood event composer where independent local-business surfaces expose 
 
 The person describes a community gathering. The agent queries separate same-origin venue, food, and logistics tool surfaces, then builds a visible constraint graph for capacity, allergens, timing, budget, and delivery. The person edits the graph, asks for a repair, and approves a final simulated event dossier.
 
+The opening page now teaches this loop to a human before showing the operations workspace: one request, three providers, thirteen typed tools, and a side-by-side comparison with page scraping. A guided story animates discovery, composition, repair, and approval without requiring the visitor to understand MCP terminology first.
+
 ## WebMCP tools
 
 - Venue surface: `find_spaces`, `check_accessibility`, and `hold_space_preview`.
