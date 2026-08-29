@@ -67,6 +67,12 @@ and Stockbridge production changes remain separate owner gates.
 
 The shared high-end interaction standard lives in [the experience system](docs/experience-system.md), and the bounded build contract is captured in [the Symphony delivery specification](docs/symphony-delivery-spec.md).
 
+The [Agent Passport pattern](docs/agent-passport-pattern.md) is the reviewed next
+extension for GatherGraph. It makes owner-bound delegated authority, exact
+approval, deterministic denial, revocation, and a simulated 402-shaped receipt
+visible as one replayable graph. It is not implemented yet and authorizes no
+real identity, payment, booking, deployment, or protocol-conformance claim.
+
 Implementation evidence and explicit judging hypotheses live in the
 [candidate scorecard](docs/candidate-scorecard.md). The real-browser enablement
 boundary and pending native acceptance matrix live in the
