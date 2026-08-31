@@ -62,8 +62,10 @@ The implementation is intentionally fixture-only: it never contacts a third
 party or creates a real booking, message, order, payment, hold, release,
 deployment, or production mutation. Native WebMCP registration depends on a
 browser exposing `document.modelContext`; unsupported browsers use the local
-fallback and display that mode. Merge, publication, competition submission,
-and Stockbridge production changes remain separate owner gates.
+fallback and display that mode. The shared adapter also normalizes missing or
+incomplete native execution contexts to a safe non-aborted signal. Merge,
+publication, competition submission, and Stockbridge production changes remain
+separate owner gates.
 
 The shared high-end interaction standard lives in [the experience system](docs/experience-system.md), and the bounded build contract is captured in [the Symphony delivery specification](docs/symphony-delivery-spec.md).
 
