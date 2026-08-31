@@ -209,11 +209,10 @@ export const registerTools = (
       tools.map((tool) => {
         const nativeTool = {
           ...tool,
-          execute: (input: Record<string, unknown>, context?: ToolContext) =>
-            tool.execute(
-              input,
-              context ?? { signal: new AbortController().signal },
-            ),
+          execute: (input: Record<string, unknown>, context?: ToolContext) => {
+            const signal = context?.signal ?? new AbortController().signal;
+            return tool.execute(input, { ...context, signal });
+          },
         };
         return Promise.resolve(
           modelContext.registerTool(nativeTool, { signal: controller.signal }),
