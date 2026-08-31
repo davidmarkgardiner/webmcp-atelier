@@ -61,10 +61,31 @@ describe("WebMCP runtime", () => {
         (
           nativeDefinition?.execute as (
             input: Record<string, unknown>,
+            context?: { signal?: AbortSignal },
           ) => unknown
         )({}),
       ),
     ).toMatchObject({ structuredContent: { ready: true } });
+    expect(
+      await Promise.resolve(
+        (
+          nativeDefinition?.execute as (
+            input: Record<string, unknown>,
+            context?: { signal?: AbortSignal },
+          ) => unknown
+        )({}, {}),
+      ),
+    ).toMatchObject({ structuredContent: { ready: true } });
+    const invocationController = new AbortController();
+    invocationController.abort();
+    expect(() =>
+      nativeDefinition?.execute(
+        {},
+        {
+          signal: invocationController.signal,
+        },
+      ),
+    ).toThrowError("Invocation aborted");
     const registrationOptions = registerTool.mock.calls[0]?.[1];
     expect(registrationOptions?.signal?.aborted).toBe(false);
     registration.unregister();

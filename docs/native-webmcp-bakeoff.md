@@ -25,9 +25,11 @@ Checked: 27 August 2026
   registers its own three tools when native WebMCP is present; the parent
   registers only the four composition and approval tools. Unsupported browsers
   retain the 13-tool namespaced parent fallback.
-- Chrome 151 executes imperative tools without the documented second callback
-  argument in this environment. The runtime now supplies a safe non-aborted
-  signal when that context is absent; the regression is covered by a unit test.
+- Native browser hosts can execute tools without the documented second callback
+  argument or with an incomplete empty context. The runtime now supplies a safe
+  non-aborted signal when `context.signal` is absent; both shapes are covered by
+  unit regression tests. A synthesized signal prevents a crash but cannot add
+  host cancellation when the host supplied no cancellable signal.
 
 ## Manual enablement boundary
 
