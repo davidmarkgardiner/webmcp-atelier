@@ -3,6 +3,7 @@ import { toolglassToolMetadata } from "../../apps/toolglass/src/tools";
 import { roastweaveToolMetadata } from "../../apps/roastweave/src/tools";
 import {
   createGathergraphTools,
+  fixtureConflictStateAfterTool,
   gathergraphToolMetadata,
 } from "../../apps/gathergraph/src/tools";
 import { providerSurfacePaths } from "../../apps/gathergraph/src/surfacePaths";
@@ -76,6 +77,23 @@ describe("candidate tool contracts", () => {
       "/webmcp-atelier/surfaces/food.html",
       "/webmcp-atelier/surfaces/logistics.html",
     ]);
+  });
+
+  it("returns the deterministic fixture conflict state that GatherGraph renders", () => {
+    expect(fixtureConflictStateAfterTool("compose_event_plan", false)).toBe(
+      true,
+    );
+    expect(
+      fixtureConflictStateAfterTool("repair_constraint_conflicts", true),
+    ).toBe(false);
+
+    for (const tool of gathergraphNames.filter(
+      (name) =>
+        name !== "compose_event_plan" && name !== "repair_constraint_conflicts",
+    )) {
+      expect(fixtureConflictStateAfterTool(tool, false)).toBe(false);
+      expect(fixtureConflictStateAfterTool(tool, true)).toBe(true);
+    }
   });
 
   it("publishes Grounded AI evidence tools and guards dossier creation", () => {

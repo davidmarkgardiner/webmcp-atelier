@@ -13,6 +13,7 @@ import {
 } from "@atelier/webmcp-runtime";
 import {
   createGathergraphTools,
+  fixtureConflictStateAfterTool,
   gathergraphToolMetadata,
   type GathergraphSurface,
 } from "./tools";
@@ -89,6 +90,7 @@ export function App() {
     async (input: Record<string, unknown>, context: ToolContext) => {
       const registeredName = String(input.__tool);
       const tool = registeredName.split(".").at(-1) ?? registeredName;
+      const conflictAfter = fixtureConflictStateAfterTool(tool, conflict);
       if (context.signal.aborted)
         throw new DOMException("Invocation aborted", "AbortError");
       const common = {
@@ -134,11 +136,11 @@ export function App() {
         });
       } else {
         if (tool === "compose_event_plan") {
-          setConflict(true);
+          setConflict(conflictAfter);
           setPhase("Timing conflict found");
         }
         if (tool === "repair_constraint_conflicts") {
-          setConflict(false);
+          setConflict(conflictAfter);
           setPhase("Constraint graph repaired");
         }
         ledger.complete(
@@ -151,7 +153,7 @@ export function App() {
       }
       return result(`${registeredName} updated the visible event workspace.`, {
         registeredName,
-        conflict,
+        conflict: conflictAfter,
       });
     },
     [conflict, ledger, phase],

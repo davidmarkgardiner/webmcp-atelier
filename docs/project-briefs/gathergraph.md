@@ -17,6 +17,11 @@ The opening page now teaches this loop to a human before showing the operations 
 
 The child surfaces are independent documents with deterministic fixtures. Tool exposure and frame behavior must be tested in the ChatGPT browser; if cross-document exposure is not interoperable, the parent registers equivalent namespaced tools while preserving separate visible surfaces.
 
+Parent tool results return the post-action state for the deterministic timing
+fixture rendered in the workspace, keeping agent receipts and the human-visible
+graph aligned. This is not a general constraint solver: compose always exposes
+the fixture conflict and repair always moves delivery to 17:15.
+
 Provider iframe URLs are document-relative. This preserves the same-origin
 surface boundary when GatherGraph is hosted below a project prefix such as
 `/webmcp-atelier/`, instead of accidentally resolving them at the site root.
