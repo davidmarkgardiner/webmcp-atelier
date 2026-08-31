@@ -98,6 +98,12 @@ test("GatherGraph fallback composes independent surfaces, repairs timing, and co
   await expect(
     page.getByTitle("Independent logistics tool surface"),
   ).toBeVisible();
+  for (const [title, source] of [
+    ["Independent venue tool surface", "./surfaces/venue.html"],
+    ["Independent food tool surface", "./surfaces/food.html"],
+    ["Independent logistics tool surface", "./surfaces/logistics.html"],
+  ] as const)
+    await expect(page.getByTitle(title)).toHaveAttribute("src", source);
   for (const title of [
     "Independent venue tool surface",
     "Independent food tool surface",

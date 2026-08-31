@@ -77,7 +77,9 @@ payment, booking, deployment, or protocol-conformance claim.
 Implementation evidence and explicit judging hypotheses live in the
 [candidate scorecard](docs/candidate-scorecard.md). The real-browser enablement
 boundary and pending native acceptance matrix live in the
-[native WebMCP bake-off](docs/native-webmcp-bakeoff.md).
+[native WebMCP bake-off](docs/native-webmcp-bakeoff.md). Provider iframe URLs
+are document-relative so all three tool surfaces remain inside a hosted project
+subpath such as GitHub Pages.
 
 ## Source material
 

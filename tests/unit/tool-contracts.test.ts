@@ -5,6 +5,7 @@ import {
   createGathergraphTools,
   gathergraphToolMetadata,
 } from "../../apps/gathergraph/src/tools";
+import { providerSurfacePaths } from "../../apps/gathergraph/src/surfacePaths";
 import { groundedAiToolMetadata } from "../../apps/grounded-ai/src/tools";
 
 const toolglassNames = toolglassToolMetadata.map(([name]) => name);
@@ -56,6 +57,25 @@ describe("candidate tool contracts", () => {
       createGathergraphTools(execute, false, "venue").map(({ name }) => name),
     ).toEqual(["find_spaces", "check_accessibility", "hold_space_preview"]);
     expect(createGathergraphTools(execute, false, "parent")).toHaveLength(4);
+  });
+
+  it("keeps GatherGraph provider surfaces inside a hosted base path", () => {
+    const hostedBase = "https://example.test/webmcp-atelier/";
+
+    expect(providerSurfacePaths).toEqual({
+      venue: "./surfaces/venue.html",
+      food: "./surfaces/food.html",
+      logistics: "./surfaces/logistics.html",
+    });
+    expect(
+      Object.values(providerSurfacePaths).map(
+        (path) => new URL(path, hostedBase).pathname,
+      ),
+    ).toEqual([
+      "/webmcp-atelier/surfaces/venue.html",
+      "/webmcp-atelier/surfaces/food.html",
+      "/webmcp-atelier/surfaces/logistics.html",
+    ]);
   });
 
   it("publishes Grounded AI evidence tools and guards dossier creation", () => {
