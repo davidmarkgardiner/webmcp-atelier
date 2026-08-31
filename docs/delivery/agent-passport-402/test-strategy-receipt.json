@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-08-30T20:51:29.911440+00:00",
+  "primary": "kimi",
+  "fallback": "claude",
+  "attempts": [
+    {
+      "provider": "kimi",
+      "status": "accepted",
+      "exit_code": 0,
+      "duration_ms": 19415,
+      "output_bytes": 5403,
+      "output_sha256": "1bfea986ea31380dab61e2c14a240089773760480fec9640658dc5c7a812b68e"
+    }
+  ],
+  "completed_at": "2026-08-30T20:51:49.327105+00:00",
+  "status": "completed",
+  "selected_provider": "kimi",
+  "fallback_used": false
+}

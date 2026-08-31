@@ -90,6 +90,15 @@ const runFixtureIntegrity = async () => {
     "repair_constraint_conflicts",
     "request_plan_approval",
     "commit_simulated_dossier",
+    "capture_ai_workload",
+    "recommend_systems",
+    "check_model_fit",
+    "validate_compatibility",
+    "compare_builds",
+    "apply_recommended_build",
+    "draft_deployment_plan",
+    "request_quote_approval",
+    "save_simulated_dossier",
   ];
 
   for (const tool of requiredTools) {

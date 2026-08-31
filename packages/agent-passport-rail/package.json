@@ -1,0 +1,11 @@
+{
+  "name": "@atelier/agent-passport-rail",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "dependencies": {
+    "@atelier/agent-passport-contracts": "*",
+    "@atelier/agent-passport-verifier": "*"
+  }
+}

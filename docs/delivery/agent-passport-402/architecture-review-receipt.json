@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-08-30T20:50:18.715971+00:00",
+  "primary": "glm53",
+  "fallback": "kimi",
+  "attempts": [
+    {
+      "provider": "glm53",
+      "status": "accepted",
+      "exit_code": 0,
+      "duration_ms": 52855,
+      "output_bytes": 5154,
+      "model_route": "zai-coding-plan/glm-5.3",
+      "output_sha256": "803126aa295c9404a1dbfbdfc4116af9f204ad636183dea994c33757986d654a"
+    }
+  ],
+  "completed_at": "2026-08-30T20:51:11.571711+00:00",
+  "status": "completed",
+  "selected_provider": "glm53",
+  "fallback_used": false
+}

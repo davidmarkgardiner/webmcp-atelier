@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GatherGraph venue tools</title>
+    <style>
+      body {
+        box-sizing: border-box;
+        display: grid;
+        min-height: 100vh;
+        margin: 0;
+        overflow: hidden;
+        padding: 0.55rem 0.7rem;
+        color: #17233c;
+        background: #f9e8ec;
+        font:
+          13px/1.25 system-ui,
+          sans-serif;
+      }
+      .document-meta {
+        display: flex;
+        gap: 0.45rem;
+        align-items: baseline;
+      }
+      .document-meta strong {
+        font-size: 0.82rem;
+      }
+      .document-meta span {
+        color: #5b6373;
+        font-size: 0.72rem;
+      }
+      [data-tool-status] {
+        display: inline-flex;
+        gap: 0.35rem;
+        align-items: center;
+        width: fit-content;
+        margin-top: 0.3rem;
+        color: #702638;
+        font-size: 0.7rem;
+      }
+      [data-tool-status]::before {
+        content: "✓";
+      }
+    </style>
+  </head>
+  <body data-surface="venue">
+    <div class="document-meta">
+      <strong>Venue provider</strong>
+      <span>3 fixture tools</span>
+    </div>
+    <strong data-tool-status aria-live="polite">Detecting WebMCP</strong>
+    <script type="module" src="/src/surface.ts"></script>
+  </body>
+</html>
