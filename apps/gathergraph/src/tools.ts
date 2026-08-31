@@ -105,6 +105,16 @@ const definitions: readonly [
 ];
 
 export const gathergraphToolMetadata = definitions;
+
+export const fixtureConflictStateAfterTool = (
+  tool: string,
+  current: boolean,
+): boolean => {
+  if (tool === "compose_event_plan") return true;
+  if (tool === "repair_constraint_conflicts") return false;
+  return current;
+};
+
 export const createGathergraphTools = (
   execute: AnyToolDefinition["execute"],
   namespaced: boolean,
