@@ -75,6 +75,10 @@ incomplete native execution contexts to a safe non-aborted signal. Merge,
 publication, competition submission, and Stockbridge production changes remain
 separate owner gates.
 
+GatherGraph tool results report the same post-action state shown for its fixed
+16:45/17:00 timing-conflict fixture, so an agent never receives the stale
+pre-repair value.
+
 The shared high-end interaction standard lives in [the experience system](docs/experience-system.md), and the bounded build contract is captured in [the Symphony delivery specification](docs/symphony-delivery-spec.md).
 
 The implemented [Agent Passport pattern](docs/agent-passport-pattern.md) extends
