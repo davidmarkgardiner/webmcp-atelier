@@ -17,6 +17,7 @@ import {
   type GathergraphSurface,
 } from "./tools";
 import { PassportDemo } from "./passport/PassportDemo";
+import { providerSurfacePaths } from "./surfacePaths";
 
 const surfaceInvocations: readonly [string, Record<string, unknown>][] = [
   ["venue.find_spaces", { capacity: 40 }],
@@ -623,7 +624,7 @@ export function App() {
                   <p>Canal Assembly Room · step-free · 52 capacity</p>
                   <iframe
                     title="Independent venue tool surface"
-                    src="/surfaces/venue.html"
+                    src={providerSurfacePaths.venue}
                   />
                 </article>
                 <article className="surface food">
@@ -632,7 +633,7 @@ export function App() {
                   <p>Vegan sharing menu · nut-free fixture verified</p>
                   <iframe
                     title="Independent food tool surface"
-                    src="/surfaces/food.html"
+                    src={providerSurfacePaths.food}
                   />
                 </article>
                 <article className="surface logistics">
@@ -641,7 +642,7 @@ export function App() {
                   <p>Cargo-bike route · illustrative 1.8 kg CO₂e</p>
                   <iframe
                     title="Independent logistics tool surface"
-                    src="/surfaces/logistics.html"
+                    src={providerSurfacePaths.logistics}
                   />
                 </article>
               </div>

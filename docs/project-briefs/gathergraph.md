@@ -17,6 +17,10 @@ The opening page now teaches this loop to a human before showing the operations 
 
 The child surfaces are independent documents with deterministic fixtures. Tool exposure and frame behavior must be tested in the ChatGPT browser; if cross-document exposure is not interoperable, the parent registers equivalent namespaced tools while preserving separate visible surfaces.
 
+Provider iframe URLs are document-relative. This preserves the same-origin
+surface boundary when GatherGraph is hosted below a project prefix such as
+`/webmcp-atelier/`, instead of accidentally resolving them at the site root.
+
 ## Three-minute proof
 
 Plan a 40-person accessible evening with vegan and nut-free food under a fixed

@@ -87,6 +87,8 @@ Implementation evidence and explicit judging hypotheses live in the
 boundary and accepted native matrix live in the
 [native WebMCP bake-off](docs/native-webmcp-bakeoff.md). The hosted release is
 built from this branch by the scoped [GitHub Pages workflow](.github/workflows/gathergraph-pages.yml).
+Provider iframe URLs are document-relative so all three tool surfaces remain
+inside the hosted project subpath.
 
 ## Source material
 
