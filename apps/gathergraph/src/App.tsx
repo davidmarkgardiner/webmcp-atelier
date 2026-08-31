@@ -16,6 +16,7 @@ import {
   gathergraphToolMetadata,
   type GathergraphSurface,
 } from "./tools";
+import { PassportDemo } from "./passport/PassportDemo";
 
 const surfaceInvocations: readonly [string, Record<string, unknown>][] = [
   ["venue.find_spaces", { capacity: 40 }],
@@ -309,6 +310,7 @@ export function App() {
           <a href="#compare">The difference</a>
           <a href="#how">How it works</a>
           <a href="#tools">Tools</a>
+          <a href="#passport">Agent Passport</a>
           <a href="#workspace">Live workspace</a>
         </nav>
       </header>
@@ -566,6 +568,28 @@ export function App() {
             )}
           </div>
         </section>
+
+        <PassportDemo
+          recordInvocation={(tool, summary) => {
+            ledger.complete(
+              {
+                tool,
+                purpose: "Run an Agent Passport local fixture action.",
+                annotation:
+                  tool.includes("approve") || tool.includes("run")
+                    ? "approval required"
+                    : tool.includes("preview")
+                      ? "reversible"
+                      : "read-only",
+                inputSummary: "fixtureRunId=passport-demo-run-001",
+                beforeRef: phase,
+              },
+              summary,
+              "passport-authority-graph",
+            );
+            setPhase(summary);
+          }}
+        />
 
         <section className="workspace-section" id="workspace">
           <div className="section-intro workspace-intro">

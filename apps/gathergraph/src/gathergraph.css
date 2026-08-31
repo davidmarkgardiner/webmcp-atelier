@@ -1432,6 +1432,166 @@ body {
   line-height: 1.5;
 }
 
+.passport-section {
+  width: min(1240px, calc(100% - 2rem));
+  margin-inline: auto;
+  padding: clamp(5rem, 9vw, 8rem) 0;
+  border-top: 1px solid var(--border);
+}
+
+.passport-banner {
+  display: flex;
+  gap: 0.8rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  padding: 0.9rem 1rem;
+  border: 2px solid var(--approval);
+  border-radius: 0.8rem;
+  background: #fff7df;
+  color: var(--ink);
+}
+
+.passport-banner strong,
+.rail-receipt strong {
+  color: #6b4304;
+  letter-spacing: 0.04em;
+}
+
+.passport-banner span {
+  color: var(--muted);
+  text-align: right;
+}
+
+.passport-intro {
+  max-width: 65rem;
+}
+
+.passport-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.passport-card,
+.authority-graph,
+.rail-receipt {
+  padding: 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: 1.2rem;
+  background: var(--surface);
+}
+
+.passport-card h3,
+.authority-graph h3 {
+  margin: 0.4rem 0 1rem;
+  font-size: 1.45rem;
+}
+
+.passport-card dl {
+  display: grid;
+  gap: 0.45rem;
+  margin: 1.2rem 0 0;
+}
+
+.passport-card dl div {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  gap: 0.8rem;
+}
+
+.passport-card dt {
+  color: var(--muted);
+}
+
+.passport-card dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-weight: 700;
+}
+
+.terms-card > code,
+.rail-receipt code,
+.authority-graph code {
+  display: block;
+  overflow-wrap: anywhere;
+  color: var(--accent);
+  text-transform: none;
+}
+
+.approval-state {
+  margin: 1rem 0;
+  color: var(--approval);
+  font-weight: 800;
+}
+
+.passport-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.danger-button {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.passport-outcome {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.2rem 0.55rem;
+  align-items: center;
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.8rem;
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.passport-outcome small {
+  grid-column: 2;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.rail-receipt {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-color: var(--success);
+}
+
+.authority-graph ol {
+  display: grid;
+  gap: 0.65rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.authority-graph li {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr;
+  gap: 0.8rem;
+  padding: 0.8rem;
+  border-left: 3px solid var(--accent);
+  background: var(--bg);
+}
+
+.authority-graph li > span {
+  color: var(--muted);
+  font-family: "SFMono-Regular", Consolas, monospace;
+}
+
+.authority-graph li p {
+  margin: 0.2rem 0;
+  color: var(--muted);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .gather-nav nav a:hover {
     color: var(--ink);
@@ -1482,8 +1642,20 @@ body {
     font-size: clamp(3.4rem, 15vw, 5rem);
   }
   .comparison-grid,
-  .how-grid {
+  .how-grid,
+  .passport-grid {
     grid-template-columns: 1fr;
+  }
+  .passport-banner,
+  .rail-receipt {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .passport-banner span {
+    text-align: left;
+  }
+  .rail-receipt {
+    display: flex;
   }
   .tools-intro,
   .workspace-intro,
@@ -1561,7 +1733,8 @@ body {
   }
   .hero-actions > *,
   .story-toolbar button,
-  .button-row button {
+  .button-row button,
+  .passport-actions button {
     width: 100%;
   }
   .compare-card,

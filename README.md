@@ -19,12 +19,12 @@ Install the lockfile-defined dependencies once, then start any candidate
 independently. Each command uses a fixed port so the four proof paths can be
 opened side by side:
 
-| Candidate   | Workspace command                              | Local URL               | Proof focus                                           |
-| ----------- | ---------------------------------------------- | ----------------------- | ----------------------------------------------------- |
-| Toolglass   | `npm run dev --workspace @atelier/toolglass`   | `http://localhost:4173` | reject → constrain → approve → simulate → rollback    |
-| Roastweave  | `npm run dev --workspace @atelier/roastweave`  | `http://localhost:4174` | compose → compare → direct rebalance → lock → restore |
-| GatherGraph | `npm run dev --workspace @atelier/gathergraph` | `http://localhost:4175` | compose → repair timing → approve → simulated dossier |
-| Grounded AI | `npm run dev --workspace @atelier/grounded-ai` | `http://localhost:4176` | capture → ground → validate → approve → local dossier |
+| Candidate   | Workspace command                              | Local URL               | Proof focus                                               |
+| ----------- | ---------------------------------------------- | ----------------------- | --------------------------------------------------------- |
+| Toolglass   | `npm run dev --workspace @atelier/toolglass`   | `http://localhost:4173` | reject → constrain → approve → simulate → rollback        |
+| Roastweave  | `npm run dev --workspace @atelier/roastweave`  | `http://localhost:4174` | compose → compare → direct rebalance → lock → restore     |
+| GatherGraph | `npm run dev --workspace @atelier/gathergraph` | `http://localhost:4175` | compose → approve exact passport → simulate → deny/revoke |
+| Grounded AI | `npm run dev --workspace @atelier/grounded-ai` | `http://localhost:4176` | capture → ground → validate → approve → local dossier     |
 
 ```sh
 npm ci --ignore-scripts
@@ -67,11 +67,12 @@ and Stockbridge production changes remain separate owner gates.
 
 The shared high-end interaction standard lives in [the experience system](docs/experience-system.md), and the bounded build contract is captured in [the Symphony delivery specification](docs/symphony-delivery-spec.md).
 
-The [Agent Passport pattern](docs/agent-passport-pattern.md) is the reviewed next
-extension for GatherGraph. It makes owner-bound delegated authority, exact
-approval, deterministic denial, revocation, and a simulated 402-shaped receipt
-visible as one replayable graph. It is not implemented yet and authorizes no
-real identity, payment, booking, deployment, or protocol-conformance claim.
+The implemented [Agent Passport pattern](docs/agent-passport-pattern.md) extends
+GatherGraph with owner-bound delegated authority, exact approval, deterministic
+denial, revocation, and a simulated 402-shaped receipt in one replayable graph.
+Its three shared packages keep fixture contracts, synchronous authorization,
+and the decision-consuming dummy rail separate. It authorizes no real identity,
+payment, booking, deployment, or protocol-conformance claim.
 
 Implementation evidence and explicit judging hypotheses live in the
 [candidate scorecard](docs/candidate-scorecard.md). The real-browser enablement

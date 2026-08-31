@@ -1,6 +1,6 @@
 # Agent Passport pattern
 
-Status: reviewed competition extension; implementation is pending guarded Symphony intake.
+Status: implemented as a deterministic GatherGraph fixture proof.
 
 Agent Passport makes the authority behind an agent action visible and testable. A synthetic human owner grants a synthetic agent narrow permission over one exact fixture quote. GatherGraph can then show the full chain from owner to passport, quote, approval, simulated challenge, verifier decision, simulated receipt, denial, and revocation.
 
@@ -24,6 +24,27 @@ This is a local safety demonstration, not an identity provider, wallet, payment 
 5. Black-box tests, accessibility evidence, copy guardrails, documentation, and a three-minute competition story.
 
 The contracts slice is the root. The UI, dummy rail, and verifier depend only on those public contracts. The final proof slice depends on all four and must consume public surfaces rather than internal state.
+
+## Implementation notes
+
+- `@atelier/agent-passport-contracts` owns the public types, stable denial list,
+  integer-only canonical JSON subset, fixture fingerprints, event IDs, and
+  graph digest validation. Strings are compared byte-for-byte; they are not
+  trimmed, folded, or Unicode-normalized.
+- `@atelier/agent-passport-verifier` owns pure ordered checks and the only
+  synchronous nonce/cap mutation boundary. It returns immutable snapshots and
+  uses one supplied trusted fixture time per evaluation.
+- `@atelier/agent-passport-rail` can create a simulated receipt only from a
+  one-time committed verifier decision. A denial or forged literal produces a
+  denial artifact, never a simulated receipt.
+- GatherGraph renders the legal owner, delegated actor, approval, receipt,
+  denials, revocation, and append-only graph. Every human invocation also
+  appends a normal execution-ledger receipt.
+
+The rail provenance check is an in-process fixture invariant, not a browser
+security boundary. State is intentionally in memory and resets on reload. The
+canonicalizer supports the fixture's JSON domain and must not be described as
+general protocol conformance.
 
 ## Three-minute competition story
 

@@ -160,6 +160,69 @@ test("GatherGraph accepts tool receipts only from its known child surfaces", asy
   await expect(page.locator(".receipt")).toHaveCount(1);
 });
 
+test("GatherGraph Agent Passport approves one exact fixture and fails negative paths closed", async ({
+  page,
+}) => {
+  await page.goto("http://127.0.0.1:4175");
+  const passport = page.locator("#passport");
+  await expect(passport.getByText("FIXTURE — NO PAYMENT")).toBeVisible();
+  await expect(passport).toContainText("synthetic legal owner");
+  await expectAccessible(page);
+
+  await keyboardActivate(page, "Alter one term");
+  await expect(passport).toContainText("18:30");
+  await expect(passport).toContainText("Exact approval required");
+  await keyboardActivate(page, "Restore exact terms");
+  await keyboardActivate(
+    page,
+    "Approve synthetic agent up to 50 fixture units before fixture expiry",
+  );
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expectAccessible(page);
+  await keyboardActivate(page, "Approve simulation");
+  await expect(passport).toContainText("Exact revision approved");
+
+  await keyboardActivate(page, "Run simulated 402 challenge");
+  await expect(passport).toContainText("AUTHORIZED — simulated only");
+  await expect(
+    passport.getByText("Simulated rail receipt", { exact: false }),
+  ).toBeVisible();
+  await expect(passport).toContainText("48.00 / 100.00 fixture units");
+
+  await passport.locator("button").evaluateAll((buttons) => {
+    for (const name of ["Test altered terms", "Test quote expiry"]) {
+      const button = buttons.find(
+        (candidate) => candidate.textContent?.trim() === name,
+      );
+      if (button instanceof HTMLElement) button.click();
+    }
+  });
+  await expect(passport.locator(".authority-graph")).toContainText(
+    "TERMS_ALTERED",
+  );
+  await expect(passport.locator(".authority-graph")).toContainText(
+    "QUOTE_EXPIRED",
+  );
+
+  for (const [button, code] of [
+    ["Test nonce replay", "REPLAY_DETECTED"],
+    ["Test per-action cap", "PER_ACTION_CAP_EXCEEDED"],
+    ["Test aggregate cap", "AGGREGATE_CAP_EXCEEDED"],
+    ["Revoke synthetic agent passport revision 3 immediately", "REVOKED"],
+  ] as const) {
+    await keyboardActivate(page, button);
+    await expect(
+      passport.getByText(code, { exact: false }).last(),
+    ).toBeVisible();
+    await expect(passport).toContainText("48.00 / 100.00 fixture units");
+  }
+  await expect(passport.locator(".authority-graph li")).toHaveCount(12);
+  await expect(passport.getByLabel("Authority graph digest")).not.toContainText(
+    "pending",
+  );
+  await expectAccessible(page);
+});
+
 test("Grounded AI turns a workload into a validated, approved browser-local dossier", async ({
   page,
 }) => {
