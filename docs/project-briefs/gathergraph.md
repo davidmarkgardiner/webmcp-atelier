@@ -19,7 +19,13 @@ The child surfaces are independent documents with deterministic fixtures. Tool e
 
 ## Three-minute proof
 
-Plan a 40-person accessible evening with vegan and nut-free food under a fixed budget. Let the first plan surface a timing conflict, change one constraint by hand, ask the agent to repair the graph, then approve the final dossier.
+Plan a 40-person accessible evening with vegan and nut-free food under a fixed
+budget. Then open Agent Passport: inspect the synthetic legal owner, delegated
+agent, scope, 50-unit action cap, expiry, and exact terms fingerprint; alter and
+restore one term; approve revision 3; run the simulated 402-shaped challenge;
+inspect its `FIXTURE — NO PAYMENT` receipt and authority graph; prove altered
+terms, nonce replay, expiry, per-action cap, aggregate cap, and revocation fail
+closed without further cap use.
 
 ## Safety boundary
 
@@ -32,7 +38,14 @@ Run `npm run dev --workspace @atelier/gathergraph` and open
 and logistics documents. When native child discovery is unavailable, it visibly
 registers equivalent namespaced parent tools. The keyboard proof composes a
 40-person accessible vegan and nut-free plan, repairs its timing conflict, and
-commits only an approved local dossier.
+commits only an approved local dossier. A second keyboard proof exercises the
+complete Agent Passport path and automated accessibility checks.
+
+Agent Passport uses `PassportV1`, `QuoteV1`, and `ApprovalV1` fixture contracts,
+a deterministic JCS-style integer-only canonical JSON subset, SHA-256 fixture
+digests, pure ordered verification, one synchronous in-memory commit boundary,
+and a dummy rail that can consume only a verifier-issued committed decision.
+The digests are not signatures or identity guarantees. State resets on reload.
 
 ## Validation and limits
 
@@ -41,4 +54,5 @@ including child-surface fallback, keyboard operation, timing repair, approval,
 simulated commit, reduced motion, narrow-width, and accessibility checks.
 Venues, menus, routes, availability, prices, and reservations are fictional
 fixtures; the dossier cannot book a venue, reserve food, send a message, charge
-money, or call a provider.
+money, or call a provider. Rollback is removal of the passport packages and the
+bounded GatherGraph section; no persisted data migration or recovery is needed.

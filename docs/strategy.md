@@ -32,3 +32,7 @@ The accepted portfolio keeps the team's strongest principles—visible state, ex
 Score each candidate from 1 to 5 on the four equally weighted official dimensions: WebMCP leverage, execution, potential impact, and creativity and ambition. Add hard pass/fail gates for native ChatGPT browser discovery, deterministic demo completion, accessibility smoke checks, no secrets or live side effects, and a public repository-ready license and README.
 
 The selected winner must have no score below 4, pass every hard gate, and present one memorable human-agent moment within the first 30 seconds of the video.
+
+## Grounded AI challenger
+
+Grounded AI is implemented as a fourth, independently runnable challenger rather than silently replacing the three scored candidates. It explores a higher-value service journey: translate an AI workload into a compatible workstation, prove model fit, and create an operational handover. After native and three-minute demo validation, it should be scored beside the original portfolio before any submission decision.

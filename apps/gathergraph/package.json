@@ -10,6 +10,9 @@
     "preview": "vite preview --port 4175 --strictPort"
   },
   "dependencies": {
+    "@atelier/agent-passport-contracts": "*",
+    "@atelier/agent-passport-rail": "*",
+    "@atelier/agent-passport-verifier": "*",
     "@atelier/execution-ledger": "*",
     "@atelier/experience-system": "*",
     "@atelier/webmcp-runtime": "*",

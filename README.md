@@ -15,6 +15,7 @@ The memorable proof is deliberately simple: plan an accessible vegan and nut-fre
 - **Toolglass** — a human control room for previewing, approving, tracing, and reversing agent actions.
 - **Roastweave** — a collaborative sensory studio where a person and agent create a coffee recipe without reducing the experience to shopping.
 - **GatherGraph** — a multi-surface neighbourhood event composer that coordinates independent venue tools into one visible, consented plan.
+- **Grounded AI** — a human-first infrastructure designer that turns an AI workload into a validated workstation and guarded deployment handover.
 
 ## Why one repository
 
@@ -23,14 +24,15 @@ The candidates share typed WebMCP registration, visible execution receipts, acce
 ## Run each candidate
 
 Install the lockfile-defined dependencies once, then start any candidate
-independently. Each command uses a fixed port so the three proof paths can be
+independently. Each command uses a fixed port so the four proof paths can be
 opened side by side:
 
-| Candidate   | Workspace command                              | Local URL               | Proof focus                                           |
-| ----------- | ---------------------------------------------- | ----------------------- | ----------------------------------------------------- |
-| Toolglass   | `npm run dev --workspace @atelier/toolglass`   | `http://localhost:4173` | reject → constrain → approve → simulate → rollback    |
-| Roastweave  | `npm run dev --workspace @atelier/roastweave`  | `http://localhost:4174` | compose → compare → direct rebalance → lock → restore |
-| GatherGraph | `npm run dev --workspace @atelier/gathergraph` | `http://localhost:4175` | compose → repair timing → approve → simulated dossier |
+| Candidate   | Workspace command                              | Local URL               | Proof focus                                               |
+| ----------- | ---------------------------------------------- | ----------------------- | --------------------------------------------------------- |
+| Toolglass   | `npm run dev --workspace @atelier/toolglass`   | `http://localhost:4173` | reject → constrain → approve → simulate → rollback        |
+| Roastweave  | `npm run dev --workspace @atelier/roastweave`  | `http://localhost:4174` | compose → compare → direct rebalance → lock → restore     |
+| GatherGraph | `npm run dev --workspace @atelier/gathergraph` | `http://localhost:4175` | compose → approve exact passport → simulate → deny/revoke |
+| Grounded AI | `npm run dev --workspace @atelier/grounded-ai` | `http://localhost:4176` | capture → ground → validate → approve → local dossier     |
 
 ```sh
 npm ci --ignore-scripts
@@ -61,7 +63,7 @@ npm run check
 
 The gate runs formatting, lint, TypeScript, shared runtime and ledger unit tests,
 fixture-integrity checks, Playwright proof paths with accessibility smoke tests,
-and production builds for all three apps. It is the deterministic validation
+and production builds for all four apps. It is the deterministic validation
 command for the workspace and is expected to pass before a candidate is judged.
 
 The implementation is intentionally fixture-only: it never contacts a third
@@ -72,6 +74,13 @@ fallback and display that mode. Merge, publication, competition submission,
 and Stockbridge production changes remain separate owner gates.
 
 The shared high-end interaction standard lives in [the experience system](docs/experience-system.md), and the bounded build contract is captured in [the Symphony delivery specification](docs/symphony-delivery-spec.md).
+
+The implemented [Agent Passport pattern](docs/agent-passport-pattern.md) extends
+GatherGraph with owner-bound delegated authority, exact approval, deterministic
+denial, revocation, and a simulated 402-shaped receipt in one replayable graph.
+Its three shared packages keep fixture contracts, synchronous authorization,
+and the decision-consuming dummy rail separate. It authorizes no real identity,
+payment, booking, deployment, or protocol-conformance claim.
 
 Implementation evidence and explicit judging hypotheses live in the
 [candidate scorecard](docs/candidate-scorecard.md). The real-browser enablement

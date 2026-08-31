@@ -5,10 +5,12 @@ import {
   createGathergraphTools,
   gathergraphToolMetadata,
 } from "../../apps/gathergraph/src/tools";
+import { groundedAiToolMetadata } from "../../apps/grounded-ai/src/tools";
 
 const toolglassNames = toolglassToolMetadata.map(([name]) => name);
 const roastweaveNames = roastweaveToolMetadata.map(([name]) => name);
 const gathergraphNames = gathergraphToolMetadata.map(([, name]) => name);
+const groundedAiNames = groundedAiToolMetadata.map(([name]) => name);
 
 describe("candidate tool contracts", () => {
   it("publishes every Toolglass tool with closed object schemas", () => {
@@ -54,5 +56,24 @@ describe("candidate tool contracts", () => {
       createGathergraphTools(execute, false, "venue").map(({ name }) => name),
     ).toEqual(["find_spaces", "check_accessibility", "hold_space_preview"]);
     expect(createGathergraphTools(execute, false, "parent")).toHaveLength(4);
+  });
+
+  it("publishes Grounded AI evidence tools and guards dossier creation", () => {
+    expect(groundedAiNames).toHaveLength(9);
+    expect(groundedAiNames).toContain("capture_ai_workload");
+    expect(groundedAiNames).toContain("validate_compatibility");
+    expect(groundedAiNames).toContain("save_simulated_dossier");
+    for (const [, , schema] of groundedAiToolMetadata)
+      expect(schema.additionalProperties).toBe(false);
+    expect(
+      groundedAiToolMetadata.find(
+        ([name]) => name === "request_quote_approval",
+      )?.[3],
+    ).toMatchObject({ needsApproval: true });
+    expect(
+      groundedAiToolMetadata.find(
+        ([name]) => name === "save_simulated_dossier",
+      )?.[3],
+    ).toMatchObject({ needsApproval: true });
   });
 });

@@ -27,5 +27,11 @@ export default defineConfig({
       port: 4175,
       reuseExistingServer: false,
     },
+    {
+      command:
+        "npm run dev --workspace @atelier/grounded-ai -- --host 127.0.0.1",
+      port: 4176,
+      reuseExistingServer: false,
+    },
   ],
 });

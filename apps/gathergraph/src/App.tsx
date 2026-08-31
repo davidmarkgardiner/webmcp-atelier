@@ -16,6 +16,7 @@ import {
   gathergraphToolMetadata,
   type GathergraphSurface,
 } from "./tools";
+import { PassportDemo } from "./passport/PassportDemo";
 
 const surfaceInvocations: readonly [string, Record<string, unknown>][] = [
   ["venue.find_spaces", { capacity: 40 }],
@@ -63,9 +64,6 @@ const storySteps = [
 
 const wait = (milliseconds: number) =>
   new Promise((resolve) => window.setTimeout(resolve, milliseconds));
-
-const surfaceUrl = (name: "venue" | "food" | "logistics") =>
-  `${import.meta.env.BASE_URL}surfaces/${name}.html`;
 
 export function App() {
   const ledger = useExecutionLedger();
@@ -179,10 +177,6 @@ export function App() {
         : undefined,
     });
     setMode(registration.mode);
-    if (probeRequested && registration.mode === "fallback")
-      setProbeEvidence(
-        "Native WebMCP unavailable in this browser · fallback demo active",
-      );
     if (probeRequested && registration.mode === "native")
       void registration.ready
         .then(() =>
@@ -316,6 +310,7 @@ export function App() {
           <a href="#compare">The difference</a>
           <a href="#how">How it works</a>
           <a href="#tools">Tools</a>
+          <a href="#passport">Agent Passport</a>
           <a href="#workspace">Live workspace</a>
         </nav>
       </header>
@@ -574,6 +569,28 @@ export function App() {
           </div>
         </section>
 
+        <PassportDemo
+          recordInvocation={(tool, summary) => {
+            ledger.complete(
+              {
+                tool,
+                purpose: "Run an Agent Passport local fixture action.",
+                annotation:
+                  tool.includes("approve") || tool.includes("run")
+                    ? "approval required"
+                    : tool.includes("preview")
+                      ? "reversible"
+                      : "read-only",
+                inputSummary: "fixtureRunId=passport-demo-run-001",
+                beforeRef: phase,
+              },
+              summary,
+              "passport-authority-graph",
+            );
+            setPhase(summary);
+          }}
+        />
+
         <section className="workspace-section" id="workspace">
           <div className="section-intro workspace-intro">
             <div>
@@ -606,7 +623,7 @@ export function App() {
                   <p>Canal Assembly Room · step-free · 52 capacity</p>
                   <iframe
                     title="Independent venue tool surface"
-                    src={surfaceUrl("venue")}
+                    src="/surfaces/venue.html"
                   />
                 </article>
                 <article className="surface food">
@@ -615,7 +632,7 @@ export function App() {
                   <p>Vegan sharing menu · nut-free fixture verified</p>
                   <iframe
                     title="Independent food tool surface"
-                    src={surfaceUrl("food")}
+                    src="/surfaces/food.html"
                   />
                 </article>
                 <article className="surface logistics">
@@ -624,7 +641,7 @@ export function App() {
                   <p>Cargo-bike route · illustrative 1.8 kg CO₂e</p>
                   <iframe
                     title="Independent logistics tool surface"
-                    src={surfaceUrl("logistics")}
+                    src="/surfaces/logistics.html"
                   />
                 </article>
               </div>

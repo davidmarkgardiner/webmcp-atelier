@@ -7,3 +7,6 @@ test-results/
 .env
 .env.*
 !.env.example
+.omc/
+agentdb.rvf
+agentdb.rvf.lock
