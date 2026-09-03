@@ -24,9 +24,9 @@
 ## Video
 
 - [x] Under-three-minute script and shot list prepared.
-- [ ] Record the deployed native workflow with spoken audio.
-- [ ] Confirm runtime is below 3:00.
-- [ ] Confirm no unlicensed music, footage, or third-party marks are included.
+- [x] Record the product workflow with spoken audio.
+- [x] Confirm runtime is below 3:00 (84.1 seconds).
+- [x] Confirm no unlicensed music, footage, or third-party marks are included.
 - [ ] Upload publicly to YouTube and review while logged out.
 - [ ] Replace `YOUTUBE_URL` placeholders.
 

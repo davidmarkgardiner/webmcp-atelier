@@ -844,9 +844,9 @@ body {
 }
 
 .gather-site button.approval {
-  border-color: var(--approval);
-  background: var(--approval);
-  color: #fff9ec;
+  border-color: #543100;
+  background: #543100;
+  color: #fffdf8;
 }
 
 .gather-site button:disabled {
@@ -854,6 +854,7 @@ body {
   border-color: var(--border);
   background: #e5e1d7;
   color: #5f635d;
+  opacity: 1;
 }
 
 .hero {

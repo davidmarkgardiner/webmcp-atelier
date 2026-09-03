@@ -1,0 +1,689 @@
+<template>
+  <style>
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      container-type: size;
+      color: #17233c;
+    }
+
+    #root * {
+      box-sizing: border-box;
+    }
+
+    #root > [data-role="ground"] {
+      position: absolute;
+      inset: 0;
+      background: #fffdf8;
+    }
+
+    #root > [data-role="stage"] {
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 896px;
+      overflow: hidden;
+    }
+
+    #root [data-role="kicker"] {
+      position: absolute;
+      left: 80px;
+      top: 43px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 25px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      line-height: 1;
+      z-index: 6;
+    }
+
+    #root [data-role="spike"] {
+      color: #81530a;
+      font-size: 31px;
+      line-height: 1;
+    }
+
+    #root [data-role="headline"] {
+      position: absolute;
+      left: 80px;
+      top: 84px;
+      margin: 0;
+      font-size: 58px;
+      font-weight: 400;
+      line-height: 1.04;
+      letter-spacing: -0.018em;
+      z-index: 6;
+    }
+
+    #root [data-role="camera"] {
+      position: absolute;
+      left: 80px;
+      top: 164px;
+      width: 1760px;
+      height: 650px;
+      overflow: hidden;
+      border: 1px solid rgba(23, 35, 60, 0.18);
+      border-radius: 12px;
+      background: #d8e7f5;
+      box-shadow:
+        0 1px 3px rgba(23, 35, 60, 0.08),
+        0 4px 16px rgba(23, 35, 60, 0.04);
+      transform-origin: 50% 55%;
+    }
+
+    #root [data-role="browser-image"] {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 44%;
+    }
+
+    #root [data-role="attention-wash"] {
+      position: absolute;
+      left: 612px;
+      top: 374px;
+      width: 420px;
+      height: 130px;
+      border: 1px solid rgba(232, 165, 90, 0.88);
+      border-radius: 9999px;
+      background: rgba(232, 165, 90, 0.13);
+      box-shadow: 0 0 0 10px rgba(232, 165, 90, 0.06);
+      pointer-events: none;
+    }
+
+    #root [data-role="magnifier"] {
+      position: absolute;
+      right: 58px;
+      top: 212px;
+      width: 500px;
+      height: 152px;
+      overflow: hidden;
+      border: 1px solid rgba(23, 35, 60, 0.2);
+      border-radius: 12px;
+      background: #fffdf8;
+      box-shadow:
+        0 1px 3px rgba(23, 35, 60, 0.08),
+        0 4px 16px rgba(23, 35, 60, 0.04);
+      z-index: 4;
+    }
+
+    #root [data-role="magnifier"] img {
+      position: absolute;
+      width: 3840px;
+      height: 2160px;
+      max-width: none;
+      left: -1320px;
+      top: -1244px;
+    }
+
+    #root [data-role="focus-label"] {
+      position: absolute;
+      right: 58px;
+      top: 379px;
+      padding: 10px 15px;
+      border: 1px solid rgba(23, 35, 60, 0.16);
+      border-radius: 9999px;
+      background: #fffdf8;
+      font-size: 25px;
+      font-weight: 500;
+      line-height: 1;
+      z-index: 4;
+    }
+
+    #root [data-role="repair-board"] {
+      position: absolute;
+      left: 322px;
+      top: 234px;
+      width: 1276px;
+      height: 458px;
+      padding: 42px 48px;
+      border: 1px solid rgba(255, 253, 248, 0.14);
+      border-radius: 12px;
+      background: #181715;
+      color: #fffdf8;
+      z-index: 8;
+      overflow: hidden;
+    }
+
+    #root [data-role="repair-label"] {
+      margin: 0 0 24px;
+      font-size: 23px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      opacity: 0.75;
+    }
+
+    #root [data-role="repair-columns"] {
+      display: grid;
+      grid-template-columns: 1fr 250px 1fr;
+      align-items: center;
+      gap: 30px;
+      height: 294px;
+    }
+
+    #root [data-role="edit-card"],
+    #root [data-role="receipt-card"] {
+      min-height: 236px;
+      padding: 30px 32px;
+      border: 1px solid rgba(255, 253, 248, 0.14);
+      border-radius: 8px;
+      background: #252320;
+    }
+
+    #root [data-role="card-label"] {
+      display: block;
+      margin-bottom: 30px;
+      font-size: 22px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.72;
+    }
+
+    #root [data-role="text-wrap"] {
+      display: inline-flex;
+      align-items: baseline;
+      min-width: 310px;
+      white-space: nowrap;
+      font-size: 71px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.022em;
+    }
+
+    #root [data-role="cursor"] {
+      display: inline-block;
+      width: 24px;
+      margin-left: 7px;
+      color: #e8a55a;
+    }
+
+    #root [data-role="connector"] {
+      width: 250px;
+      height: 150px;
+      overflow: visible;
+    }
+
+    #root [data-role="connector-path"] {
+      fill: none;
+      stroke: #e8a55a;
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    #root [data-role="receipt-time"] {
+      margin: 0 0 18px;
+      font-size: 71px;
+      line-height: 1;
+      letter-spacing: -0.022em;
+    }
+
+    #root [data-role="receipt-note"] {
+      margin: 0;
+      font-size: 25px;
+      line-height: 1.35;
+      color: rgba(255, 253, 248, 0.78);
+    }
+
+    #root [data-role="settled"] {
+      position: absolute;
+      right: 48px;
+      top: 38px;
+      padding: 10px 16px;
+      border: 1px solid rgba(255, 253, 248, 0.22);
+      border-radius: 9999px;
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    #root [data-role="evidence-veil"] {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 253, 248, 0.92);
+      z-index: 10;
+    }
+
+    #root [data-role="evidence"] {
+      position: absolute;
+      left: 80px;
+      top: 134px;
+      width: 1760px;
+      height: 690px;
+      display: grid;
+      grid-template-columns: 1040px 1fr;
+      gap: 28px;
+      z-index: 11;
+    }
+
+    #root [data-role="evidence-image"] {
+      width: 1040px;
+      height: 690px;
+      object-fit: cover;
+      object-position: center 43%;
+      border: 1px solid rgba(23, 35, 60, 0.18);
+      border-radius: 12px;
+      background: #d8e7f5;
+      box-shadow:
+        0 1px 3px rgba(23, 35, 60, 0.08),
+        0 4px 16px rgba(23, 35, 60, 0.04);
+    }
+
+    #root [data-role="delta-card"] {
+      position: relative;
+      height: 690px;
+      padding: 42px 40px;
+      border: 1px solid rgba(23, 35, 60, 0.18);
+      border-radius: 12px;
+      background: #d8e7f5;
+    }
+
+    #root [data-role="delta-label"] {
+      margin: 0 0 24px;
+      font-size: 23px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    #root [data-role="delta-row"] {
+      display: grid;
+      grid-template-columns: 138px 1fr;
+      gap: 22px;
+      align-items: baseline;
+      padding: 26px 0;
+      border-top: 1px solid rgba(23, 35, 60, 0.16);
+    }
+
+    #root [data-role="delta-key"] {
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.68;
+    }
+
+    #root [data-role="delta-value"] {
+      font-size: 42px;
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.018em;
+    }
+
+    #root [data-role="boundary"] {
+      position: absolute;
+      left: 40px;
+      right: 40px;
+      bottom: 39px;
+      padding-top: 26px;
+      border-top: 1px solid rgba(23, 35, 60, 0.24);
+      font-size: 44px;
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.018em;
+    }
+  </style>
+
+  <div
+    data-hf-id="hf-2n6x"
+    id="root"
+    data-composition-id="04-visible-repair"
+    data-width="1920"
+    data-height="1080"
+    data-duration="15.732"
+  >
+    <div
+      data-hf-id="hf-c3si"
+      id="f04-ground-track"
+      class="clip"
+      data-role="ground"
+      data-start="0"
+      data-duration="25"
+      data-track-index="0"
+    ></div>
+
+    <div
+      data-hf-id="hf-5s4r"
+      id="f04-stage-track"
+      class="clip"
+      data-role="stage"
+      data-start="0"
+      data-duration="25"
+      data-track-index="1"
+    >
+      <div data-hf-id="hf-1674" data-role="kicker">
+        <span data-hf-id="hf-53vv" data-role="spike">✱</span
+        ><span data-hf-id="hf-l2xq">Visible repair</span>
+      </div>
+      <h1 data-hf-id="hf-j6uj" data-role="headline">Conflict stays visible.</h1>
+
+      <div data-hf-id="hf-vu1q" data-role="camera">
+        <img
+          data-hf-id="hf-rw7n"
+          data-role="browser-image"
+          src="assets/gathergraph-workspace.png"
+          alt="GatherGraph workspace conflict surface"
+        />
+        <div data-hf-id="hf-ibl1" data-role="attention-wash"></div>
+      </div>
+
+      <div data-hf-id="hf-v3ih" data-role="magnifier">
+        <img
+          data-hf-id="hf-gl4r"
+          src="assets/gathergraph-conflict-detail.png"
+          alt="Magnified deterministic caterer access conflict state"
+        />
+      </div>
+      <div data-hf-id="hf-62ur" data-role="focus-label">
+        Caterer 16:45 conflicts
+      </div>
+
+      <section
+        data-hf-id="hf-dsua"
+        data-role="repair-board"
+        aria-label="Synchronised repair"
+      >
+        <p data-hf-id="hf-454k" data-role="repair-label">
+          Edit and synchronise
+        </p>
+        <div data-hf-id="hf-dsra" data-role="settled">Repaired</div>
+        <div data-hf-id="hf-7tdi" data-role="repair-columns">
+          <div data-hf-id="hf-wxwq" data-role="edit-card">
+            <span data-hf-id="hf-h0xt" data-role="card-label">Arrival</span>
+            <span data-hf-id="hf-vy04" data-role="text-wrap"
+              ><span data-hf-id="hf-9hdb" id="f04-visible-repair-time"
+                >16:45</span
+              ><span
+                data-hf-id="hf-3y1h"
+                data-role="cursor"
+                id="f04-visible-repair-cursor"
+                >_</span
+              ></span
+            >
+          </div>
+          <svg
+            data-hf-id="hf-46nc"
+            data-role="connector"
+            viewBox="0 0 250 150"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              data-hf-id="hf-i6ai"
+              id="f04-visible-repair-path"
+              data-role="connector-path"
+              d="M 10 75 C 66 75, 73 34, 126 34 S 184 75, 240 75"
+            />
+          </svg>
+          <div data-hf-id="hf-25rg" data-role="receipt-card">
+            <span data-hf-id="hf-m20c" data-role="card-label"
+              >Ledger receipt</span
+            >
+            <p data-hf-id="hf-b8ty" data-role="receipt-time">17:15</p>
+            <p data-hf-id="hf-5gat" data-role="receipt-note">
+              Changed field recorded
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div
+        data-hf-id="hf-sux1"
+        data-role="evidence-veil"
+        data-layout-allow-occlusion=""
+      ></div>
+      <section
+        data-hf-id="hf-6lgg"
+        data-role="evidence"
+        aria-label="Preserved repair delta"
+      >
+        <img
+          data-hf-id="hf-ezpn"
+          data-role="evidence-image"
+          src="assets/gathergraph-ledger.png"
+          alt="GatherGraph execution ledger evidence surface"
+        />
+        <div data-hf-id="hf-1lyi" data-role="delta-card">
+          <p data-hf-id="hf-sp4d" data-role="delta-label">Recorded delta</p>
+          <div data-hf-id="hf-6kd9" data-role="delta-row" data-delta="before">
+            <span data-hf-id="hf-pn8t" data-role="delta-key">Before</span>
+            <span data-hf-id="hf-s1z4" data-role="delta-value">16:45</span>
+          </div>
+          <div data-hf-id="hf-7fe4" data-role="delta-row" data-delta="after">
+            <span data-hf-id="hf-prc8" data-role="delta-key">After</span>
+            <span data-hf-id="hf-udog" data-role="delta-value">17:15</span>
+          </div>
+          <div data-hf-id="hf-8el0" data-role="delta-row" data-delta="reason">
+            <span data-hf-id="hf-nt2e" data-role="delta-key">Reason</span>
+            <span data-hf-id="hf-fame" data-role="delta-value"
+              >access window</span
+            >
+          </div>
+          <div data-hf-id="hf-7b98" data-role="boundary">
+            REPAIRED ≠ APPROVED
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script>
+    (() => {
+      const root = document.querySelector(
+        '[data-composition-id="04-visible-repair"]',
+      );
+      const camera = root.querySelector('[data-role="camera"]');
+      const wash = root.querySelector('[data-role="attention-wash"]');
+      const magnifier = root.querySelector('[data-role="magnifier"]');
+      const focusLabel = root.querySelector('[data-role="focus-label"]');
+      const repairBoard = root.querySelector('[data-role="repair-board"]');
+      const editCard = root.querySelector('[data-role="edit-card"]');
+      const receiptCard = root.querySelector('[data-role="receipt-card"]');
+      const settled = root.querySelector('[data-role="settled"]');
+      const evidenceVeil = root.querySelector('[data-role="evidence-veil"]');
+      const evidence = root.querySelector('[data-role="evidence"]');
+      const boundary = root.querySelector('[data-role="boundary"]');
+      const timeEl = root.querySelector('[id="f04-visible-repair-time"]');
+      const cursorEl = root.querySelector('[id="f04-visible-repair-cursor"]');
+      const path = root.querySelector('[id="f04-visible-repair-path"]');
+
+      const pathLength = path.getTotalLength();
+      path.style.strokeDasharray = `${pathLength}`;
+      path.style.strokeDashoffset = `${pathLength}`;
+
+      const timeSequence = [
+        { t: 0.0, text: "16:45" },
+        { t: 0.45, text: "17:" },
+        { t: 1.05, text: "17:1" },
+        { t: 1.28, text: "17:15" },
+        { t: 2.25, text: "17:15 ✓" },
+      ];
+
+      const textAt = (time) => {
+        for (let i = timeSequence.length - 1; i >= 0; i -= 1) {
+          if (time >= timeSequence[i].t) return timeSequence[i].text;
+        }
+        return "16:45";
+      };
+
+      const editDriver = { t: 0 };
+      const blinkDriver = { p: 0 };
+      const tl = gsap.timeline({ paused: true });
+
+      tl.fromTo(
+        camera,
+        { opacity: 0, scale: 0.985 },
+        { opacity: 1, scale: 1, duration: 0.45, ease: "power1.out" },
+        0,
+      );
+      tl.fromTo(
+        root.querySelector('[data-role="kicker"]'),
+        { opacity: 0, y: -12 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power1.out" },
+        0.08,
+      );
+      tl.fromTo(
+        root.querySelector('[data-role="headline"]'),
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.55, ease: "power1.out" },
+        0.22,
+      );
+      tl.fromTo(
+        wash,
+        { opacity: 0, scale: 0.9 },
+        { opacity: 1, scale: 1, duration: 0.65, ease: "power2.out" },
+        1.15,
+      );
+      tl.fromTo(
+        magnifier,
+        { opacity: 0, x: 36 },
+        { opacity: 1, x: 0, duration: 0.72, ease: "power2.out" },
+        2.05,
+      );
+      tl.fromTo(
+        focusLabel,
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.52, ease: "power1.out" },
+        2.52,
+      );
+      tl.to(
+        camera,
+        { x: -72, y: -20, scale: 1.075, duration: 2.15, ease: "power2.inOut" },
+        3.15,
+      );
+
+      tl.fromTo(
+        repairBoard,
+        { opacity: 0, y: 34, scale: 0.985 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power2.out" },
+        7.5,
+      );
+      tl.fromTo(
+        editCard,
+        { opacity: 0, x: -28 },
+        { opacity: 1, x: 0, duration: 0.56, ease: "power1.out" },
+        8.12,
+      );
+      tl.to(
+        editDriver,
+        {
+          t: 2.25,
+          duration: 2.25,
+          ease: "none",
+          onUpdate: () => {
+            timeEl.textContent = textAt(editDriver.t);
+          },
+        },
+        8.45,
+      );
+      tl.to(
+        blinkDriver,
+        {
+          p: Math.PI * 2 * 6,
+          duration: 3.8,
+          ease: "none",
+          onUpdate: () => {
+            cursorEl.style.opacity = Math.sin(blinkDriver.p) > 0 ? "1" : "0";
+          },
+        },
+        8.45,
+      );
+      tl.fromTo(
+        receiptCard,
+        { opacity: 0, x: 28 },
+        { opacity: 1, x: 0, duration: 0.6, ease: "power1.out" },
+        11.45,
+      );
+      tl.to(
+        path,
+        { strokeDashoffset: 0, duration: 0.78, ease: "power2.out" },
+        12.35,
+      );
+      tl.fromTo(
+        settled,
+        { opacity: 0, scale: 0.92 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" },
+        14.25,
+      );
+      tl.fromTo(
+        root.querySelector('[data-role="receipt-time"]'),
+        { opacity: 0.45, scale: 0.96 },
+        { opacity: 1, scale: 1, duration: 0.62, ease: "power1.out" },
+        14.7,
+      );
+
+      tl.fromTo(
+        evidenceVeil,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.65, ease: "power1.out" },
+        17.0,
+      );
+      tl.fromTo(
+        evidence,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.72, ease: "power2.out" },
+        17.18,
+      );
+      tl.set(
+        [
+          root.querySelector('[data-role="kicker"]'),
+          root.querySelector('[data-role="headline"]'),
+          camera,
+          magnifier,
+          focusLabel,
+          repairBoard,
+        ],
+        { visibility: "hidden" },
+        17.18,
+      );
+      tl.fromTo(
+        root.querySelector('[data-delta="before"]'),
+        { opacity: 0, x: 24 },
+        { opacity: 1, x: 0, duration: 0.55, ease: "power1.out" },
+        18.3,
+      );
+      tl.fromTo(
+        root.querySelector('[data-delta="after"]'),
+        { opacity: 0, x: 24 },
+        { opacity: 1, x: 0, duration: 0.55, ease: "power1.out" },
+        19.65,
+      );
+      tl.fromTo(
+        root.querySelector('[data-delta="reason"]'),
+        { opacity: 0, x: 24 },
+        { opacity: 1, x: 0, duration: 0.55, ease: "power1.out" },
+        21.0,
+      );
+      tl.fromTo(
+        boundary,
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" },
+        22.45,
+      );
+      tl.to(
+        root.querySelector('[data-role="delta-card"]'),
+        { y: -4, duration: 1.2, ease: "power1.out" },
+        23.35,
+      );
+
+      tl.pause(0);
+      const playbackDriver = { time: 0 };
+      const playback = gsap.timeline({ paused: true });
+      playback.to(playbackDriver, {
+        time: 25,
+        duration: 11.627,
+        ease: "none",
+        onUpdate: () => tl.time(playbackDriver.time, false),
+      });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["04-visible-repair"] = playback;
+    })();
+  </script>
+</template>

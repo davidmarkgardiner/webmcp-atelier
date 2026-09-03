@@ -1,0 +1,14 @@
+.media/
+.venv-hyperframes/
+.thumbnails/
+.waveform-cache/
+.hyperframes/frame-packets/
+capture/
+capture-legacy-*/
+audio/
+audio_engine_meta.json
+audio_meta.json
+audio_request.json
+caption_groups.json
+snapshots/
+renders/

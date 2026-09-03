@@ -1,6 +1,10 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
+const portOffset = Number.parseInt(process.env.ATELIER_PORT_OFFSET ?? "0", 10);
+const appUrl = (defaultPort: number) =>
+  `http://127.0.0.1:${defaultPort + portOffset}`;
+
 const expectAccessible = async (page: Page) => {
   const results = await new AxeBuilder({ page }).analyze();
   expect(
@@ -19,7 +23,7 @@ const keyboardActivate = async (page: Page, name: string) => {
 test("Toolglass keyboard proof exposes reject, approval, simulated commit, rollback, abort-safe state, and inert content", async ({
   page,
 }) => {
-  await page.goto("http://127.0.0.1:4173");
+  await page.goto(appUrl(4173));
   await expect(page.getByLabel("WebMCP availability")).toContainText(
     "Fallback registry",
   );
@@ -60,7 +64,7 @@ test("Toolglass keyboard proof exposes reject, approval, simulated commit, rollb
 test("Roastweave keyboard proof composes, directly rebalances, locks, and restores a local recipe", async ({
   page,
 }) => {
-  await page.goto("http://127.0.0.1:4174");
+  await page.goto(appUrl(4174));
   await expect(page.getByLabel("WebMCP availability")).toContainText(
     "Fallback registry",
   );
@@ -89,25 +93,30 @@ test("Roastweave keyboard proof composes, directly rebalances, locks, and restor
 test("GatherGraph fallback composes independent surfaces, repairs timing, and commits only a simulated dossier", async ({
   page,
 }) => {
-  await page.goto("http://127.0.0.1:4175");
+  await page.goto(appUrl(4175));
   await expect(page.getByLabel("WebMCP availability")).toContainText(
     "namespaced parent tools are active",
   );
   await expect(page.getByTitle("Independent venue tool surface")).toBeVisible();
-  await expect(page.getByTitle("Independent food tool surface")).toBeVisible();
   await expect(
-    page.getByTitle("Independent logistics tool surface"),
+    page.getByTitle("Independent catering tool surface"),
+  ).toBeVisible();
+  await expect(
+    page.getByTitle("Independent caterer access and setup tool surface"),
   ).toBeVisible();
   for (const [title, source] of [
     ["Independent venue tool surface", "./surfaces/venue.html"],
-    ["Independent food tool surface", "./surfaces/food.html"],
-    ["Independent logistics tool surface", "./surfaces/logistics.html"],
+    ["Independent catering tool surface", "./surfaces/food.html"],
+    [
+      "Independent caterer access and setup tool surface",
+      "./surfaces/logistics.html",
+    ],
   ] as const)
     await expect(page.getByTitle(title)).toHaveAttribute("src", source);
   for (const title of [
     "Independent venue tool surface",
-    "Independent food tool surface",
-    "Independent logistics tool surface",
+    "Independent catering tool surface",
+    "Independent caterer access and setup tool surface",
   ])
     await expect(
       page
@@ -116,12 +125,16 @@ test("GatherGraph fallback composes independent surfaces, repairs timing, and co
     ).toBeVisible();
   await expectAccessible(page);
 
-  await keyboardActivate(page, "Compose fixture plan");
-  await expect(page.getByText("⚠ Delivery 16:45 conflicts")).toBeVisible();
-  await keyboardActivate(page, "Repair conflict");
-  await expect(page.getByText("✓ Delivery repaired to 17:15")).toBeVisible();
+  await keyboardActivate(page, "Have agent assemble plan");
+  await expect(
+    page.getByText("⚠ Caterer arrival at 16:45 conflicts"),
+  ).toBeVisible();
+  await keyboardActivate(page, "Resolve access conflict");
+  await expect(
+    page.getByText("✓ Caterer arrival moved to 17:15"),
+  ).toBeVisible();
   await page.getByLabel("Budget ceiling").fill("1750");
-  await keyboardActivate(page, "Request approval");
+  await keyboardActivate(page, "Ask me to approve");
   await expect(page.getByRole("dialog")).toBeVisible();
   await expectAccessible(page);
   await keyboardActivate(page, "Approve simulation");
@@ -136,7 +149,7 @@ test("GatherGraph fallback composes independent surfaces, repairs timing, and co
 test("GatherGraph accepts tool receipts only from its known child surfaces", async ({
   page,
 }) => {
-  await page.goto("http://127.0.0.1:4175");
+  await page.goto(appUrl(4175));
   await page
     .frameLocator('iframe[title="Independent venue tool surface"]')
     .locator("body")
@@ -169,7 +182,7 @@ test("GatherGraph accepts tool receipts only from its known child surfaces", asy
 test("GatherGraph Agent Passport approves one exact fixture and fails negative paths closed", async ({
   page,
 }) => {
-  await page.goto("http://127.0.0.1:4175");
+  await page.goto(appUrl(4175));
   const passport = page.locator("#passport");
   await expect(passport.getByText("FIXTURE — NO PAYMENT")).toBeVisible();
   await expect(passport).toContainText("synthetic legal owner");
@@ -232,7 +245,7 @@ test("GatherGraph Agent Passport approves one exact fixture and fails negative p
 test("Grounded AI turns a workload into a validated, approved browser-local dossier", async ({
   page,
 }) => {
-  await page.goto("http://127.0.0.1:4176");
+  await page.goto(appUrl(4176));
   await expect(page.getByLabel("WebMCP availability")).toContainText(
     "Fallback registry",
   );
@@ -269,7 +282,7 @@ test("opening states remain operable at narrow width and 200% zoom", async ({
   await page.setViewportSize({ width: 360, height: 740 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   for (const port of [4173, 4174, 4175, 4176]) {
-    await page.goto(`http://127.0.0.1:${port}`);
+    await page.goto(appUrl(port));
     await page.evaluate(() => {
       document.documentElement.style.zoom = "2";
     });

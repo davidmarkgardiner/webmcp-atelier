@@ -1,0 +1,876 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "Inter";
+      src: url("assets/fonts/Inter.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 100 900;
+    }
+
+    @font-face {
+      font-family: "SFMono-Regular";
+      src: url("assets/fonts/SFMono-Regular.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      container-type: size;
+      color: #17233c;
+      font-family: "Inter";
+    }
+
+    .f06-shared-control-ground {
+      position: absolute;
+      inset: 0;
+      background: #fffdf8;
+    }
+
+    .f06-shared-control-stage {
+      position: absolute;
+      inset: 0 0 auto;
+      height: 896px;
+      overflow: hidden;
+    }
+
+    .f06-shared-control-scene-one,
+    .f06-shared-control-scene-two,
+    .f06-shared-control-scene-three {
+      opacity: 0;
+    }
+
+    .f06-shared-control-browser {
+      position: absolute;
+      left: 96px;
+      top: 54px;
+      width: 1728px;
+      height: 784px;
+      overflow: hidden;
+      border: 1px solid rgba(23, 35, 60, 0.2);
+      border-radius: 12px;
+      background: #fffdf8;
+      box-shadow:
+        0 1px 3px rgba(23, 35, 60, 0.08),
+        0 4px 16px rgba(23, 35, 60, 0.04);
+    }
+
+    .f06-shared-control-browser-bar {
+      position: absolute;
+      z-index: 4;
+      inset: 0 0 auto;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 18px;
+      border-bottom: 1px solid rgba(23, 35, 60, 0.12);
+      background: #fffdf8;
+      font-family: "SFMono-Regular";
+      font-size: 15px;
+      letter-spacing: 0.08em;
+    }
+
+    .f06-shared-control-browser-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background: rgba(23, 35, 60, 0.25);
+    }
+
+    .f06-shared-control-browser-label {
+      margin-left: 8px;
+      opacity: 0.72;
+    }
+
+    .f06-shared-control-page-world {
+      position: absolute;
+      left: 0;
+      top: 46px;
+      width: 100%;
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+
+    .f06-shared-control-page-world img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .f06-shared-control-marker {
+      position: absolute;
+      z-index: 5;
+      top: 92px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 150px;
+      padding: 13px 18px;
+      border: 1px solid rgba(23, 35, 60, 0.2);
+      border-radius: 9999px;
+      background: rgba(255, 253, 248, 0.94);
+      font-family: "SFMono-Regular";
+      font-size: 20px;
+      letter-spacing: 0.14em;
+      box-shadow:
+        0 1px 3px rgba(23, 35, 60, 0.08),
+        0 4px 16px rgba(23, 35, 60, 0.04);
+    }
+
+    .f06-shared-control-marker::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 9999px;
+      background: #245c8f;
+    }
+
+    .f06-shared-control-human-marker {
+      left: 142px;
+    }
+
+    .f06-shared-control-agent-marker {
+      right: 142px;
+    }
+
+    .f06-shared-control-constraint-bracket {
+      position: absolute;
+      z-index: 5;
+      left: 615px;
+      top: 245px;
+      width: 498px;
+      height: 248px;
+      border-left: 2px solid #81530a;
+      border-right: 2px solid #81530a;
+      pointer-events: none;
+    }
+
+    .f06-shared-control-constraint-bracket::before,
+    .f06-shared-control-constraint-bracket::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 22px;
+      border-top: 2px solid #81530a;
+      border-bottom: 2px solid #81530a;
+    }
+
+    .f06-shared-control-constraint-bracket::before {
+      top: 0;
+    }
+
+    .f06-shared-control-constraint-bracket::after {
+      bottom: 0;
+    }
+
+    .f06-shared-control-constraint-label {
+      position: absolute;
+      left: 18px;
+      top: -17px;
+      padding: 5px 9px;
+      background: #fffdf8;
+      font-family: "SFMono-Regular";
+      font-size: 14px;
+      letter-spacing: 0.12em;
+    }
+
+    .f06-shared-control-ledger-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 896px;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .f06-shared-control-receipt-rail {
+      position: absolute;
+      left: 1245px;
+      top: 350px;
+      width: 334px;
+      height: 340px;
+      padding: 18px;
+      border: 1px solid rgba(23, 35, 60, 0.12);
+      border-radius: 8px;
+      background: #fffdf8;
+      box-shadow:
+        0 1px 3px rgba(23, 35, 60, 0.08),
+        0 4px 16px rgba(23, 35, 60, 0.04);
+    }
+
+    .f06-shared-control-sequence {
+      display: flex;
+      align-items: baseline;
+      min-height: 36px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(23, 35, 60, 0.12);
+      font-family: "SFMono-Regular";
+      font-size: 15px;
+      letter-spacing: 0.035em;
+      white-space: nowrap;
+    }
+
+    .f06-shared-control-sequence-text {
+      display: inline-block;
+      min-width: 278px;
+    }
+
+    .f06-shared-control-sequence-cursor {
+      display: inline-block;
+      width: 8px;
+      margin-left: 3px;
+    }
+
+    .f06-shared-control-receipt-row {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      align-items: center;
+      gap: 12px;
+      height: 72px;
+      margin-top: 9px;
+      padding: 0 14px;
+      border: 1px solid rgba(23, 35, 60, 0.12);
+      border-radius: 8px;
+      background: #d8e7f5;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+
+    .f06-shared-control-receipt-index {
+      font-family: "SFMono-Regular";
+      font-size: 14px;
+      opacity: 0.65;
+    }
+
+    .f06-shared-control-receipt-row strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .f06-shared-control-proof {
+      position: absolute;
+      left: 340px;
+      top: 768px;
+      width: 1240px;
+      padding-top: 19px;
+      border-top: 1px solid rgba(23, 35, 60, 0.2);
+      text-align: center;
+      font-family: "SFMono-Regular";
+      font-size: 28px;
+      letter-spacing: 0.13em;
+    }
+
+    .f06-shared-control-final-world {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+
+    .f06-shared-control-final-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 896px;
+      object-fit: cover;
+      object-position: top center;
+      opacity: 0.2;
+    }
+
+    .f06-shared-control-final-wash {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 253, 248, 0.76);
+    }
+
+    .f06-shared-control-final-lockup {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 104px;
+      text-align: center;
+    }
+
+    .f06-shared-control-kicker {
+      font-family: "SFMono-Regular";
+      font-size: 24px;
+      letter-spacing: 0.16em;
+    }
+
+    .f06-shared-control-kicker-mark {
+      color: #81530a;
+    }
+
+    .f06-shared-control-brand {
+      margin-top: 28px;
+      font-size: 130px;
+      font-weight: 400;
+      line-height: 0.98;
+      letter-spacing: -0.028em;
+    }
+
+    .f06-shared-control-control-map {
+      position: relative;
+      width: 940px;
+      height: 222px;
+      margin-top: 54px;
+    }
+
+    .f06-shared-control-control-line {
+      position: absolute;
+      left: 110px;
+      right: 110px;
+      top: 111px;
+      height: 1px;
+      background: rgba(23, 35, 60, 0.2);
+    }
+
+    .f06-shared-control-provider,
+    .f06-shared-control-human-core {
+      position: absolute;
+      top: 67px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 88px;
+      border-radius: 9999px;
+      font-family: "SFMono-Regular";
+      font-size: 19px;
+      letter-spacing: 0.1em;
+    }
+
+    .f06-shared-control-provider {
+      width: 176px;
+      border: 1px solid rgba(23, 35, 60, 0.2);
+      background: #fffdf8;
+    }
+
+    .f06-shared-control-provider-one {
+      left: 0;
+    }
+
+    .f06-shared-control-provider-two {
+      left: 210px;
+    }
+
+    .f06-shared-control-provider-three {
+      right: 0;
+    }
+
+    .f06-shared-control-human-core {
+      z-index: 2;
+      left: 394px;
+      top: 36px;
+      width: 152px;
+      height: 152px;
+      border: 1px solid #81530a;
+      background: #81530a;
+      color: #fffdf8;
+      box-shadow:
+        0 1px 3px rgba(23, 35, 60, 0.08),
+        0 4px 16px rgba(23, 35, 60, 0.04);
+    }
+
+    .f06-shared-control-final-proof {
+      margin-top: 24px;
+      font-family: "SFMono-Regular";
+      font-size: 27px;
+      letter-spacing: 0.11em;
+    }
+  </style>
+
+  <div
+    data-hf-id="hf-ca8x"
+    id="root"
+    data-composition-id="06-shared-control"
+    data-width="1920"
+    data-height="1080"
+    data-duration="17.024"
+  >
+    <div
+      data-hf-id="hf-w4i9"
+      id="f06-ground-track"
+      class="clip f06-shared-control-ground"
+      data-start="0"
+      data-duration="17.024"
+      data-track-index="0"
+    ></div>
+
+    <section
+      data-hf-id="hf-g6rn"
+      id="f06-shared-control-scene-one"
+      class="clip f06-shared-control-stage f06-shared-control-scene-one"
+      data-start="0"
+      data-duration="17.024"
+      data-track-index="1"
+    >
+      <div
+        data-hf-id="hf-478u"
+        id="f06-shared-control-browser"
+        class="f06-shared-control-browser"
+      >
+        <div data-hf-id="hf-l4q5" class="f06-shared-control-browser-bar">
+          <span
+            data-hf-id="hf-2bzq"
+            class="f06-shared-control-browser-dot"
+          ></span>
+          <span
+            data-hf-id="hf-x6ze"
+            class="f06-shared-control-browser-dot"
+          ></span>
+          <span
+            data-hf-id="hf-xlaf"
+            class="f06-shared-control-browser-dot"
+          ></span>
+          <span data-hf-id="hf-9q2r" class="f06-shared-control-browser-label"
+            >GATHERGRAPH / SHARED PLAN</span
+          >
+        </div>
+        <div
+          data-hf-id="hf-6sbw"
+          id="f06-shared-control-page-world"
+          class="f06-shared-control-page-world"
+        >
+          <img
+            data-hf-id="hf-6gmn"
+            src="assets/gathergraph-full-page.png"
+            alt="GatherGraph full product journey"
+          />
+        </div>
+        <div
+          data-hf-id="hf-vti4"
+          id="f06-shared-control-human-marker"
+          class="f06-shared-control-marker f06-shared-control-human-marker"
+        >
+          HUMAN
+        </div>
+        <div
+          data-hf-id="hf-02z4"
+          id="f06-shared-control-agent-marker"
+          class="f06-shared-control-marker f06-shared-control-agent-marker"
+        >
+          AGENT
+        </div>
+        <div
+          data-hf-id="hf-sxcw"
+          id="f06-shared-control-constraint-bracket"
+          class="f06-shared-control-constraint-bracket"
+        >
+          <span data-hf-id="hf-4zao" class="f06-shared-control-constraint-label"
+            >CURRENT CONSTRAINT</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <section
+      data-hf-id="hf-jist"
+      id="f06-shared-control-scene-two"
+      class="clip f06-shared-control-stage f06-shared-control-scene-two"
+      data-start="0"
+      data-duration="17.024"
+      data-track-index="2"
+    >
+      <img
+        data-hf-id="hf-jx4f"
+        class="f06-shared-control-ledger-image"
+        src="assets/gathergraph-ledger.png"
+        alt="GatherGraph execution ledger"
+      />
+      <div data-hf-id="hf-23ay" class="f06-shared-control-receipt-rail">
+        <div data-hf-id="hf-7m80" class="f06-shared-control-sequence">
+          <span
+            data-hf-id="hf-hsq7"
+            id="f06-shared-control-sequence-text"
+            class="f06-shared-control-sequence-text"
+          ></span
+          ><span
+            data-hf-id="hf-f06c"
+            id="f06-shared-control-sequence-cursor"
+            class="f06-shared-control-sequence-cursor"
+            >_</span
+          >
+        </div>
+        <div
+          data-hf-id="hf-6uqu"
+          id="f06-shared-control-receipt-one"
+          class="f06-shared-control-receipt-row"
+        >
+          <span data-hf-id="hf-pjuo" class="f06-shared-control-receipt-index"
+            >01</span
+          >
+          <span data-hf-id="hf-9yno"
+            ><strong data-hf-id="hf-v3qx">Venue</strong>Confirmed · receipt
+            saved</span
+          >
+        </div>
+        <div
+          data-hf-id="hf-44dk"
+          id="f06-shared-control-receipt-two"
+          class="f06-shared-control-receipt-row"
+        >
+          <span data-hf-id="hf-ocxl" class="f06-shared-control-receipt-index"
+            >02</span
+          >
+          <span data-hf-id="hf-jd9j"
+            ><strong data-hf-id="hf-nvve">Catering</strong>Constraints
+            matched</span
+          >
+        </div>
+        <div
+          data-hf-id="hf-3lsu"
+          id="f06-shared-control-receipt-three"
+          class="f06-shared-control-receipt-row"
+        >
+          <span data-hf-id="hf-or8m" class="f06-shared-control-receipt-index"
+            >03</span
+          >
+          <span data-hf-id="hf-f9nf"
+            ><strong data-hf-id="hf-mc0d">Access</strong>Repaired · receipt
+            saved</span
+          >
+        </div>
+      </div>
+      <div
+        data-hf-id="hf-0cc0"
+        id="f06-shared-control-proof"
+        class="f06-shared-control-proof"
+      >
+        VISIBLE · REVERSIBLE · RECEIPTED
+      </div>
+    </section>
+
+    <section
+      data-hf-id="hf-667t"
+      id="f06-shared-control-scene-three"
+      class="clip f06-shared-control-stage f06-shared-control-scene-three"
+      data-start="0"
+      data-duration="17.024"
+      data-track-index="3"
+    >
+      <div
+        data-hf-id="hf-yzxe"
+        id="f06-shared-control-final-world"
+        class="f06-shared-control-final-world"
+      >
+        <img
+          data-hf-id="hf-stxf"
+          class="f06-shared-control-final-image"
+          src="assets/gathergraph-hero.png"
+          alt="GatherGraph product hero"
+        />
+        <div
+          data-hf-id="hf-am98"
+          id="f06-shared-control-final-wash"
+          class="f06-shared-control-final-wash"
+        ></div>
+        <div data-hf-id="hf-h910" class="f06-shared-control-final-lockup">
+          <div
+            data-hf-id="hf-x2dm"
+            id="f06-shared-control-kicker"
+            class="f06-shared-control-kicker"
+          >
+            <span data-hf-id="hf-onuy" class="f06-shared-control-kicker-mark"
+              >✱</span
+            >
+            SHARED CONTROL
+          </div>
+          <div
+            data-hf-id="hf-7dub"
+            id="f06-shared-control-brand"
+            class="f06-shared-control-brand"
+          >
+            GatherGraph
+          </div>
+          <div data-hf-id="hf-y8tj" class="f06-shared-control-control-map">
+            <div
+              data-hf-id="hf-x641"
+              class="f06-shared-control-control-line"
+            ></div>
+            <div
+              data-hf-id="hf-s7ij"
+              id="f06-shared-control-provider-one"
+              class="f06-shared-control-provider f06-shared-control-provider-one"
+            >
+              VENUE
+            </div>
+            <div
+              data-hf-id="hf-qv5o"
+              id="f06-shared-control-provider-two"
+              class="f06-shared-control-provider f06-shared-control-provider-two"
+            >
+              FOOD
+            </div>
+            <div
+              data-hf-id="hf-8usn"
+              id="f06-shared-control-provider-three"
+              class="f06-shared-control-provider f06-shared-control-provider-three"
+            >
+              SETUP
+            </div>
+            <div
+              data-hf-id="hf-2mz7"
+              id="f06-shared-control-human-core"
+              class="f06-shared-control-human-core"
+            >
+              HUMAN
+            </div>
+          </div>
+          <div
+            data-hf-id="hf-iuz3"
+            id="f06-shared-control-final-proof"
+            class="f06-shared-control-final-proof"
+          >
+            ONE HUMAN BRIEF · EVERY SUPPLIER COORDINATED · ONE FINAL DECISION
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (() => {
+      const gsap = window.gsap;
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["06-shared-control"] = tl;
+
+      const pageWorld = document.getElementById(
+        "f06-shared-control-page-world",
+      );
+      const pageCamera = { scale: 1, x: 0, y: 0 };
+      const applyPageCamera = () => {
+        pageWorld.style.transform = `translate(${pageCamera.x}px, ${pageCamera.y}px) scale(${pageCamera.scale})`;
+      };
+      applyPageCamera();
+
+      tl.fromTo(
+        "#f06-shared-control-scene-one",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.45, ease: "power1.out" },
+        0,
+      );
+      tl.fromTo(
+        "#f06-shared-control-browser",
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+        0,
+      );
+      tl.fromTo(
+        "#f06-shared-control-human-marker",
+        { opacity: 0, y: -12 },
+        { opacity: 1, y: 0, duration: 0.42, ease: "power2.out" },
+        0.25,
+      );
+      tl.fromTo(
+        "#f06-shared-control-agent-marker",
+        { opacity: 0, y: -12 },
+        { opacity: 1, y: 0, duration: 0.42, ease: "power2.out" },
+        0.95,
+      );
+      tl.fromTo(
+        "#f06-shared-control-constraint-bracket",
+        { opacity: 0, scale: 1.04 },
+        { opacity: 1, scale: 1, duration: 0.55, ease: "power2.out" },
+        1.75,
+      );
+      tl.to(
+        pageCamera,
+        {
+          y: -60,
+          duration: 8.15,
+          ease: "power1.inOut",
+          onUpdate: applyPageCamera,
+        },
+        0.35,
+      );
+      tl.to(
+        "#f06-shared-control-scene-one",
+        { opacity: 0, duration: 0.7, ease: "power1.inOut" },
+        8.55,
+      );
+
+      tl.fromTo(
+        "#f06-shared-control-scene-two",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.72, ease: "power1.inOut" },
+        8.55,
+      );
+      tl.fromTo(
+        "#f06-shared-control-receipt-one",
+        { opacity: 0, x: 70 },
+        { opacity: 1, x: 0, duration: 0.46, ease: "power2.out" },
+        10.05,
+      );
+      tl.fromTo(
+        "#f06-shared-control-receipt-two",
+        { opacity: 0, x: 70 },
+        { opacity: 1, x: 0, duration: 0.46, ease: "power2.out" },
+        12.35,
+      );
+      tl.fromTo(
+        "#f06-shared-control-receipt-three",
+        { opacity: 0, x: 70 },
+        { opacity: 1, x: 0, duration: 0.46, ease: "power2.out" },
+        14.65,
+      );
+      tl.fromTo(
+        "#f06-shared-control-proof",
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+        16.35,
+      );
+
+      const receiptStates = [
+        { t: 0.0, text: "RECEIPT TRAIL" },
+        { t: 0.5, text: "VENUE" },
+        { t: 0.75, text: "VENUE · CHECK" },
+        { t: 1.05, text: "VENUE · CONFIRMED ✓" },
+        { t: 2.8, text: "CATERING · CHECK" },
+        { t: 3.1, text: "CATERING · MATCHED ✓" },
+        { t: 5.1, text: "ACCESS · REPAIR" },
+        { t: 5.5, text: "ACCESS · RECEIPT ✓" },
+        { t: 7.1, text: "TRAIL COMPLETE ✓" },
+      ];
+      const receiptText = document.getElementById(
+        "f06-shared-control-sequence-text",
+      );
+      const receiptCursor = document.getElementById(
+        "f06-shared-control-sequence-cursor",
+      );
+      const textAt = (time) => {
+        for (let i = receiptStates.length - 1; i >= 0; i -= 1) {
+          if (time >= receiptStates[i].t) return receiptStates[i].text;
+        }
+        return "";
+      };
+      const receiptDriver = { t: 0 };
+      tl.to(
+        receiptDriver,
+        {
+          t: 8.2,
+          duration: 8.2,
+          ease: "none",
+          onUpdate: () => {
+            receiptText.textContent = textAt(receiptDriver.t);
+          },
+        },
+        9.05,
+      );
+      const cursorDriver = { p: 0 };
+      tl.to(
+        cursorDriver,
+        {
+          p: Math.PI * 2 * 12,
+          duration: 8.2,
+          ease: "none",
+          onUpdate: () => {
+            receiptCursor.style.opacity =
+              Math.sin(cursorDriver.p) > 0 ? "1" : "0";
+          },
+        },
+        9.05,
+      );
+      tl.to(
+        "#f06-shared-control-scene-two",
+        { opacity: 0, duration: 0.72, ease: "power1.inOut" },
+        18.42,
+      );
+
+      const finalWorld = document.getElementById(
+        "f06-shared-control-final-world",
+      );
+      const finalCamera = { scale: 1.08, x: 0, y: 0 };
+      const applyFinalCamera = () => {
+        finalWorld.style.transform = `translate(${finalCamera.x}px, ${finalCamera.y}px) scale(${finalCamera.scale})`;
+      };
+      applyFinalCamera();
+
+      tl.fromTo(
+        "#f06-shared-control-scene-three",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.8, ease: "power1.inOut" },
+        18.35,
+      );
+      tl.fromTo(
+        "#f06-shared-control-final-wash",
+        { opacity: 0.58 },
+        { opacity: 0.76, duration: 0.9, ease: "power1.out" },
+        18.45,
+      );
+      tl.to(
+        finalCamera,
+        {
+          scale: 1,
+          duration: 8.35,
+          ease: "power1.out",
+          onUpdate: applyFinalCamera,
+        },
+        18.45,
+      );
+      tl.fromTo(
+        "#f06-shared-control-kicker",
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.48, ease: "power2.out" },
+        19.0,
+      );
+      tl.fromTo(
+        "#f06-shared-control-brand",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.65, ease: "power2.out" },
+        19.45,
+      );
+      tl.fromTo(
+        "#f06-shared-control-provider-one",
+        { opacity: 0, x: 40 },
+        { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" },
+        21.15,
+      );
+      tl.fromTo(
+        "#f06-shared-control-provider-two",
+        { opacity: 0, y: 26 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        21.8,
+      );
+      tl.fromTo(
+        "#f06-shared-control-provider-three",
+        { opacity: 0, x: -40 },
+        { opacity: 1, x: 0, duration: 0.45, ease: "power2.out" },
+        22.45,
+      );
+      tl.fromTo(
+        "#f06-shared-control-human-core",
+        { opacity: 0, scale: 0.92 },
+        { opacity: 1, scale: 1, duration: 0.58, ease: "power2.out" },
+        23.05,
+      );
+      tl.fromTo(
+        "#f06-shared-control-final-proof",
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.62, ease: "power2.out" },
+        24.05,
+      );
+      tl.pause(0);
+      const playbackDriver = { time: 0 };
+      const playback = gsap.timeline({ paused: true });
+      playback.to(playbackDriver, {
+        time: 27,
+        duration: 17.024,
+        ease: "none",
+        onUpdate: () => tl.time(playbackDriver.time, false),
+      });
+      window.__timelines["06-shared-control"] = playback;
+    })();
+  </script>
+</template>

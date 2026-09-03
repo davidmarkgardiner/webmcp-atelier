@@ -6,11 +6,11 @@ GatherGraph
 
 ## Tagline
 
-One event brief, three local providers, one plan a person can understand and approve.
+One event brief. Every supplier coordinated by an agent. One final human decision.
 
 ## Short description
 
-GatherGraph is a human-agent event planner built with WebMCP. A person describes an accessible community dinner in plain language. Their agent calls structured tools owned by independent venue, food, and logistics documents, composes the results, repairs a timing conflict, and presents one feasible plan for human approval. Every action remains visible and produces a durable browser-local receipt.
+GatherGraph is an agent-run catered-event planner built with WebMCP. A person describes the event once in plain language, then stays in their chat while the agent calls structured tools owned by independent venue, catering, and caterer-access documents. It compares the results, repairs a supplier timing conflict, and returns with one feasible plan for the person's final yes or no. Every action remains visible and produces a deterministic session-local receipt.
 
 ## Why this is a strong fit for WebMCP
 
@@ -20,9 +20,9 @@ WebMCP is essential to the experience rather than an integration badge. Nine too
 
 ## A better human-agent experience
 
-The human states the outcome: an accessible dinner for 40 people, vegan and nut-free, under £1,800. The agent discovers the available capabilities and gathers structured venue, allergen, menu, route, timing, and footprint evidence. GatherGraph makes a delivery conflict visible, repairs it from 16:45 to 17:15, and stops before the consequential step.
+The human states the outcome: an accessible dinner for 40 people, vegan and nut-free, under £1,800. The agent discovers the available capabilities and gathers structured venue, allergen, menu, access, setup, timing, and route evidence. GatherGraph makes the real constraint explicit: the caterer proposes arriving at 16:45, but the venue does not open to suppliers until 17:00. The agent moves arrival to 17:15 and stops before the consequential step.
 
-The person can inspect the same workspace, change the budget manually, invoke the same controls, review the execution ledger, and approve or reject the dossier. Agent speed and human judgment operate on one shared object instead of being hidden behind a chat transcript.
+The person's only required intervention is approving or rejecting the final plan. They never need to search supplier sites, copy details between forms, or negotiate the access window themselves. An optional audit workspace lets them inspect the evidence, change the budget, review the execution ledger, or take over manually. Agent speed and human judgment operate on one shared object instead of being hidden behind a chat transcript.
 
 ## What was difficult or impossible before
 
@@ -32,7 +32,7 @@ GatherGraph replaces those guesses with named schemas, document ownership, safet
 
 ## Implementation
 
-GatherGraph is a React and TypeScript application using the experimental `document.modelContext` WebMCP interface. The venue, food, and logistics iframes each register three tools in their own document. The parent registers four orchestration tools. A shared runtime handles feature detection, registration lifecycle, abort signals, and a namespaced development fallback for unsupported browsers.
+GatherGraph is a React and TypeScript application using the experimental `document.modelContext` WebMCP interface. The venue, catering, and caterer-access iframes each register three tools in their own document. The parent registers four orchestration tools. A shared runtime handles feature detection, registration lifecycle, abort signals, and a namespaced development fallback for unsupported browsers.
 
 All tool calls update visible UI state and append deterministic execution receipts. Approval is separate from conflict repair, and dossier creation fails closed without a completed human approval receipt. Playwright, axe, TypeScript, ESLint, fixture-integrity checks, and production builds validate the proof.
 

@@ -1,0 +1,831 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "Inter";
+      src: url("assets/fonts/Inter.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    @font-face {
+      font-family: "Inter";
+      src: url("assets/fonts/Inter.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    @font-face {
+      font-family: "SFMono-Regular";
+      src: url("assets/fonts/SFMono-Regular.ttf") format("truetype");
+      font-style: normal;
+      font-weight: 400 700;
+    }
+
+    #root {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      container-type: size;
+      color: #17233c;
+      font-family: "Inter";
+    }
+
+    [id="f03-one-request-ground"] {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #fffdf8;
+    }
+
+    [id="f03-one-request-camera"] {
+      position: absolute;
+      inset: 0;
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+
+    [id="f03-one-request-browser"] {
+      position: absolute;
+      top: 4.6cqh;
+      left: 4.2cqw;
+      width: 91.6cqw;
+      height: 73.2cqh;
+      overflow: hidden;
+      border: 1px solid rgba(23, 35, 60, 0.2);
+      border-radius: 12px;
+      background: #fffdf8;
+      box-shadow:
+        0 1px 3px rgba(23, 35, 60, 0.08),
+        0 4px 16px rgba(23, 35, 60, 0.04);
+    }
+
+    [id="f03-one-request-browser-chrome"] {
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4.4cqh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.25cqw;
+      border-bottom: 1px solid rgba(23, 35, 60, 0.12);
+      background: #fffdf8;
+      z-index: 5;
+    }
+
+    [data-role="browser-dots"] {
+      display: flex;
+      gap: 0.42cqw;
+    }
+
+    [data-role="browser-dot"] {
+      width: 0.48cqw;
+      height: 0.48cqw;
+      border: 1px solid rgba(23, 35, 60, 0.28);
+      border-radius: 9999px;
+      background: #d8e7f5;
+    }
+
+    [id="f03-one-request-browser-label"] {
+      font-family: "SFMono-Regular";
+      font-size: 1.35cqw;
+      letter-spacing: 0.02em;
+      color: rgba(23, 35, 60, 0.72);
+    }
+
+    [id="f03-one-request-workspace"] {
+      position: absolute;
+      top: 4.4cqh;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 4.4cqh);
+      object-fit: cover;
+      object-position: center top;
+      opacity: 0.72;
+    }
+
+    [id="f03-one-request-wash"] {
+      position: absolute;
+      inset: 4.4cqh 0 0 0;
+      background: rgba(255, 253, 248, 0.26);
+      pointer-events: none;
+    }
+
+    [id="f03-one-request-prompt"] {
+      position: absolute;
+      left: 8.4cqw;
+      top: 63.2cqh;
+      width: 66cqw;
+      min-height: 8.2cqh;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 1.2cqw;
+      padding: 1.2cqh 1.15cqw 1.2cqh 1.45cqw;
+      box-sizing: border-box;
+      border: 1px solid rgba(23, 35, 60, 0.2);
+      border-radius: 12px;
+      background: #fffdf8;
+      z-index: 14;
+    }
+
+    [id="f03-one-request-prompt-text-wrap"] {
+      display: inline-flex;
+      align-items: baseline;
+      min-width: 47cqw;
+      white-space: nowrap;
+      overflow: hidden;
+      font-family: "SFMono-Regular";
+      font-size: 1.66cqw;
+      line-height: 1.15;
+      letter-spacing: 0.01em;
+      color: #17233c;
+    }
+
+    [id="f03-one-request-prompt-cursor"] {
+      display: inline-block;
+      width: 0.55cqw;
+      margin-left: 0.12cqw;
+      color: #17233c;
+    }
+
+    [id="f03-one-request-submit"] {
+      min-width: 8.2cqw;
+      padding: 1.15cqh 1.1cqw;
+      border: 0;
+      border-radius: 8px;
+      background: #81530a;
+      color: #fffdf8;
+      font-family: "Inter";
+      font-size: 1.46cqw;
+      font-weight: 400;
+      line-height: 1;
+      text-align: center;
+    }
+
+    [id="f03-one-request-provider-stage"] {
+      position: absolute;
+      inset: 4.4cqh 0 0 0;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    [data-role="provider"] {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 52cqw;
+      min-height: 9.4cqh;
+      display: grid;
+      grid-template-columns: 8.6cqw 1fr;
+      align-items: center;
+      gap: 1.15cqw;
+      padding: 1.1cqh 1.15cqw;
+      box-sizing: border-box;
+      border: 1px solid rgba(23, 35, 60, 0.16);
+      border-radius: 12px;
+      background: rgba(255, 253, 248, 0.96);
+      will-change: transform, opacity;
+    }
+
+    [data-role="provider-name"] {
+      font-family: "SFMono-Regular";
+      font-size: 1.35cqw;
+      line-height: 1.15;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #17233c;
+    }
+
+    [data-role="provider-state"] {
+      display: block;
+      margin-top: 0.62cqh;
+      font-family: "SFMono-Regular";
+      font-size: 0.94cqw;
+      letter-spacing: 0.06em;
+      color: #6f7681;
+    }
+
+    [data-role="evidence-stack"] {
+      display: grid;
+      gap: 0.72cqh;
+    }
+
+    [data-role="evidence-row"] {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.58cqw;
+    }
+
+    [data-role="evidence-pill"] {
+      padding: 0.56cqh 0.7cqw;
+      border: 1px solid rgba(23, 35, 60, 0.16);
+      border-radius: 9999px;
+      background: #d8e7f5;
+      color: #17233c;
+      font-family: "SFMono-Regular";
+      font-size: 1.08cqw;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    [data-role="fill-track"] {
+      width: 100%;
+      height: 0.46cqh;
+      overflow: hidden;
+      border-radius: 9999px;
+      background: rgba(23, 35, 60, 0.1);
+    }
+
+    [data-role="fill"] {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background: #245c8f;
+      transform-origin: left center;
+      will-change: transform;
+    }
+
+    [id="f03-one-request-receipt-rail"] {
+      position: absolute;
+      top: 10.2cqh;
+      right: 4.2cqw;
+      width: 17.8cqw;
+      height: 49.5cqh;
+      padding: 1.2cqh 1.05cqw 1.3cqh 2.15cqw;
+      box-sizing: border-box;
+      border: 1px solid rgba(23, 35, 60, 0.16);
+      border-radius: 12px;
+      background: rgba(255, 253, 248, 0.97);
+      z-index: 18;
+    }
+
+    [id="f03-one-request-passport"] {
+      width: 100%;
+      height: 10.2cqh;
+      object-fit: cover;
+      object-position: center;
+      border: 1px solid rgba(23, 35, 60, 0.14);
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    [id="f03-one-request-rail-title"] {
+      margin-top: 0.72cqh;
+      font-family: "SFMono-Regular";
+      font-size: 1.05cqw;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(23, 35, 60, 0.7);
+    }
+
+    [id="f03-one-request-rail-svg"] {
+      position: absolute;
+      left: 0.55cqw;
+      top: 15.2cqh;
+      width: 2.1cqw;
+      height: 29.2cqh;
+      overflow: visible;
+    }
+
+    [data-role="rail-path"] {
+      fill: none;
+      stroke: #245c8f;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    [id="f03-one-request-receipts"] {
+      margin-top: 1.2cqh;
+      display: grid;
+      gap: 1.05cqh;
+    }
+
+    [data-role="receipt"] {
+      min-height: 7.1cqh;
+      display: grid;
+      grid-template-columns: 1.7cqw 1fr;
+      align-items: center;
+      gap: 0.55cqw;
+      padding: 0.75cqh 0.72cqw;
+      box-sizing: border-box;
+      border: 1px solid rgba(23, 35, 60, 0.14);
+      border-radius: 8px;
+      background: #d8e7f5;
+    }
+
+    [data-role="receipt-check"] {
+      width: 1.35cqw;
+      height: 1.35cqw;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(23, 35, 60, 0.34);
+      border-radius: 9999px;
+      color: #17233c;
+      font-family: "SFMono-Regular";
+      font-size: 0.92cqw;
+    }
+
+    [data-role="receipt-copy"] {
+      font-family: "SFMono-Regular";
+      font-size: 1.02cqw;
+      line-height: 1.2;
+      letter-spacing: 0.04em;
+      color: #17233c;
+      text-transform: uppercase;
+    }
+
+    [id="f03-one-request-plan-lockup"] {
+      position: absolute;
+      right: 4.2cqw;
+      top: 63.2cqh;
+      width: 31.5cqw;
+      min-height: 7.7cqh;
+      display: grid;
+      place-items: center;
+      padding: 1.1cqh 1.2cqw;
+      box-sizing: border-box;
+      border: 1px solid rgba(23, 35, 60, 0.2);
+      border-radius: 8px;
+      background: #fffdf8;
+      font-family: "SFMono-Regular";
+      font-size: 1.46cqw;
+      line-height: 1;
+      letter-spacing: 0.08em;
+      color: #17233c;
+      text-align: center;
+      z-index: 20;
+    }
+  </style>
+
+  <div
+    data-hf-id="hf-ol9j"
+    id="root"
+    data-composition-id="03-one-request"
+    data-width="1920"
+    data-height="1080"
+    data-duration="10.261"
+  >
+    <div
+      data-hf-id="hf-xm3z"
+      id="f03-one-request-ground"
+      class="clip"
+      data-start="0"
+      data-duration="27"
+      data-track-index="0"
+    ></div>
+
+    <div
+      data-hf-id="hf-h3uk"
+      id="f03-scene-track"
+      class="clip"
+      data-start="0"
+      data-duration="27"
+      data-track-index="1"
+    >
+      <div data-hf-id="hf-m15j" id="f03-one-request-camera">
+        <div data-hf-id="hf-wpi6" id="f03-one-request-browser">
+          <div data-hf-id="hf-5m69" id="f03-one-request-browser-chrome">
+            <div
+              data-hf-id="hf-wtrb"
+              data-role="browser-dots"
+              aria-hidden="true"
+            >
+              <span data-hf-id="hf-oc7c" data-role="browser-dot"></span>
+              <span data-hf-id="hf-yrsw" data-role="browser-dot"></span>
+              <span data-hf-id="hf-xkvt" data-role="browser-dot"></span>
+            </div>
+            <div data-hf-id="hf-9zdv" id="f03-one-request-browser-label">
+              GATHERGRAPH / SHARED WORKSPACE
+            </div>
+          </div>
+
+          <img
+            data-hf-id="hf-4f6i"
+            id="f03-one-request-workspace"
+            src="assets/gathergraph-workspace.png"
+            alt="GatherGraph shared planning workspace"
+          />
+          <div data-hf-id="hf-hu5b" id="f03-one-request-wash"></div>
+
+          <div data-hf-id="hf-4w44" id="f03-one-request-provider-stage">
+            <article
+              data-hf-id="hf-1zwh"
+              data-role="provider"
+              data-target-x="-270"
+              data-target-y="-220"
+            >
+              <div data-hf-id="hf-jzlr" data-role="provider-name">
+                Venue<span data-hf-id="hf-30nk" data-role="provider-state"
+                  >WAITING</span
+                >
+              </div>
+              <div data-hf-id="hf-56ob" data-role="evidence-stack">
+                <div data-hf-id="hf-4y9b" data-role="evidence-row">
+                  <span data-hf-id="hf-2ug9" data-role="evidence-pill"
+                    >CAPACITY 40</span
+                  >
+                  <span data-hf-id="hf-ijuy" data-role="evidence-pill"
+                    >STEP-FREE</span
+                  >
+                </div>
+                <div data-hf-id="hf-430e" data-role="fill-track">
+                  <div
+                    data-hf-id="hf-ra75"
+                    data-role="fill"
+                    data-fill="0.88"
+                  ></div>
+                </div>
+              </div>
+            </article>
+
+            <article
+              data-hf-id="hf-mntt"
+              data-role="provider"
+              data-target-x="-270"
+              data-target-y="-82"
+            >
+              <div data-hf-id="hf-0knf" data-role="provider-name">
+                Menu<span data-hf-id="hf-ip60" data-role="provider-state"
+                  >WAITING</span
+                >
+              </div>
+              <div data-hf-id="hf-sk8b" data-role="evidence-stack">
+                <div data-hf-id="hf-t573" data-role="evidence-row">
+                  <span data-hf-id="hf-8cli" data-role="evidence-pill"
+                    >ALLERGENS</span
+                  >
+                  <span data-hf-id="hf-inv5" data-role="evidence-pill"
+                    >17:15</span
+                  >
+                </div>
+                <div data-hf-id="hf-uy3m" data-role="fill-track">
+                  <div
+                    data-hf-id="hf-5zes"
+                    data-role="fill"
+                    data-fill="0.76"
+                  ></div>
+                </div>
+              </div>
+            </article>
+
+            <article
+              data-hf-id="hf-70sv"
+              data-role="provider"
+              data-target-x="-270"
+              data-target-y="56"
+            >
+              <div data-hf-id="hf-uqlk" data-role="provider-name">
+                Access &amp; setup<span
+                  data-hf-id="hf-hi8x"
+                  data-role="provider-state"
+                  >WAITING</span
+                >
+              </div>
+              <div data-hf-id="hf-s5xa" data-role="evidence-stack">
+                <div data-hf-id="hf-sqw2" data-role="evidence-row">
+                  <span data-hf-id="hf-bsrk" data-role="evidence-pill"
+                    >ROUTE</span
+                  >
+                  <span data-hf-id="hf-kmqi" data-role="evidence-pill"
+                    >FOOTPRINT</span
+                  >
+                </div>
+                <div data-hf-id="hf-vcen" data-role="fill-track">
+                  <div
+                    data-hf-id="hf-ekj7"
+                    data-role="fill"
+                    data-fill="0.82"
+                  ></div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div data-hf-id="hf-tkyc" id="f03-one-request-prompt">
+            <div data-hf-id="hf-kjex" id="f03-one-request-prompt-text-wrap">
+              <span data-hf-id="hf-ecwx" id="f03-one-request-prompt-text"></span
+              ><span data-hf-id="hf-y6lr" id="f03-one-request-prompt-cursor"
+                >_</span
+              >
+            </div>
+            <div data-hf-id="hf-9k3k" id="f03-one-request-submit">SEND</div>
+          </div>
+
+          <aside data-hf-id="hf-g2z2" id="f03-one-request-receipt-rail">
+            <img
+              data-hf-id="hf-4asw"
+              id="f03-one-request-passport"
+              src="assets/gathergraph-passport.png"
+              alt="GatherGraph provider passport"
+            />
+            <div data-hf-id="hf-3d13" id="f03-one-request-rail-title">
+              Provider receipts
+            </div>
+            <svg
+              data-hf-id="hf-bj2q"
+              id="f03-one-request-rail-svg"
+              viewBox="0 0 44 316"
+              aria-hidden="true"
+            >
+              <path
+                data-hf-id="hf-ardm"
+                data-role="rail-path"
+                d="M 8 4 L 8 300"
+              />
+              <path
+                data-hf-id="hf-zyns"
+                data-role="rail-path"
+                d="M 8 44 C 20 44 24 44 40 44"
+              />
+              <path
+                data-hf-id="hf-ifo6"
+                data-role="rail-path"
+                d="M 8 148 C 20 148 24 148 40 148"
+              />
+              <path
+                data-hf-id="hf-20ki"
+                data-role="rail-path"
+                d="M 8 252 C 20 252 24 252 40 252"
+              />
+            </svg>
+            <div data-hf-id="hf-1yb9" id="f03-one-request-receipts">
+              <div data-hf-id="hf-41d1" data-role="receipt">
+                <span data-hf-id="hf-xczi" data-role="receipt-check">✓</span
+                ><span data-hf-id="hf-h2hb" data-role="receipt-copy"
+                  >Venue receipt</span
+                >
+              </div>
+              <div data-hf-id="hf-rwop" data-role="receipt">
+                <span data-hf-id="hf-5fxe" data-role="receipt-check">✓</span
+                ><span data-hf-id="hf-v13n" data-role="receipt-copy"
+                  >Menu receipt</span
+                >
+              </div>
+              <div data-hf-id="hf-t3ls" data-role="receipt">
+                <span data-hf-id="hf-5u8f" data-role="receipt-check">✓</span
+                ><span data-hf-id="hf-r0op" data-role="receipt-copy"
+                  >Route receipt</span
+                >
+              </div>
+            </div>
+          </aside>
+
+          <div data-hf-id="hf-97t4" id="f03-one-request-plan-lockup">
+            3 PROVIDERS · 1 VISIBLE PLAN
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    (() => {
+      const frameRoot = document.querySelector(
+        '[data-composition-id="03-one-request"]',
+      );
+      const camera = frameRoot.querySelector('[id="f03-one-request-camera"]');
+      const browser = frameRoot.querySelector('[id="f03-one-request-browser"]');
+      const prompt = frameRoot.querySelector('[id="f03-one-request-prompt"]');
+      const promptText = frameRoot.querySelector(
+        '[id="f03-one-request-prompt-text"]',
+      );
+      const promptCursor = frameRoot.querySelector(
+        '[id="f03-one-request-prompt-cursor"]',
+      );
+      const submit = frameRoot.querySelector('[id="f03-one-request-submit"]');
+      const providerEls = Array.from(
+        frameRoot.querySelectorAll('[data-role="provider"]'),
+      );
+      const providerStates = Array.from(
+        frameRoot.querySelectorAll('[data-role="provider-state"]'),
+      );
+      const fills = Array.from(
+        frameRoot.querySelectorAll('[data-role="fill"]'),
+      );
+      const receiptRail = frameRoot.querySelector(
+        '[id="f03-one-request-receipt-rail"]',
+      );
+      const passport = frameRoot.querySelector(
+        '[id="f03-one-request-passport"]',
+      );
+      const receipts = Array.from(
+        frameRoot.querySelectorAll('[data-role="receipt"]'),
+      );
+      const planLockup = frameRoot.querySelector(
+        '[id="f03-one-request-plan-lockup"]',
+      );
+      const railPaths = Array.from(
+        frameRoot.querySelectorAll('[data-role="rail-path"]'),
+      );
+
+      railPaths.forEach((path) => {
+        const length = path.getTotalLength();
+        path.style.strokeDasharray = `${length}`;
+        path.style.strokeDashoffset = `${length}`;
+      });
+
+      const tl = gsap.timeline({ paused: true });
+
+      tl.fromTo(
+        browser,
+        { opacity: 0, scale: 0.985 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out" },
+        0,
+      );
+      tl.fromTo(
+        prompt,
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" },
+        0.45,
+      );
+
+      const promptSequence = [
+        { t: 0, text: "" },
+        { t: 0.3, text: "Acc" },
+        { t: 0.58, text: "Accessible" },
+        { t: 1.0, text: "Accessible dinner" },
+        { t: 1.42, text: "Accessible dinner · 40" },
+        { t: 1.82, text: "Accessible dinner · 40 people" },
+        { t: 2.34, text: "Accessible dinner · 40 people · under" },
+        { t: 2.82, text: "Accessible dinner · 40 people · under £1,800" },
+      ];
+      const promptDriver = { t: 0 };
+      tl.to(
+        promptDriver,
+        {
+          t: 3.4,
+          duration: 3.4,
+          ease: "none",
+          onUpdate: () => {
+            for (let i = promptSequence.length - 1; i >= 0; i -= 1) {
+              if (promptDriver.t >= promptSequence[i].t) {
+                promptText.textContent = promptSequence[i].text;
+                break;
+              }
+            }
+          },
+        },
+        1.25,
+      );
+
+      const blink = { p: 0 };
+      tl.to(
+        blink,
+        {
+          p: Math.PI * 14,
+          duration: 5.4,
+          ease: "none",
+          onUpdate: () => {
+            promptCursor.style.opacity = Math.sin(blink.p) > 0 ? "1" : "0";
+          },
+        },
+        0.6,
+      );
+
+      tl.fromTo(
+        submit,
+        { scale: 1 },
+        { scale: 0.94, duration: 0.14, ease: "power1.in" },
+        5.6,
+      );
+      tl.to(submit, { scale: 1, duration: 0.24, ease: "power2.out" }, 5.74);
+      const submitState = { t: 0 };
+      tl.to(
+        submitState,
+        {
+          t: 7,
+          duration: 7,
+          ease: "none",
+          onUpdate: () => {
+            submit.textContent = submitState.t >= 5.92 ? "SENT" : "SEND";
+            if (submitState.t >= 5.92) promptCursor.style.opacity = "0";
+          },
+        },
+        0,
+      );
+      tl.to(prompt, { y: -4, duration: 0.65, ease: "power2.out" }, 6.05);
+
+      const phase = { scale: 1.03 };
+      tl.to(phase, { scale: 1.065, duration: 1.45, ease: "power2.out" }, 7.0);
+      tl.to(phase, { scale: 0.92, duration: 4.4, ease: "power2.inOut" }, 18.0);
+
+      const drift = { p: 0 };
+      tl.to(
+        drift,
+        {
+          p: Math.PI * 4,
+          duration: 27,
+          ease: "none",
+          onUpdate: () => {
+            const dx = Math.sin(drift.p) * 4;
+            const dy = Math.sin(drift.p * 1.3) * 2;
+            camera.style.transform = `scale(${phase.scale}) translate(${dx}px, ${dy}px)`;
+          },
+        },
+        0,
+      );
+
+      const providerTimes = [7.45, 10.0, 12.55];
+      providerEls.forEach((el, index) => {
+        const targetX = Number(el.dataset.targetX);
+        const targetY = Number(el.dataset.targetY);
+        tl.fromTo(
+          el,
+          { xPercent: -50, yPercent: -50, x: 0, y: 0, scale: 0.76, opacity: 0 },
+          {
+            x: targetX,
+            y: targetY,
+            scale: 1,
+            opacity: 1,
+            duration: 1.35,
+            ease: "power3.out",
+          },
+          providerTimes[index],
+        );
+        tl.fromTo(
+          fills[index],
+          { scaleX: 0 },
+          {
+            scaleX: Number(fills[index].dataset.fill),
+            duration: 1.0,
+            ease: "power2.out",
+          },
+          providerTimes[index] + 0.82,
+        );
+      });
+
+      const stateDriver = { t: 0 };
+      tl.to(
+        stateDriver,
+        {
+          t: 10,
+          duration: 10,
+          ease: "none",
+          onUpdate: () => {
+            const local = stateDriver.t;
+            providerStates[0].textContent =
+              local < 1.3 ? "QUERYING" : "VERIFIED";
+            providerStates[1].textContent =
+              local < 3.8 ? "WAITING" : local < 6.0 ? "QUERYING" : "VERIFIED";
+            providerStates[2].textContent =
+              local < 6.35 ? "WAITING" : local < 8.6 ? "QUERYING" : "VERIFIED";
+          },
+        },
+        7.0,
+      );
+
+      tl.fromTo(
+        receiptRail,
+        { opacity: 0, x: 24 },
+        { opacity: 1, x: 0, duration: 0.8, ease: "power2.out" },
+        18.1,
+      );
+      tl.fromTo(
+        passport,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.65, ease: "power2.out" },
+        18.65,
+      );
+      railPaths.forEach((path, index) => {
+        tl.to(
+          path,
+          {
+            strokeDashoffset: 0,
+            duration: index === 0 ? 0.8 : 0.48,
+            ease: "power2.out",
+          },
+          18.85 + index * 0.38,
+        );
+      });
+      tl.fromTo(
+        receipts,
+        { opacity: 0, x: 14 },
+        { opacity: 1, x: 0, duration: 0.62, ease: "power2.out", stagger: 0.72 },
+        19.55,
+      );
+      tl.fromTo(
+        planLockup,
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
+        23.0,
+      );
+      tl.set(prompt, { visibility: "hidden" }, 23.0);
+
+      tl.pause(0);
+      const playbackDriver = { time: 0 };
+      const playback = gsap.timeline({ paused: true });
+      playback.to(playbackDriver, {
+        time: 27,
+        duration: 10.261,
+        ease: "none",
+        onUpdate: () => tl.time(playbackDriver.time, false),
+      });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["03-one-request"] = playback;
+    })();
+  </script>
+</template>

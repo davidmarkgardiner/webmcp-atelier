@@ -10,6 +10,7 @@ export default tseslint.config(
       "playwright-report/**",
       "test-results/**",
       "brain/**",
+      "videos/**/.venv-hyperframes/**",
     ],
   },
   eslint.configs.recommended,

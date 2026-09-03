@@ -1,12 +1,12 @@
 # WebMCP Atelier
 
-Three high-end, deliberately different WebMCP applications built for the 2026 OpenAI WebMCP Challenge. **GatherGraph is the selected submission candidate**: a neighbourhood event planner where a person and agent coordinate independent venue, food, and logistics providers through thirteen structured browser tools.
+Four high-end, deliberately different WebMCP applications built for the 2026 OpenAI WebMCP Challenge. **GatherGraph is the selected submission candidate**: an agent-run catered-event planner where one human brief becomes a coordinated venue, catering, and setup plan through thirteen structured browser tools.
 
 ## Selected entry: GatherGraph
 
-GatherGraph turns one plain-language event brief into a visible, repairable plan. Three independent same-origin provider documents expose their own WebMCP capabilities. The parent document composes their evidence, identifies a timing conflict, repairs it, and stops for human approval before creating a browser-local dossier.
+GatherGraph turns one plain-language event brief into a visible, repairable plan. The person does not have to visit supplier websites: the agent works across three independent same-origin venue, catering, and caterer-access documents, reconciles their evidence, fixes a timing conflict, and returns only for the person's final approval before creating a browser-local dossier.
 
-The memorable proof is deliberately simple: plan an accessible vegan and nut-free dinner for 40 people under £1,800, watch the agent repair a delivery conflict, then approve a simulation with a receipt for every action. No venue, supplier, payment provider, or messaging service is contacted.
+The memorable proof is deliberately simple: ask for an accessible vegan and nut-free catered dinner for 40 people under £1,800. The agent finds a suitable venue and caterer, notices that the caterer would arrive before supplier access opens, moves setup to 17:15, and asks the person for one final yes or no. No venue, supplier, payment provider, or messaging service is contacted.
 
 [Open the live GatherGraph preview](https://davidmarkgardiner.github.io/webmcp-atelier/) · [Read the submission pack](docs/submission/README.md) · [See the native WebMCP proof](docs/native-webmcp-bakeoff.md) · [Review the judging evidence](docs/candidate-scorecard.md)
 
@@ -27,12 +27,12 @@ Install the lockfile-defined dependencies once, then start any candidate
 independently. Each command uses a fixed port so the four proof paths can be
 opened side by side:
 
-| Candidate   | Workspace command                              | Local URL               | Proof focus                                               |
-| ----------- | ---------------------------------------------- | ----------------------- | --------------------------------------------------------- |
-| Toolglass   | `npm run dev --workspace @atelier/toolglass`   | `http://localhost:4173` | reject → constrain → approve → simulate → rollback        |
-| Roastweave  | `npm run dev --workspace @atelier/roastweave`  | `http://localhost:4174` | compose → compare → direct rebalance → lock → restore     |
-| GatherGraph | `npm run dev --workspace @atelier/gathergraph` | `http://localhost:4175` | compose → approve exact passport → simulate → deny/revoke |
-| Grounded AI | `npm run dev --workspace @atelier/grounded-ai` | `http://localhost:4176` | capture → ground → validate → approve → local dossier     |
+| Candidate   | Workspace command                              | Local URL               | Proof focus                                             |
+| ----------- | ---------------------------------------------- | ----------------------- | ------------------------------------------------------- |
+| Toolglass   | `npm run dev --workspace @atelier/toolglass`   | `http://localhost:4173` | reject → constrain → approve → simulate → rollback      |
+| Roastweave  | `npm run dev --workspace @atelier/roastweave`  | `http://localhost:4174` | compose → compare → direct rebalance → lock → restore   |
+| GatherGraph | `npm run dev --workspace @atelier/gathergraph` | `http://localhost:4175` | compose → repair → request approval → simulated dossier |
+| Grounded AI | `npm run dev --workspace @atelier/grounded-ai` | `http://localhost:4176` | capture → ground → validate → approve → local dossier   |
 
 ```sh
 npm ci --ignore-scripts
@@ -41,7 +41,7 @@ npm run dev --workspace @atelier/gathergraph
 
 Every app is a keyboard-accessible interface and reports whether tools use
 native `document.modelContext` registration or the local development fallback.
-GatherGraph also exposes independent same-origin venue, food, and logistics
+GatherGraph also exposes independent same-origin venue, catering, and caterer-access
 documents; when child discovery is unavailable, its namespaced parent fallback
 keeps those surfaces visibly separate. All boards, recipes, vendors, routes,
 approvals, commits, locks, holds, and dossiers are deterministic browser-local
@@ -59,6 +59,13 @@ and recovery actions as separate tool and UI states.
 
 ```sh
 npm run check
+```
+
+If another local project already uses the default preview ports, run the same
+gate on an isolated range without stopping that work:
+
+```sh
+ATELIER_PORT_OFFSET=100 npm run check
 ```
 
 The gate runs formatting, lint, TypeScript, shared runtime and ledger unit tests,

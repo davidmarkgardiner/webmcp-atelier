@@ -40,27 +40,31 @@ const surfaceToolNames = new Set(
 
 const surfaceLabels: Record<GathergraphSurface, string> = {
   venue: "Venue provider",
-  food: "Food provider",
-  logistics: "Logistics provider",
+  food: "Catering provider",
+  logistics: "Caterer access & setup",
   parent: "GatherGraph",
 };
 
 const storySteps = [
-  ["01", "Discover", "The browser exposes 13 typed tools from four surfaces."],
+  [
+    "01",
+    "Receive your brief",
+    "You describe the event once. The agent turns it into clear constraints.",
+  ],
   [
     "02",
-    "Compose",
-    "The agent asks each provider for evidence, not page markup.",
+    "Coordinate suppliers",
+    "The agent calls venue, catering, and setup tools directly.",
   ],
   [
     "03",
-    "Repair",
-    "GatherGraph spots the 16:45 delivery conflict and moves it.",
+    "Resolve conflicts",
+    "It moves the caterer's arrival from 16:45 to the 17:15 access window.",
   ],
   [
     "04",
-    "Approve",
-    "The human reviews the feasible plan before any dossier exists.",
+    "Ask for your decision",
+    "You receive one feasible plan and give the only final yes or no.",
   ],
 ] as const;
 
@@ -322,19 +326,20 @@ export function App() {
         <section className="hero" id="top" aria-labelledby="hero-title">
           <div className="hero-copy">
             <p className="proposal-pill">
-              <span aria-hidden="true">●</span> A local event planning service
+              <span aria-hidden="true">●</span> Agent-run catered event planning
             </p>
             <h1 id="hero-title">
-              Plan one gathering.
+              Describe the event.
               <br />
-              <em>Coordinate three local teams.</em>
+              <em>Let your agent coordinate it.</em>
               <br />
-              Stay in control.
+              You give the final yes.
             </h1>
             <p className="hero-lede">
-              Tell your agent who is coming, what they need, and what you can
-              spend. GatherGraph coordinates the venue, menu, and delivery into
-              one plan you can inspect and approve.
+              You do not search venue or catering websites. Tell your agent who
+              is coming, what they need, and what you can spend. It compares
+              suppliers, checks capacity, catering, access, and timing, then
+              returns with one plan for your confirmation.
             </p>
             <div className="hero-actions">
               <button onClick={() => void runStory()} disabled={storyRunning}>
@@ -347,13 +352,15 @@ export function App() {
             <div className="prompt-card" aria-label="Example request">
               <span>You ask your agent</span>
               <strong>
-                “Plan an accessible dinner for 40 people under £1,800.”
+                “Find an accessible venue for 40 people, arrange vegan and
+                nut-free catering, and make sure the caterer can get in and set
+                up on time. Bring me the final plan to approve.”
               </strong>
             </div>
           </div>
           <div
             className="hero-diagram"
-            aria-label="Civic Table event plan assembled from three providers"
+            aria-label="Civic Table event plan assembled from venue and catering evidence"
           >
             <p className="plan-board-kicker">Civic Table · draft plan</p>
             <div className="orbit orbit-venue">
@@ -361,17 +368,17 @@ export function App() {
               <span>Canal Assembly Room</span>
             </div>
             <div className="orbit orbit-food">
-              <small>Menu</small>
+              <small>Catering</small>
               <span>Vegan sharing table</span>
             </div>
             <div className="orbit orbit-logistics">
-              <small>Delivery</small>
-              <span>Cargo bike · 17:15</span>
+              <small>Access &amp; setup</small>
+              <span>Caterer arrives · 17:15</span>
             </div>
             <div className="graph-core">
               <small>Plan status</small>
               <strong>Ready</strong>
-              <span>for human review</span>
+              <span>for your approval</span>
             </div>
             <span className="connector connector-a" aria-hidden="true" />
             <span className="connector connector-b" aria-hidden="true" />
@@ -410,10 +417,13 @@ export function App() {
         <section className="compare-section" id="compare">
           <div className="section-intro">
             <p className="eyebrow">Side by side</p>
-            <h2>The same local event, two ways for an agent to plan it.</h2>
+            <h2>
+              One request from you. All the supplier work handled by the agent.
+            </h2>
             <p>
-              Without WebMCP, the agent must interpret three unrelated pages.
-              With GatherGraph, each provider declares exactly what it can do.
+              You stay in your chat. The agent works across the venue and
+              caterer tools—including the menu, delivery, access, and setup—then
+              returns when it needs your final decision.
             </p>
           </div>
           <div className="story-toolbar">
@@ -434,8 +444,8 @@ export function App() {
               <div className="compare-label danger-label">Without WebMCP</div>
               <h3>Agent must guess</h3>
               <p>
-                It searches labels, buttons, layout, and screenshots across
-                every provider page.
+                It opens each supplier website and tries to interpret labels,
+                buttons, layouts, and screenshots before it can compare them.
               </p>
               <div className="dom-stack" aria-label="Example DOM observations">
                 <code>&lt;button&gt; “Hold” - which venue?</code>
@@ -456,7 +466,8 @@ export function App() {
               <div className="compare-label success-label">With WebMCP</div>
               <h3>Agent calls tools</h3>
               <p>
-                Names, schemas, ownership, and approval boundaries are explicit.
+                Each supplier makes its capabilities, constraints, and approval
+                boundaries explicit.
               </p>
               <ol className="story-steps">
                 {storySteps.map(([number, title, detail], index) => (
@@ -489,31 +500,33 @@ export function App() {
         <section className="how-section" id="how">
           <div className="section-intro">
             <p className="eyebrow">The idea in three steps</p>
-            <h2>How GatherGraph works</h2>
+            <h2>You brief it once. Your agent does the legwork.</h2>
           </div>
           <div className="how-grid">
             <article>
               <span>01</span>
-              <h3>Providers declare capabilities</h3>
+              <h3>Tell the agent what the event needs</h3>
               <p>
-                Venue, food, and delivery each expose three tools from their own
-                page. GatherGraph exposes four coordination tools above them.
+                Give one outcome in plain language: guests, date, accessibility,
+                food requirements, budget, and anything else that matters.
               </p>
             </article>
             <article>
               <span>02</span>
-              <h3>The agent composes evidence</h3>
+              <h3>The agent coordinates every supplier</h3>
               <p>
-                The agent calls the right provider, receives structured results,
-                and lets GatherGraph expose conflicts instead of guessing.
+                It checks suitable venues and caterers, compares structured
+                results, verifies the catering team can access and set up at the
+                venue, and resolves timing conflicts.
               </p>
             </article>
             <article>
               <span>03</span>
-              <h3>The human stays in control</h3>
+              <h3>You make the final decision</h3>
               <p>
-                Every call becomes a receipt. Repair is separate from approval,
-                and approval is separate from the simulated dossier.
+                The agent returns with one feasible, fully explained plan. You
+                approve or reject it. You never need to visit the supplier
+                websites or repeat the coordination work yourself.
               </p>
             </article>
           </div>
@@ -600,8 +613,9 @@ export function App() {
               <p className="eyebrow">Live human workspace</p>
               <h2>See exactly what the agent changed.</h2>
               <p>
-                The panels below are the product, not developer diagnostics. You
-                can take over at any time and use the same controls by hand.
+                You would normally stay in your chat and see only the final
+                plan. This audit view makes the agent's supplier work visible,
+                and lets you take over manually if you choose.
               </p>
             </div>
             <span className="phase-pill" aria-live="polite">
@@ -631,19 +645,19 @@ export function App() {
                 </article>
                 <article className="surface food">
                   <span className="surface-number">02</span>
-                  <h3>Food</h3>
+                  <h3>Catering</h3>
                   <p>Vegan sharing menu · nut-free fixture verified</p>
                   <iframe
-                    title="Independent food tool surface"
+                    title="Independent catering tool surface"
                     src={providerSurfacePaths.food}
                   />
                 </article>
                 <article className="surface logistics">
                   <span className="surface-number">03</span>
-                  <h3>Logistics</h3>
-                  <p>Cargo-bike route · illustrative 1.8 kg CO₂e</p>
+                  <h3>Caterer access &amp; setup</h3>
+                  <p>Delivery and setup · cargo bike · arrival 17:15</p>
                   <iframe
-                    title="Independent logistics tool surface"
+                    title="Independent caterer access and setup tool surface"
                     src={providerSurfacePaths.logistics}
                   />
                 </article>
@@ -652,13 +666,13 @@ export function App() {
                 className="constraint-graph"
                 aria-label="Event constraint graph"
               >
-                <span>Venue available 17:00</span>
+                <span>Venue opens to suppliers at 17:00</span>
                 <span className={conflict ? "conflict" : "resolved"}>
                   {conflict
-                    ? "⚠ Delivery 16:45 conflicts"
-                    : "✓ Delivery repaired to 17:15"}
+                    ? "⚠ Caterer arrival at 16:45 conflicts"
+                    : "✓ Caterer arrival moved to 17:15"}
                 </span>
-                <span>Service begins 18:00</span>
+                <span>Dinner service begins at 18:00</span>
               </div>
               <label className="budget">
                 Budget ceiling
@@ -680,7 +694,7 @@ export function App() {
               </label>
               <div className="button-row">
                 <button onClick={() => void compose()}>
-                  Compose fixture plan
+                  Have agent assemble plan
                 </button>
                 <button
                   className="secondary"
@@ -691,7 +705,7 @@ export function App() {
                     })
                   }
                 >
-                  Repair conflict
+                  Resolve access conflict
                 </button>
                 <button
                   className="approval"
@@ -702,7 +716,7 @@ export function App() {
                     })
                   }
                 >
-                  Request approval
+                  Ask me to approve
                 </button>
                 <button
                   className="secondary"
@@ -739,14 +753,14 @@ export function App() {
 
       <ApprovalDialog
         open={approvalOpen}
-        title="Approve this fictional event dossier?"
+        title="Approve the final event plan?"
         onApprove={() => decide(true)}
         onReject={() => decide(false)}
       >
         <p>
-          The plan is feasible against deterministic fixtures. Approval
-          assembles a browser-local dossier only; it cannot book, reserve, pay,
-          or message.
+          The agent has resolved the supplier constraints and the fixture plan
+          is feasible. Your approval lets it assemble a browser-local dossier
+          only; this demo cannot book, reserve, pay, or message.
         </p>
       </ApprovalDialog>
     </div>

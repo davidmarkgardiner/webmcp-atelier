@@ -1,0 +1,542 @@
+<template>
+  <div
+    data-hf-id="hf-i77x"
+    id="root"
+    data-composition-id="02-native-contract"
+    data-width="1920"
+    data-height="1080"
+    data-duration="14.601"
+  >
+    <style>
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        container-type: size;
+        color: #17233c;
+      }
+
+      #root *,
+      #root *::before,
+      #root *::after {
+        box-sizing: border-box;
+      }
+
+      .f02-native-contract-ground {
+        position: absolute;
+        inset: 0;
+        background: #fffdf8;
+      }
+
+      .f02-native-contract-proof-surface {
+        position: absolute;
+        left: 5.73cqw;
+        top: 5.2cqh;
+        width: 88.54cqw;
+        height: 70.4cqh;
+        overflow: hidden;
+        border: 1px solid rgba(23, 35, 60, 0.12);
+        border-radius: 12px;
+        background: #fffdf8;
+        box-shadow:
+          0 1px 3px rgba(23, 35, 60, 0.08),
+          0 4px 16px rgba(23, 35, 60, 0.04);
+      }
+
+      .f02-native-contract-proof-image {
+        position: absolute;
+        inset: -1.5%;
+        width: 103%;
+        height: 103%;
+        object-fit: cover;
+        object-position: 50% 49%;
+        transform-origin: 50% 50%;
+      }
+
+      .f02-native-contract-native-label {
+        position: absolute;
+        left: 8.35cqw;
+        top: 8.5cqh;
+        display: flex;
+        align-items: center;
+        gap: 0.72cqw;
+        min-height: 3.1cqh;
+        padding: 0.72cqh 0.9cqw;
+        border: 1px solid rgba(23, 35, 60, 0.12);
+        border-radius: 6px;
+        background: rgba(255, 253, 248, 0.94);
+        color: #17233c;
+        font-family: monospace;
+        font-size: 1.46cqw;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        line-height: 1;
+      }
+
+      .f02-native-contract-native-spike {
+        color: #81530a;
+        font-size: 1.42cqw;
+        line-height: 1;
+      }
+
+      .f02-native-contract-grid-stage {
+        position: absolute;
+        inset: 0 0 17% 0;
+      }
+
+      .f02-native-contract-wash {
+        position: absolute;
+        left: 27cqw;
+        top: 22cqh;
+        width: 24cqw;
+        height: 39cqh;
+        border-radius: 12px;
+        background: #d8e7f5;
+        opacity: 0;
+      }
+
+      .f02-native-contract-group {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 25cqw;
+        height: 13.9cqh;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 1.65cqw;
+        border: 1px solid rgba(23, 35, 60, 0.16);
+        border-radius: 12px;
+        background: rgba(255, 253, 248, 0.94);
+        box-shadow:
+          0 1px 3px rgba(23, 35, 60, 0.08),
+          0 4px 16px rgba(23, 35, 60, 0.04);
+        color: #17233c;
+        will-change: transform, opacity;
+      }
+
+      .f02-native-contract-group-name {
+        font-family: monospace;
+        font-size: 1.46cqw;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        line-height: 1;
+      }
+
+      .f02-native-contract-group-count {
+        min-width: 3.25cqw;
+        padding-left: 1cqw;
+        border-left: 1px solid rgba(23, 35, 60, 0.16);
+        font-family: sans-serif;
+        font-size: 3.15cqw;
+        font-weight: 400;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: -0.022em;
+        line-height: 1;
+        text-align: right;
+      }
+
+      .f02-native-contract-proof-line-stage {
+        position: absolute;
+        left: 50%;
+        top: 42%;
+        width: 78cqw;
+        height: 35cqh;
+        margin-left: -39cqw;
+        margin-top: -17.5cqh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(23, 35, 60, 0.16);
+        border-radius: 12px;
+        background: rgba(255, 253, 248, 0.95);
+        box-shadow:
+          0 1px 3px rgba(23, 35, 60, 0.08),
+          0 4px 16px rgba(23, 35, 60, 0.04);
+        opacity: 0;
+      }
+
+      .f02-native-contract-equation {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        width: 68cqw;
+        color: #17233c;
+        font-family: sans-serif;
+        font-size: 5.25cqw;
+        font-weight: 400;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: -0.025em;
+        line-height: 0.95;
+        white-space: nowrap;
+      }
+
+      .f02-native-contract-equation-prefix {
+        display: inline-block;
+      }
+
+      .f02-native-contract-counter-wrap {
+        display: inline-flex;
+        align-items: baseline;
+        justify-content: center;
+        width: 8.2cqw;
+        margin-left: 1.2cqw;
+      }
+
+      .f02-native-contract-counter {
+        display: inline-block;
+        color: #17233c;
+        font-size: 7.5cqw;
+        font-variant-numeric: tabular-nums;
+        line-height: 0.82;
+        transform-origin: center center;
+      }
+
+      .f02-native-contract-context-label {
+        margin-top: 3.7cqh;
+        font-family: monospace;
+        font-size: 1.46cqw;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        line-height: 1;
+      }
+
+      .f02-native-contract-marker {
+        position: absolute;
+        width: 1.35cqw;
+        height: 1.35cqw;
+        border: 1px solid rgba(23, 35, 60, 0.2);
+        border-radius: 6px;
+        background: #d8e7f5;
+        opacity: 0;
+      }
+
+      .f02-native-contract-marker-a {
+        left: 10%;
+        top: 18%;
+      }
+      .f02-native-contract-marker-b {
+        right: 10%;
+        top: 18%;
+      }
+      .f02-native-contract-marker-c {
+        left: 10%;
+        bottom: 18%;
+      }
+      .f02-native-contract-marker-d {
+        right: 10%;
+        bottom: 18%;
+      }
+    </style>
+
+    <div
+      data-hf-id="hf-3tz3"
+      id="f02-ground-track"
+      class="clip f02-native-contract-ground"
+      data-start="0"
+      data-duration="20"
+      data-track-index="0"
+    ></div>
+
+    <div
+      data-hf-id="hf-9y6i"
+      id="f02-proof-track"
+      class="clip f02-native-contract-proof-surface"
+      data-start="0"
+      data-duration="20"
+      data-track-index="1"
+    >
+      <img
+        data-hf-id="hf-kayv"
+        class="f02-native-contract-proof-image"
+        data-layout-allow-overflow=""
+        src="assets/gathergraph-tools.png"
+        alt="GatherGraph native WebMCP tools comparison"
+      />
+    </div>
+
+    <div
+      data-hf-id="hf-xrwb"
+      id="f02-label-track"
+      class="clip f02-native-contract-native-label"
+      data-start="0"
+      data-duration="20"
+      data-track-index="2"
+    >
+      <span data-hf-id="hf-ql88" class="f02-native-contract-native-spike"
+        >✱</span
+      >
+      <span data-hf-id="hf-kfaw">NATIVE WEBMCP</span>
+    </div>
+
+    <div
+      data-hf-id="hf-9bc9"
+      id="f02-grid-track"
+      class="clip f02-native-contract-grid-stage"
+      data-start="0"
+      data-duration="20"
+      data-track-index="3"
+    >
+      <div data-hf-id="hf-4ku1" class="f02-native-contract-wash"></div>
+      <div
+        data-hf-id="hf-18g3"
+        class="f02-native-contract-group f02-native-contract-group-parent"
+        data-target-x="-250"
+        data-target-y="-112"
+      >
+        <span data-hf-id="hf-q7u2" class="f02-native-contract-group-name"
+          >PARENT</span
+        >
+        <span
+          data-hf-id="hf-em22"
+          class="f02-native-contract-group-count"
+          data-layout-allow-overlap=""
+          >4</span
+        >
+      </div>
+      <div
+        data-hf-id="hf-hl0h"
+        class="f02-native-contract-group f02-native-contract-group-venue"
+        data-target-x="250"
+        data-target-y="-112"
+      >
+        <span data-hf-id="hf-223l" class="f02-native-contract-group-name"
+          >VENUE</span
+        >
+        <span
+          data-hf-id="hf-gll7"
+          class="f02-native-contract-group-count"
+          data-layout-allow-overlap=""
+          >3</span
+        >
+      </div>
+      <div
+        data-hf-id="hf-cm1g"
+        class="f02-native-contract-group f02-native-contract-group-food"
+        data-target-x="-250"
+        data-target-y="112"
+      >
+        <span data-hf-id="hf-yrdu" class="f02-native-contract-group-name"
+          >CATERING</span
+        >
+        <span
+          data-hf-id="hf-7uln"
+          class="f02-native-contract-group-count"
+          data-layout-allow-overlap=""
+          >3</span
+        >
+      </div>
+      <div
+        data-hf-id="hf-22f2"
+        class="f02-native-contract-group f02-native-contract-group-logistics"
+        data-target-x="250"
+        data-target-y="112"
+      >
+        <span data-hf-id="hf-yz1h" class="f02-native-contract-group-name"
+          >ACCESS / SETUP</span
+        >
+        <span
+          data-hf-id="hf-7gam"
+          class="f02-native-contract-group-count"
+          data-layout-allow-overlap=""
+          >3</span
+        >
+      </div>
+
+      <div data-hf-id="hf-ax8o" class="f02-native-contract-proof-line-stage">
+        <div
+          data-hf-id="hf-6puu"
+          class="f02-native-contract-marker f02-native-contract-marker-a"
+        ></div>
+        <div
+          data-hf-id="hf-2rqt"
+          class="f02-native-contract-marker f02-native-contract-marker-b"
+        ></div>
+        <div
+          data-hf-id="hf-2030"
+          class="f02-native-contract-marker f02-native-contract-marker-c"
+        ></div>
+        <div
+          data-hf-id="hf-phkj"
+          class="f02-native-contract-marker f02-native-contract-marker-d"
+        ></div>
+        <div data-hf-id="hf-1l3i" class="f02-native-contract-equation">
+          <span data-hf-id="hf-gl37" class="f02-native-contract-equation-prefix"
+            >4 + 3 + 3 + 3 =</span
+          >
+          <span data-hf-id="hf-3mkk" class="f02-native-contract-counter-wrap"
+            ><span
+              data-hf-id="hf-voo9"
+              id="f02-native-contract-counter"
+              class="f02-native-contract-counter"
+              >0</span
+            ></span
+          >
+        </div>
+        <div data-hf-id="hf-2vfv" class="f02-native-contract-context-label">
+          FOUR DOCUMENT CONTEXTS
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        const root = document.querySelector(
+          '[data-composition-id="02-native-contract"]',
+        );
+        const tl = gsap.timeline({ paused: true });
+        const proofSurface = root.querySelector(
+          ".f02-native-contract-proof-surface",
+        );
+        const proofImage = root.querySelector(
+          ".f02-native-contract-proof-image",
+        );
+        const nativeLabel = root.querySelector(
+          ".f02-native-contract-native-label",
+        );
+        const groups = Array.from(
+          root.querySelectorAll(".f02-native-contract-group"),
+        );
+        const wash = root.querySelector(".f02-native-contract-wash");
+        const proofLine = root.querySelector(
+          ".f02-native-contract-proof-line-stage",
+        );
+        const counter = root.querySelector("#f02-native-contract-counter");
+        const contextLabel = root.querySelector(
+          ".f02-native-contract-context-label",
+        );
+        const markers = Array.from(
+          root.querySelectorAll(".f02-native-contract-marker"),
+        );
+        const countState = { value: 0 };
+
+        tl.fromTo(
+          proofSurface,
+          { opacity: 0.86 },
+          { opacity: 1, duration: 0.35, ease: "power2.out" },
+          0,
+        );
+        tl.fromTo(
+          nativeLabel,
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.48, ease: "power2.out" },
+          0.12,
+        );
+        tl.fromTo(
+          proofImage,
+          { scale: 1 },
+          { scale: 1.055, duration: 19.6, ease: "none" },
+          0.2,
+        );
+
+        groups.forEach((group, index) => {
+          tl.fromTo(
+            group,
+            {
+              xPercent: -50,
+              yPercent: -50,
+              x: 0,
+              y: 0,
+              scale: 0.72,
+              opacity: 0,
+            },
+            {
+              x: Number(group.dataset.targetX),
+              y: Number(group.dataset.targetY),
+              scale: 1,
+              opacity: 1,
+              duration: 1.45,
+              ease: "power3.out",
+            },
+            5.15 + index * 0.07,
+          );
+        });
+
+        tl.fromTo(
+          wash,
+          { x: -440, opacity: 0 },
+          { x: 720, opacity: 0.28, duration: 1.15, ease: "power2.out" },
+          10.55,
+        );
+        tl.to(
+          wash,
+          {
+            x: 1020,
+            opacity: 0,
+            duration: 0.42,
+            ease: "power2.out",
+            overwrite: "auto",
+          },
+          11.7,
+        );
+
+        tl.set(groups, { autoAlpha: 0 }, 13.5);
+        tl.set(wash, { autoAlpha: 0 }, 13.5);
+        tl.fromTo(
+          proofLine,
+          { opacity: 0, scale: 0.97 },
+          { opacity: 1, scale: 1, duration: 0.65, ease: "power2.out" },
+          13.5,
+        );
+        tl.fromTo(
+          counter,
+          { scale: 0.48 },
+          { scale: 1, duration: 2.25, ease: "power3.out" },
+          14.05,
+        );
+        tl.to(
+          countState,
+          {
+            value: 13,
+            duration: 2.25,
+            ease: "power3.out",
+            onUpdate: () => {
+              counter.textContent = Math.round(
+                countState.value,
+              ).toLocaleString();
+            },
+          },
+          14.05,
+        );
+        tl.fromTo(
+          contextLabel,
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+          15.2,
+        );
+
+        markers.forEach((marker, index) => {
+          tl.fromTo(
+            marker,
+            { opacity: 0, scale: 0.86 },
+            { opacity: 1, scale: 1, duration: 0.45, ease: "power2.out" },
+            16.2 + index * 0.08,
+          );
+          tl.to(
+            marker,
+            {
+              x: index % 2 === 0 ? 5 : -5,
+              y: index < 2 ? 4 : -4,
+              duration: 3.1,
+              ease: "sine.inOut",
+            },
+            16.65,
+          );
+        });
+
+        tl.pause(0);
+        const playbackDriver = { time: 0 };
+        const playback = gsap.timeline({ paused: true });
+        playback.to(playbackDriver, {
+          time: 20,
+          duration: 12.8,
+          ease: "none",
+          onUpdate: () => tl.time(playbackDriver.time, false),
+        });
+        window.__timelines["02-native-contract"] = playback;
+      })();
+    </script>
+  </div>
+</template>

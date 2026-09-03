@@ -8,3 +8,17 @@ package-lock.json
 .omc/
 agentdb.rvf
 agentdb.rvf.lock
+videos/**/.media/
+videos/**/.venv-hyperframes/
+videos/**/.hyperframes/frame-packets/
+videos/**/.waveform-cache/
+videos/**/.thumbnails/
+videos/**/capture/
+videos/**/capture-legacy-*/
+videos/**/audio/
+videos/**/audio_engine_meta.json
+videos/**/audio_meta.json
+videos/**/audio_request.json
+videos/**/caption_groups.json
+videos/**/snapshots/
+videos/**/renders/
